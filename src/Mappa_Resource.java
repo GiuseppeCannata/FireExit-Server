@@ -16,9 +16,15 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import entity.Mappa;
+import entity.Nodo;
+import entity.NodoApp;
 import services.Mappa_service;
+
 
 
 
@@ -69,6 +75,33 @@ public class Mappa_Resource {
         response.header("Content-Length", f.length());
         return response.build();
 		
+	}
+	
+	
+	@POST
+    @Path("segnalazione")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String segnalazione(String NodiSottoIncendio) {
+		
+		System.out.println("mac"+NodiSottoIncendio);
+		boolean esito = false;
+		
+		Type type = new TypeToken<ArrayList<NodoApp>>() {
+        }.getType();
+        
+        ArrayList<NodoApp> dati_nodi = new Gson().fromJson(NodiSottoIncendio, type);
+        
+        
+        Mappa_service mS = new Mappa_service();
+        
+        esito = mS.prendiSegnalazione(dati_nodi);
+        System.out.println("esito update nodi: "+esito);
+        
+        if(esito)
+        	return "ok";
+        else
+        	return "no";
+			
 	}
 	
 	

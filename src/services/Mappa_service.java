@@ -1,12 +1,12 @@
 package services;
 
-
-
 import java.util.ArrayList;
 
 import entity.Mappa;
 import entity.Nodo;
+import entity.NodoApp;
 import model.Nodo_DB;
+import utils.Parametri;
 
 public class Mappa_service {
 	
@@ -35,6 +35,25 @@ public class Mappa_service {
 		
 		return mappa;	
 		 
+	}
+	
+
+	public boolean prendiSegnalazione(ArrayList<NodoApp> Nodi) {
+		
+		boolean esito = false;
+		int controllo = 0;
+		
+		Nodo_DB ndb = new Nodo_DB();
+		
+		for(NodoApp n: Nodi) 
+			if(n.isTipoIncendio() & ndb.setTipo(Parametri.TIPO_INCENDIO, n.getBeaconId())) 
+				controllo++;
+			
+		if (controllo == Nodi.size())
+			esito = true;
+		
+		return esito;	
+		
 	}
 
 }

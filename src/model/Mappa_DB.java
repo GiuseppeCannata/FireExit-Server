@@ -18,14 +18,9 @@ public class Mappa_DB extends Model{
     	
     }
     
-    public void method(){
-    	
-    	
-    }
     
-public String FindPiantinaByPIANO(int piano) {
+    public String FindPiantinaByPIANO(int piano) {
     	
-    	ResultSet rs = null;
     	String nomePiantina = null;
     	
     	try {
@@ -33,26 +28,27 @@ public String FindPiantinaByPIANO(int piano) {
 	    	String query = "select * from "+TBL_NAME+" where "+FIELD_PIANO+" = "+piano;
 	    	
 	    	OpenConnessione();
-		    st = conn.prepareStatement(query);
-		    rs = st.executeQuery();
+		    ResultSet rs = this.selectQuery(query);
 		    
 		    if(rs.next()) {
 		    	
 		       nomePiantina = rs.getString("piantina");
 		       
 		    }
+		    
 		    CloseConnessione();
 		    st.close();
-		    
-		    
-			
+		    	
     	} catch (SQLException e) {
 			e.printStackTrace();
 		} 
 			
 			return nomePiantina;
     	
-  	
+    }
+    
+   public void method(){
+    	
     	
     }
 
