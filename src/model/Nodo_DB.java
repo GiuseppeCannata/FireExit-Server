@@ -1,13 +1,16 @@
 package model;
 
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import entity.Nodo;
 
+/*
+ * Nodo_DB è una specializzazione della classe Model.
+ * presenta le varie query che si possono eseguire sulla tabella Nodo
+ * 
+ */
 public class Nodo_DB extends Model{
 	
 	public static final String TBL_NAME="NODO";
@@ -23,11 +26,12 @@ public class Nodo_DB extends Model{
     	
     }
     
-    public void method(){ 		
-    	
-    	
-    }
-    
+    /*
+     * Ottiene il piano dei vari Beacon in base al loro macAdrs
+     * 
+     * @param macAdrs
+     * @return piano
+     */
     public int FindPianoByID(String ID) {
     	
     	int piano = 0;
@@ -51,11 +55,13 @@ public class Nodo_DB extends Model{
 		}
     	
     	return piano;	
-  	
-    	
     }
     
-    
+    /*
+     * Ottiene i nodi in base al piano 
+     * 
+     * @param nodi , piano
+     */ 
     public void FindNodiByPiano( ArrayList<Nodo> nodi , int piano) {
     	
     	try {
@@ -87,8 +93,14 @@ public class Nodo_DB extends Model{
 		}
     	
      }
-    	
-    public boolean setTipo(int Tipo, String macAdrs) {
+    
+    /*
+     * Esegue un update del tipo dei nodi
+     * 
+     * @param tipo , macAdrs
+     * @return true/false
+     */
+     public boolean setTipo(int Tipo, String macAdrs) {
     	
     	boolean esito = false;
     	
@@ -107,8 +119,12 @@ public class Nodo_DB extends Model{
 			e.printStackTrace();	
 		}	
     	
-    	return esito;
+    	return esito;	
+    }
+    
+    public void method(){ 		
+    	
+    	//VUOTO
     	
     }
-
 }

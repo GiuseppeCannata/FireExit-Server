@@ -16,6 +16,12 @@ public class Mappa_service {
 	}
 	
 	
+	/*
+	 * si preoccupa di costruire la classe mappa con le sue informazioni:
+	 * 1) Piano
+	 * 2) Nome piantina
+	 * 3) Nodi
+	 */
 	public Mappa CostruzioneMappaByMAC(String mac) {
 		
 		Nodo_DB ndb = new Nodo_DB();
@@ -37,7 +43,9 @@ public class Mappa_service {
 		 
 	}
 	
-
+    /*
+     * Gestisce le segnalazioni di emergenza
+     */
 	public boolean prendiSegnalazione(ArrayList<NodoApp> Nodi) {
 		
 		boolean esito = false;
@@ -52,8 +60,6 @@ public class Mappa_service {
 		if (controllo == Nodi.size())
 			esito = true;
 		
-		return esito;	
-		
+		return esito;		
 	}
-
 }

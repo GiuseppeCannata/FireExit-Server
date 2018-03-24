@@ -1,11 +1,23 @@
 package model;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
+/*
+ * Classe padre di tutte le classi presenti nel package Model.
+ * Fornisce i metodi per:
+ * 
+ * 1) l apertura/chiusura connessione con il DB
+ * 2) Eseguire le select
+ * 3) Eseguire gli update
+ * 
+ * E' una classe astratta e come tale presenterà solamente la definifione del metodo method
+ * il cui corpo, anche se vuoto, verrà definito nelle specializzazioni di queta.
+ * 
+ */
 
 public abstract class Model {
 	
@@ -58,8 +70,8 @@ public abstract class Model {
         } catch (SQLException se) {
             se.printStackTrace();
         }
+        
         return rs;
-
     }
     
     /**
