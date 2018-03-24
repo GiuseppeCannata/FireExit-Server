@@ -26,31 +26,31 @@ import entity.NodoApp;
 import services.Mappa_service;
 
 
-
-
-
 @Path("maps")
 public class Mappa_Resource {
 	
 	@POST
     @Path("getMappa")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String downloadMappa(String macAdrs) {
 		
 		System.out.println("mac"+macAdrs);
 		
+		// Estrazione dal Json in entrata dell info macAdrs
 		JsonObject jobj = new Gson().fromJson(macAdrs, JsonObject.class);
 		String mac = jobj.get("mac_beacon").getAsString();
 		
-		Mappa_service mS = new Mappa_service();
+		Mappa_service mappaService = new Mappa_service();
 		
 		Mappa mappa;
-		mappa = mS.CostruzioneMappaByMAC(mac);
+		mappa = mappaService.CostruzioneMappaByMAC(mac);
 		
+		// Costruisco il Json da inviare all App
 		Gson gson = new Gson();
 		String esito = gson.toJson(mappa);
 		
-	    return esito;		
+	    return esito;	//essendo un Json il ritorno sarà di tipo String	
 	}
 	
 	@GET
@@ -60,6 +60,8 @@ public class Mappa_Resource {
 		
 		System.out.println("Nome piantina: "+nome);
 		
+		// Path all interno della cartella server dove sono contenute le mappe
+		// Path assoluto poichè il relativo non vede la directory
 		File f = new File("C:\\Users\\User\\Desktop\\glassfish5\\glassfish\\domains\\domain1\\docroot\\src\\images\\"+nome+".png");
 	    FileInputStream inStream = null;
 	    
@@ -73,14 +75,14 @@ public class Mappa_Resource {
 		
         ResponseBuilder response = Response.ok((Object)inStream);
         response.header("Content-Length", f.length());
-        return response.build();
-		
+        return response.build();	
 	}
 	
 	
 	@POST
     @Path("segnalazione")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String segnalazione(String NodiSottoIncendio) {
 		
 		System.out.println("mac"+NodiSottoIncendio);
@@ -89,22 +91,16 @@ public class Mappa_Resource {
 		Type type = new TypeToken<ArrayList<NodoApp>>() {
         }.getType();
         
+        // Estrazione dell ArrayList inviato dall app
         ArrayList<NodoApp> dati_nodi = new Gson().fromJson(NodiSottoIncendio, type);
+        Mappa_service mappaService = new Mappa_service();
         
-        
-        Mappa_service mS = new Mappa_service();
-        
-        esito = mS.prendiSegnalazione(dati_nodi);
+        esito = mappaService.prendiSegnalazione(dati_nodi);
         System.out.println("esito update nodi: "+esito);
         
-        if(esito)
-        	return "ok";
-        else
-        	return "no";
-			
+        JsonObject Data = new JsonObject();
+        Data.addProperty("esito", esito);
+        
+        return Data.toString();		
 	}
-	
-	
-	
-
 }

@@ -4,6 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/*
+ * Mappa_DB è una specializzazione della classe Model.
+ * presenta le varie query che si possono eseguire sulla tabella Mappa
+ * 
+ */
+
 public class Mappa_DB extends Model{
 	
 	private PreparedStatement st;
@@ -14,11 +20,17 @@ public class Mappa_DB extends Model{
     
     public Mappa_DB() {
     	
-    	super();
+    	super();  
     	
     }
     
     
+    /*
+     * Ottiene il nome della piantina salvata nella cartella images in base al piano.
+     * 
+     * @param piano
+     * @return nome piantina
+     */
     public String FindPiantinaByPIANO(int piano) {
     	
     	String nomePiantina = null;
@@ -31,9 +43,7 @@ public class Mappa_DB extends Model{
 		    ResultSet rs = this.selectQuery(query);
 		    
 		    if(rs.next()) {
-		    	
 		       nomePiantina = rs.getString("piantina");
-		       
 		    }
 		    
 		    CloseConnessione();
@@ -43,12 +53,12 @@ public class Mappa_DB extends Model{
 			e.printStackTrace();
 		} 
 			
-			return nomePiantina;
-    	
+			return nomePiantina;	
     }
     
    public void method(){
     	
+	   //VUOTO
     	
     }
 

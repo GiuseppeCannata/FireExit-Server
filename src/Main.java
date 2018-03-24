@@ -11,7 +11,7 @@ public class Main extends Application {
     public Set<Class<?>> getClasses() {
     	
         final Set<Class<?>> classes = new HashSet<>();
-        // register root resource
+        // register dei servizi offerti
         classes.add(Mappa_Resource.class);
         return classes;
         

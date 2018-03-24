@@ -13,8 +13,7 @@ public class Mappa {
 
 	        Piano = piano;
 	        Piantina = piantina;
-	        Nodi = nodi;
-	        
+	        Nodi = nodi;    
 
 	    }
 
@@ -47,10 +46,4 @@ public class Mappa {
 		public void setNodi(ArrayList<Nodo> nodi) {
 			Nodi = nodi;
 		}
-	    
-	    
-	    
-	    
-	
-
 }

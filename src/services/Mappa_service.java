@@ -29,8 +29,6 @@ public class Mappa_service {
 		
 		ArrayList<Nodo> Nodi = new ArrayList<Nodo>();
 		
-		
-		
 		// in base al macAdrs agganciato dall app, vedo il beacon a che piano corrisponde
 		piano = ndb.FindPianoByID(mac);
 		// prelevo i beacon relativi al piano
@@ -45,6 +43,7 @@ public class Mappa_service {
 	
     /*
      * Gestisce le segnalazioni di emergenza
+     * 
      */
 	public boolean prendiSegnalazione(ArrayList<NodoApp> Nodi) {
 		
@@ -53,9 +52,21 @@ public class Mappa_service {
 		
 		Nodo_DB ndb = new Nodo_DB();
 		
-		for(NodoApp n: Nodi) 
-			if(n.isTipoIncendio() & ndb.setTipo(Parametri.TIPO_INCENDIO, n.getBeaconId())) 
+		for(NodoApp n: Nodi) {
+			
+			if(n.isTipoIncendio()) {
+				
+				ndb.setTipo(Parametri.TIPO_INCENDIO, n.getBeaconId());
 				controllo++;
+				
+			} else if(n.isCambiato()) {
+				
+				ndb.setTipo(Parametri.TIPO_BASE, n.getBeaconId());
+				controllo++;
+				
+			}
+			
+		}
 			
 		if (controllo == Nodi.size())
 			esito = true;
