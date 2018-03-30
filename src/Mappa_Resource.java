@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 import entity.Mappa;
 import entity.Nodo;
-import entity.NodoApp;
+import model.Nodo_DB;
 import services.Mappa_service;
 
 
@@ -42,9 +42,13 @@ public class Mappa_Resource {
 		String mac = jobj.get("mac_beacon").getAsString();
 		
 		Mappa_service mappaService = new Mappa_service();
-		
+		Nodo_DB ndb = new Nodo_DB();
+		int piano;
 		Mappa mappa;
-		mappa = mappaService.CostruzioneMappaByMAC(mac);
+		
+		piano = ndb.findPianoByMAC(mac);
+		
+		mappa = mappaService.CostruzioneMappa(piano);
 		
 		// Costruisco il Json da inviare all App
 		Gson gson = new Gson();
@@ -88,11 +92,11 @@ public class Mappa_Resource {
 		System.out.println("mac"+NodiSottoIncendio);
 		boolean esito = false;
 		
-		Type type = new TypeToken<ArrayList<NodoApp>>() {
+		Type type = new TypeToken<ArrayList<Nodo>>() {
         }.getType();
         
         // Estrazione dell ArrayList inviato dall app
-        ArrayList<NodoApp> dati_nodi = new Gson().fromJson(NodiSottoIncendio, type);
+        ArrayList<Nodo> dati_nodi = new Gson().fromJson(NodiSottoIncendio, type);
         Mappa_service mappaService = new Mappa_service();
         
         esito = mappaService.prendiSegnalazione(dati_nodi);

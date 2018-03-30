@@ -13,6 +13,7 @@ public class Main extends Application {
         final Set<Class<?>> classes = new HashSet<>();
         // register dei servizi offerti
         classes.add(Mappa_Resource.class);
+        classes.add(Percorso_Resource.class);
         return classes;
         
     }

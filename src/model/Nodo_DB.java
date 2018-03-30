@@ -13,12 +13,13 @@ import entity.Nodo;
  */
 public class Nodo_DB extends Model{
 	
-	public static final String TBL_NAME="NODO";
-    public static final String FIELD_IDBEACON="ID_beacon";
-    public static final String FIELD_PIANO="piano";
-    public static final String FIELD_X="x";  
-    public static final String FIELD_Y="y";  
-    public static final String FIELD_TIPO="tipo"; 
+	public static final String TBL_NAME = "NODO";
+	public static final String FIELD_ID = "ID";
+    public static final String FIELD_IDBEACON = "BEACONID";
+    public static final String FIELD_PIANO = "piano";
+    public static final String FIELD_X = "x";  
+    public static final String FIELD_Y = "y";  
+    public static final String FIELD_TIPO = "tipo"; 
     
     public Nodo_DB() {
     	
@@ -32,13 +33,13 @@ public class Nodo_DB extends Model{
      * @param macAdrs
      * @return piano
      */
-    public int FindPianoByID(String ID) {
+    public int findPianoByMAC(String MacAdrs) {
     	
     	int piano = 0;
     	
     	try {
     		
-	    	String query = "select "+FIELD_PIANO+" from "+TBL_NAME+" where "+FIELD_IDBEACON+" = '"+ID+"'";
+	    	String query = "select "+FIELD_PIANO+" from "+TBL_NAME+" where "+FIELD_IDBEACON+" = '"+MacAdrs+"'";
 	    	System.out.println(query);
 	    	
 	    	OpenConnessione();
@@ -62,7 +63,10 @@ public class Nodo_DB extends Model{
      * 
      * @param nodi , piano
      */ 
-    public void FindNodiByPiano( ArrayList<Nodo> nodi , int piano) {
+    public void findNodiByPiano( ArrayList<Nodo> nodi , int piano) {
+    	
+    	boolean tipoIncendio;
+        boolean tipoUscita;
     	
     	try {
         	
@@ -74,14 +78,47 @@ public class Nodo_DB extends Model{
 		    
 		    while(rs.next()) {
 			  
-			  Nodo nodo = new Nodo( rs.getString(FIELD_IDBEACON),
-					                piano,
-					                rs.getInt(FIELD_X),
-					                rs.getInt(FIELD_Y), 
-					                rs.getInt(FIELD_TIPO)
-					               );
-			  
-			  nodi.add(nodo);
+		    	Nodo nodo;
+		    	
+		    	switch (rs.getInt(FIELD_TIPO)) {
+
+                case 1:
+                    nodo = new Nodo(rs.getInt(FIELD_ID),
+                    		        rs.getString(FIELD_IDBEACON),
+                    		        rs.getInt(FIELD_X),
+                    		        rs.getInt(FIELD_Y),  
+                    		        rs.getInt(FIELD_PIANO));
+                    nodi.add(nodo);
+                    break;
+
+                case 2:
+                    tipoUscita = false;
+                    tipoIncendio = true;
+	                nodo = new Nodo(rs.getInt(FIELD_ID),
+		                    		rs.getString(FIELD_IDBEACON), 
+		                    		rs.getInt(FIELD_X),
+		                    		rs.getInt(FIELD_Y), 
+		                    		tipoUscita, 
+		                    		tipoIncendio, 
+	                    		    rs.getInt(FIELD_PIANO)
+	                    		    );
+	                nodi.add(nodo);
+                    break;
+
+                case 3:
+                    tipoUscita = true;
+                    tipoIncendio = false;
+                    nodo  = new Nodo(rs.getInt(FIELD_ID),
+                    		rs.getString(FIELD_IDBEACON), 
+                    		rs.getInt(FIELD_X),
+                    		rs.getInt(FIELD_Y), 
+                    		tipoUscita, 
+                    		tipoIncendio, 
+                		    rs.getInt(FIELD_PIANO)
+                		    );
+                    nodi.add(nodo);
+                    break;
+               }
 			  
 		    }
 		    
@@ -122,6 +159,143 @@ public class Nodo_DB extends Model{
     	return esito;	
     }
     
+     
+    
+    
+    public Nodo FindNodoById(int id) {
+    	
+    	Nodo nodo = null;
+    	boolean tipoIncendio;
+        boolean tipoUscita;
+   	 
+   	 try {
+        	
+	    	String query = "select * from "+TBL_NAME+" where "+FIELD_ID+" = "+id;
+	    	System.out.println(query);
+	    	
+	    	OpenConnessione();
+		    ResultSet rs = selectQuery(query);
+		    
+		    if(rs.next()) {
+		    	
+		    	
+		    	switch (rs.getInt(FIELD_TIPO)) {
+
+                case 1:
+                    nodo = new Nodo(rs.getInt(FIELD_ID),
+                    		        rs.getString(FIELD_IDBEACON),
+                    		        rs.getInt(FIELD_X),
+                    		        rs.getInt(FIELD_Y),  
+                    		        rs.getInt(FIELD_PIANO));
+                    break;
+
+                case 2:
+                    tipoUscita = false;
+                    tipoIncendio = true;
+	                nodo = new Nodo(rs.getInt(FIELD_ID),
+		                    		rs.getString(FIELD_IDBEACON), 
+		                    		rs.getInt(FIELD_X),
+		                    		rs.getInt(FIELD_Y), 
+		                    		tipoUscita, 
+		                    		tipoIncendio, 
+	                    		    rs.getInt(FIELD_PIANO)
+	                    		    );
+                    break;
+
+                case 3:
+                    tipoUscita = true;
+                    tipoIncendio = false;
+                    nodo  = new Nodo(rs.getInt(FIELD_ID),
+                    		rs.getString(FIELD_IDBEACON), 
+                    		rs.getInt(FIELD_X),
+                    		rs.getInt(FIELD_Y), 
+                    		tipoUscita, 
+                    		tipoIncendio, 
+                		    rs.getInt(FIELD_PIANO)
+                		    );
+                    break;
+               }
+  
+            }
+ 		    
+		    CloseConnessione();
+		    st.close();
+			
+    	} catch (SQLException e) {
+			e.printStackTrace();	
+		}
+   	 
+   	 return nodo;
+   	 	 
+    }
+    
+    public Nodo FindNodoByMac(String macAdrs) {
+    	
+    	 Nodo nodo = null;
+    	 boolean tipoIncendio;
+         boolean tipoUscita;
+   	 
+	   	 try {
+	        	
+		    	String query = "select * from "+TBL_NAME+" where "+FIELD_IDBEACON+" = '"+macAdrs+"'";
+		    	System.out.println(query);
+		    	
+		    	OpenConnessione();
+			    ResultSet rs = selectQuery(query);
+			    
+			    if(rs.next()) {
+				  
+			    	switch (rs.getInt(FIELD_TIPO)) {
+
+	                case 1:
+	                    nodo = new Nodo(rs.getInt(FIELD_ID),
+	                    		        rs.getString(FIELD_IDBEACON),
+	                    		        rs.getInt(FIELD_X),
+	                    		        rs.getInt(FIELD_Y),  
+	                    		        rs.getInt(FIELD_PIANO));
+	                    break;
+
+	                case 2:
+	                    tipoUscita = false;
+	                    tipoIncendio = true;
+		                nodo = new Nodo(rs.getInt(FIELD_ID),
+			                    		rs.getString(FIELD_IDBEACON), 
+			                    		rs.getInt(FIELD_X),
+			                    		rs.getInt(FIELD_Y), 
+			                    		tipoUscita, 
+			                    		tipoIncendio, 
+		                    		    rs.getInt(FIELD_PIANO)
+		                    		    );
+	                    break;
+
+	                case 3:
+	                    tipoUscita = true;
+	                    tipoIncendio = false;
+	                    nodo  = new Nodo(rs.getInt(FIELD_ID),
+	                    		rs.getString(FIELD_IDBEACON), 
+	                    		rs.getInt(FIELD_X),
+	                    		rs.getInt(FIELD_Y), 
+	                    		tipoUscita, 
+	                    		tipoIncendio, 
+                    		    rs.getInt(FIELD_PIANO)
+                    		    );
+	                    break;
+	               }
+				  
+			    }
+			    
+			    CloseConnessione();
+			    st.close();
+				
+	    	} catch (SQLException e) {
+				e.printStackTrace();	
+			}
+   	 
+   	 return nodo;
+   	 	 
+    }
+    
+     
     public void method(){ 		
     	
     	//VUOTO

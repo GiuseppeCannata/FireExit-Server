@@ -1,27 +1,57 @@
 package entity;
 
+import java.util.ArrayList;
+
 public class Nodo {
 	
-
+        private int Id;
 	    private String BeaconId;
-		private int Piano;
+		private int mappaId;
 	    private int X, Y;       // valori da 0 a 100 che indicano le coordinate relative alla mappa
-	    private int Tipo;
+	    private boolean tipoUscita;
+	    private boolean tipoIncendio;
 	    
+	    private boolean cambiato;  
 	  
 
-	    public Nodo(String beaconId, int piano, int x, int y, int tipo) {
+	    public Nodo(int id, String beaconId, int x, int y, int mappaId) {
+	        this(id, beaconId, x, y, false, false, mappaId);
+	    }
 
-	        
-	        BeaconId = beaconId;
-	        Piano = piano;
-	        X = x;
-	        Y = y;
-	        Tipo = tipo;
+	    public Nodo(int id, String beaconId, int x, int y, boolean tipoUscita, int mappaId) {
+	        this(id, beaconId, x, y, tipoUscita, false, mappaId);
+	    }
+
+	    public Nodo(int id, String beaconId, int x, int y, boolean tipoUscita, boolean tipoIncendio, int mappaId) {
+
+	        this.Id = id;
+	        this.BeaconId = beaconId;
+	        this.X = x;
+	        this.Y = y;
+	        this.tipoUscita = tipoUscita;
+	        this.tipoIncendio = tipoIncendio;
+	        this.mappaId = mappaId;
 
 	    }
 
+	    
 
+
+		public boolean isTipoUscita() {
+			return tipoUscita;
+		}
+
+		public void setTipoUscita(boolean tipoUscita) {
+			this.tipoUscita = tipoUscita;
+		}
+
+		public boolean isTipoIncendio() {
+			return tipoIncendio;
+		}
+
+		public void setTipoIncendio(boolean tipoIncendio) {
+			this.tipoIncendio = tipoIncendio;
+		}
 
 		public String getBeaconId() {
 			return BeaconId;
@@ -35,14 +65,14 @@ public class Nodo {
 
 
 
-		public int getPiano() {
-			return Piano;
+		public int getmappaId() {
+			return mappaId;
 		}
 
 
 
-		public void setPiano(int piano) {
-			Piano = piano;
+		public void setmappId(int piano) {
+			mappaId = piano;
 		}
 
 
@@ -69,19 +99,45 @@ public class Nodo {
 			Y = y;
 		}
 
-
-
-		public int getTipo() {
-			return Tipo;
-		}
-
-
-
-		public void setTipo(int tipo) {
-			Tipo = tipo;
-		}
 	    
+		public ArrayList<Arco> getStella(ArrayList<Arco> archi) {
+	        ArrayList<Arco> stella = new ArrayList<>();
+	        for(Arco arco : archi)
+	            if (arco.getNodoArrivo().equals(this) || arco.getNodoPartenza().equals(this))
+	                stella.add(arco);
+	        return stella;
+	    }
 
+
+
+		public int getId() {
+			return Id;
+		}
+
+
+
+		public void setId(int id) {
+			Id = id;
+		}
+		
+		@Override
+	    public boolean equals(Object o) {
+	        if (this == o) return true;
+	        if (o == null || getClass() != o.getClass()) return false;
+
+	        Nodo nodo = (Nodo) o;
+
+	        return Id == nodo.getId();
+	    }
+		
+		@Override
+	    public int hashCode() {
+	        return Id;
+	    }
+		
+		public boolean isCambiato() {
+	        return cambiato;
+	    }
 		   
 	  
 
