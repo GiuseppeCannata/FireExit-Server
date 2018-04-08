@@ -295,7 +295,112 @@ public class Nodo_DB extends Model{
    	 	 
     }
     
-     
+    public ArrayList<Nodo> getListNodi(){
+    	
+    	boolean tipoIncendio;
+        boolean tipoUscita;
+        ArrayList<Nodo> nodi = new ArrayList<Nodo>();
+    	
+    	try {
+        	
+	    	String query = "select * from "+TBL_NAME;
+	    	System.out.println(query);
+	    	
+	    	OpenConnessione();
+		    ResultSet rs = selectQuery(query);
+		    
+		    while(rs.next()) {
+			  
+		    	Nodo nodo;
+		    	
+		    	switch (rs.getInt(FIELD_TIPO)) {
+
+                case 1:
+                    nodo = new Nodo(rs.getInt(FIELD_ID),
+                    		        rs.getString(FIELD_IDBEACON),
+                    		        rs.getInt(FIELD_X),
+                    		        rs.getInt(FIELD_Y),  
+                    		        rs.getInt(FIELD_PIANO));
+                    nodi.add(nodo);
+                    break;
+
+                case 2:
+                    tipoUscita = false;
+                    tipoIncendio = true;
+	                nodo = new Nodo(rs.getInt(FIELD_ID),
+		                    		rs.getString(FIELD_IDBEACON), 
+		                    		rs.getInt(FIELD_X),
+		                    		rs.getInt(FIELD_Y), 
+		                    		tipoUscita, 
+		                    		tipoIncendio, 
+	                    		    rs.getInt(FIELD_PIANO)
+	                    		    );
+	                nodi.add(nodo);
+                    break;
+
+                case 3:
+                    tipoUscita = true;
+                    tipoIncendio = false;
+                    nodo  = new Nodo(rs.getInt(FIELD_ID),
+                    		rs.getString(FIELD_IDBEACON), 
+                    		rs.getInt(FIELD_X),
+                    		rs.getInt(FIELD_Y), 
+                    		tipoUscita, 
+                    		tipoIncendio, 
+                		    rs.getInt(FIELD_PIANO)
+                		    );
+                    nodi.add(nodo);
+                    break;
+               }
+			  
+		    }
+		    
+		    CloseConnessione();
+		    st.close();
+			
+    	} catch (SQLException e) {
+			e.printStackTrace();	
+		}
+    	
+    	return nodi;
+    	
+    }
+    
+    public boolean updateNodo(Nodo nodo) throws SQLException {
+    	       	
+    	boolean esito = false;
+    	int tipo;
+    	
+    	if(nodo.isTipoIncendio())
+    		tipo = 2;
+        else if(nodo.isTipoUscita())
+        	tipo = 3;
+        else
+        	tipo = 1;
+    	
+    
+        	
+	    	String query ="update "+TBL_NAME+" set "
+	    			      +FIELD_IDBEACON+" = '"+nodo.getBeaconId()+"',"
+	    			      +FIELD_PIANO+" = "+nodo.getmappaId()+","
+	    			      +FIELD_TIPO+" = "+tipo+","
+	    			      +FIELD_X+" = "+nodo.getX()+","
+	    	              +FIELD_Y+" = "+nodo.getY()+""
+	    	              +"where "+FIELD_ID+"= "+nodo.getId()+"";
+	    	System.out.println(query);
+	    	
+	    	OpenConnessione();
+	    	esito = updateQuery(query);
+		    
+		    CloseConnessione();
+		    st.close();
+			
+    		
+    	
+    	return esito;	
+    
+   }    
+    
     public void method(){ 		
     	
     	//VUOTO
