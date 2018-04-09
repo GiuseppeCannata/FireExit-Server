@@ -58,7 +58,7 @@ public class Mappa_Resource {
 	}
 	
 	@GET
-    @Path("/downloadPiantina/{nome}")
+    @Path("downloadPiantina/{nome}")
 	@Produces("image/png")
 	public Response downloadPiantina(@PathParam("nome") String nome) {
 		
@@ -106,5 +106,29 @@ public class Mappa_Resource {
         Data.addProperty("esito", esito);
         
         return Data.toString();		
+	}
+	
+	@POST
+    @Path("downloadAggiornamenti")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String downloadAggiornamenti(String pianoJSON) {
+		
+		System.out.println("mac"+pianoJSON);
+		
+		// Estrazione dal Json in entrata dell info macAdrs
+		JsonObject jobj = new Gson().fromJson(pianoJSON, JsonObject.class);
+		int pianoUtente = jobj.get("PianoUtente").getAsInt();
+		
+		Mappa_service mappaService = new Mappa_service();
+		Mappa mappa;
+		
+		mappa = mappaService.CostruzioneMappa(pianoUtente);
+		
+		// Costruisco il Json da inviare all App
+		Gson gson = new Gson();
+		String esito = gson.toJson(mappa);
+		
+	    return esito;	//essendo un Json il ritorno sarà di tipo String	
 	}
 }

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.*" %>
+<%@ page import="entity.Nodo" %>
+<%@ page import="java.lang.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,12 +34,20 @@
            <tr>
               <td>Piano</td>
               <td>
-                <select id="bv" name="bevanda" size="1">
-                    <option selected>${nodo.getmappaId()}</option>
-                    <c:forEach var = "i" begin = "1" end = "${piani.size()}">
-	                   <option>${ListPiani.get(i)}</option>
-	                </c:forEach>
-                </select> 
+                <select id="p" name="piano"> 
+	                <% 
+	                    Nodo nodo =(Nodo) request.getAttribute("nodo");
+	                    ArrayList<Integer> a = (ArrayList<Integer>) request.getAttribute("ListPiani");
+	                    
+	                    for(int i=0; i<a.size(); i++){
+	                    	
+	                    	if(a.get(i) != nodo.getmappaId())
+	                    	   out.print("<option>"+a.get(i)+"</option>");
+	                    	else
+	                    		 out.print("<option selected>"+a.get(i)+"</option>");
+	                    }
+	                %>
+	             </select>           
                </td>
            </tr>
            <tr>

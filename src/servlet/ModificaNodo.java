@@ -44,10 +44,13 @@ public class ModificaNodo extends HttpServlet {
 		
 		nodo = ndb.FindNodoById(a);
 		piani = mdb.getPiani();
+		
+		piani.add(134);
+		piani.add(150);
 		System.out.println(piani.size());
-		piani.add(134);
-		piani.add(134);
-	
+		System.out.println(piani.get(0));
+		System.out.println(piani.get(1));
+		System.out.println(piani.get(2));
 		
 		
 		request.setAttribute("nodo", nodo);
