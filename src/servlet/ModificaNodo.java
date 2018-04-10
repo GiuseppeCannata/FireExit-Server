@@ -47,16 +47,10 @@ public class ModificaNodo extends HttpServlet {
 		
 		piani.add(134);
 		piani.add(150);
-		System.out.println(piani.size());
-		System.out.println(piani.get(0));
-		System.out.println(piani.get(1));
-		System.out.println(piani.get(2));
-		
 		
 		request.setAttribute("nodo", nodo);
 		request.setAttribute("ListPiani", piani);
 		
-		 
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
         dispatcher.forward(request, response);
 	}
@@ -66,19 +60,36 @@ public class ModificaNodo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Nodo nodo;
+		
 		int Id = Integer.parseInt(request.getParameter("Id"));
+		System.out.println(Id);
         String BeaconId = (String) request.getParameter("BeaconId");
-        String mappaId = request.getParameter("mappaId");
-        String X = request.getParameter("X");
-        String Y = request.getParameter("Y");
-        String TipoIncendio = request.getParameter("TipoIncendio");
-        String TipoUscita = request.getParameter("TipoUscita");
+        System.out.println("size"+BeaconId.length());
+        int mappaId = Integer.parseInt(request.getParameter("mappaId"));
+        int X = Integer.parseInt(request.getParameter("X"));
+        int Y = Integer.parseInt(request.getParameter("Y"));
+        boolean TipoIncendio = Boolean.parseBoolean(request.getParameter("TipoIncendio"));
+        boolean TipoUscita = Boolean.parseBoolean(request.getParameter("TipoUscita"));
+        
+        
+        
+        System.out.println(mappaId);
+        System.out.println(X);
+        System.out.println(Y);
+        System.out.println(TipoIncendio);
+        System.out.println(TipoUscita);
         
         boolean hasError = false;
         String errorString = null;
         
-       // Nodo nodo = new Nodo(Id,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);
+        Nodo nodo = new Nodo(Id,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);
+        ArrayList<Integer> piani;
+        Mappa_DB mdb = new Mappa_DB();
+        piani = mdb.getPiani();
+		
+		piani.add(134);
+		piani.add(150);
+        
 
         if (BeaconId.length() == 0) {
             hasError = true;
@@ -86,8 +97,6 @@ public class ModificaNodo extends HttpServlet {
         } else {
            
 	        Nodo_DB ndb = new Nodo_DB();
-	        nodo = new Nodo(Id,BeaconId,Integer.parseInt(X),Integer.parseInt(Y),
-	        		Boolean.parseBoolean(TipoUscita),Boolean.parseBoolean(TipoIncendio),Integer.parseInt(mappaId));
 	        
 	        try {
 	        	
@@ -106,18 +115,15 @@ public class ModificaNodo extends HttpServlet {
         }
         
         if (hasError) {		
-	        nodo = new Nodo(Id,BeaconId,Integer.parseInt(X),Integer.parseInt(Y),
-	        		Boolean.parseBoolean(TipoUscita),Boolean.parseBoolean(TipoIncendio),Integer.parseInt(mappaId));
-	        
-	    
-	    request.setAttribute("errorString", errorString);
-	    request.setAttribute("nodo", nodo);
-	    
-	    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
- 
-	    dispatcher.forward(request, response);
+	       
+		    request.setAttribute("errorString", errorString);
+		    request.setAttribute("nodo", nodo);
+		    request.setAttribute("ListPiani", piani);
+		    
+		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
+	 
+		    dispatcher.forward(request, response);
 				
-			
 	   }
 	}
 

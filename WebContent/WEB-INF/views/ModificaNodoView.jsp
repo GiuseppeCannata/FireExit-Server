@@ -34,7 +34,7 @@
            <tr>
               <td>Piano</td>
               <td>
-                <select id="p" name="piano"> 
+                <select name="mappaId"> 
 	                <% 
 	                    Nodo nodo =(Nodo) request.getAttribute("nodo");
 	                    ArrayList<Integer> a = (ArrayList<Integer>) request.getAttribute("ListPiani");
@@ -52,19 +52,71 @@
            </tr>
            <tr>
               <td>X</td>
-              <td><input type="text" name="X" value="${nodo.getX()}" /></td>
+              <td>
+               <select name="X"> 
+	                <% 
+	                    for(int i=1; i<= 100; i++){
+	                    	
+	                    	if(i != nodo.getX())
+	                    	   out.print("<option>"+i+"</option>");
+	                    	else
+	                    		 out.print("<option selected>"+nodo.getX()+"</option>");
+	                    }
+	                %>
+	             </select> 
+	           </td> 
            </tr>
            <tr>
               <td>Y</td>
-              <td><input type="text" name="Y" value="${nodo.getY()}" /></td>
+              <td>
+               <select name="Y"> 
+	                <% 
+	                    for(int i=1; i<= 100; i++){
+	                    	
+	                    	if(i != nodo.getY())
+	                    	   out.print("<option>"+i+"</option>");
+	                    	else
+	                    		 out.print("<option selected>"+nodo.getY()+"</option>");
+	                    }
+	                %>
+	             </select> 
+	           </td>
            </tr>
            <tr>
               <td>Tipo Incendio</td>
-              <td><input type="text" name="TipoIncendio" value="${nodo.isTipoIncendio()}" /></td>
+              <td>
+               <select name="TipoIncendio"> 
+	                <% 
+                    	if(nodo.isTipoIncendio()){
+                    	   out.print("<option selected>True</option>");
+                    	   out.print("<option>False</option>");
+                    	}
+                    	else{
+                    	   out.print("<option selected>False</option>");
+                     	   out.print("<option>True</option>");
+                    	}
+	                    
+	                %>
+	             </select> 
+	           </td>
            </tr>
            <tr>
               <td>Tipo Uscita</td>
-              <td><input type="text" name="TipoUscita" value="${nodo.isTipoUscita()}" /></td>
+              <td>
+               <select name="TipoUscita"> 
+	                <% 
+                    	if(nodo.isTipoUscita()){
+                    	   out.print("<option selected>True</option>");
+                    	   out.print("<option>False</option>");
+                    	}
+                    	else{
+                    	   out.print("<option selected>False</option>");
+                     	   out.print("<option>True</option>");
+                    	}
+	                    
+	                %>
+	             </select> 
+	           </td>
            </tr>
            <tr>
               <td colspan = "2">
