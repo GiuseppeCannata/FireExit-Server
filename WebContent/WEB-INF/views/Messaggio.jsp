@@ -9,17 +9,17 @@
 </head>
 <body>
     <div id="header">
-       <jsp:include page="WEB-INF/layout/_header.jsp"></jsp:include>
+       <jsp:include page="../layout/_header.jsp"></jsp:include>
     </div>
     
     <div id="topnav">
-        <jsp:include page="WEB-INF/layout/_topnav.jsp"></jsp:include>
+        <jsp:include page="../layout/_topnav.jsp"></jsp:include>
     </div>
     
     <h1 class="messaggio">${Messaggio}</h1>
     
     <div id="footer">
-       <jsp:include page="WEB-INF/layout/_footer.jsp"></jsp:include>
+       <jsp:include page="../layout/_footer.jsp"></jsp:include>
     </div>
 </body>
 </html>
