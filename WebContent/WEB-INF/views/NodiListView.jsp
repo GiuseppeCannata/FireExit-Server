@@ -7,6 +7,7 @@
    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
    <title>FireExit Server</title>
    <link rel="stylesheet" type="text/css" href="css/style.css">
+   <script type="text/javascript" src="js/functions.js"></script>
 </head>
 <body>
     <div id="header">
@@ -19,6 +20,9 @@
     
     <h4>Lista dei nodi contenuti nel DB: </h4>
     
+    <a href="${pageContext.request.contextPath}/InserimentoNodo"><button type="button">Inserisci nuovo nodo</button></a>
+    <br>
+    <br>
     <table border="1" cellpadding="5" cellspacing="1" >
       <tr>
           <th>BeaconId</th>
@@ -40,7 +44,7 @@
                 <a href="${pageContext.request.contextPath}/ModificaNodo?id=${nodo.getId()}">Edit</a>
              </td>
              <td>
-                <a>Delete</a>
+                <a id="delete" href="#" onclick="elimina(event,'${pageContext.request.contextPath}/EliminaNodo?id=${nodo.getId()}','${nodo.getBeaconId()}')">Delete</a>
              </td>
           </tr>
        </c:forEach>

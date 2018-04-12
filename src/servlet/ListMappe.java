@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.Nodo;
+import entity.Mappa;
 import model.Nodo_DB;
 
 /**
- * Servlet implementation class ListNodi
+ * Servlet implementation class ListMappe
  */
-@WebServlet("/ListNodi")
-public class ListNodi extends HttpServlet {
+@WebServlet("/ListMappe")
+public class ListMappe extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListNodi() {
+    public ListMappe() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,10 +32,9 @@ public class ListNodi extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Nodo> list = new ArrayList<Nodo>();
+		// TODO Auto-generated method stub
+		ArrayList<Mappa> list = new ArrayList<Mappa>();
         Nodo_DB ndb = new Nodo_DB();
-      
-        list = ndb.getListNodi();
        
         request.setAttribute("NodiList", list);
          

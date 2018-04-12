@@ -16,17 +16,7 @@
         <jsp:include page="WEB-INF/layout/_topnav.jsp"></jsp:include>
     </div>
     
-    <div id="menu">
-      <h4>Come posso aiutarti:</h4>
-        <ul>
-          <li>
-            <a href="${pageContext.request.contextPath}/ListNodi">Lista nodi</a>
-          </li>
-          <li>
-            <a href="${pageContext.request.contextPath}/ListMappe">Lista Mappe</a>
-          </li>
-        </ul>
-    </div>
+    <h1 class="messaggio">${Messaggio}</h1>
     
     <div id="footer">
        <jsp:include page="WEB-INF/layout/_footer.jsp"></jsp:include>

@@ -10,8 +10,10 @@
    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
    <title>FireExit Server</title>
    <link rel="stylesheet" type="text/css" href="css/style.css">
+   <script type="text/javascript" src="js/functions.js"></script>
 </head>
 <body>
+
     <div id="header">
        <jsp:include page="../layout/_header.jsp"></jsp:include>
     </div>
@@ -24,7 +26,7 @@
     
     <p class="errore">${errorString}</p>
     
-     <form method="POST" action="${pageContext.request.contextPath}/ModificaNodo">
+     <form id="form" method="POST" action="${pageContext.request.contextPath}/ModificaNodo">
         <input type="hidden" name="Id" value="${nodo.getId()}" />
         <table border="0">
            <tr>
@@ -120,13 +122,12 @@
            </tr>
            <tr>
               <td colspan = "2">
-                  <input type="submit" value="Submit" />
-                  <a href="${pageContext.request.contextPath}/ListNodi">Indietro</a>
+                  <button  onclick="confirmActionForm(event)">Fatto</button>
+                  <a id="indietro" href="#" onclick="back(event,'${pageContext.request.contextPath}/ListNodi')">Indietro</a>
               </td>
            </tr>
         </table>
-     </form>
-      
+     </form>     
     
     <div id="footer">
        <jsp:include page="../layout/_footer.jsp"></jsp:include>

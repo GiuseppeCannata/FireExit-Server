@@ -394,12 +394,78 @@ public class Nodo_DB extends Model{
 		    
 		    CloseConnessione();
 		    st.close();
-			
-    		
-    	
+	    	
     	return esito;	
     
-   }    
+   }  
+    
+   public boolean inserimentoNodo(Nodo nodo) {
+    	
+    	boolean esito = false;
+    	int tipo;
+    	
+    	if(nodo.isTipoIncendio())
+    		tipo = 2;
+        else if(nodo.isTipoUscita())
+        	tipo = 3;
+        else
+        	tipo = 1;
+    	
+    
+    	
+    	String query ="insert into "+TBL_NAME+" ( "+FIELD_IDBEACON+","
+    			                                   +FIELD_PIANO+","
+    	                                           +FIELD_TIPO+","
+    			                                   +FIELD_X+","
+    	                                           +FIELD_Y+ " )"+
+    			                     " values( '"+nodo.getBeaconId()+"',"
+    	                                       +nodo.getmappaId()+","
+    	                                       +tipo+","
+    	                                       +nodo.getX()+","
+    	                                       +nodo.getY()+" )";
+    	                                       
+    			       
+    	System.out.println(query);
+    	
+    	try {
+			OpenConnessione();
+			esito = updateQuery(query);
+		    
+		    CloseConnessione();
+		    st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+	    return esito;		
+    
+    }
+    
+    public boolean delete(int Id) {
+    	
+    	boolean esito = false;
+    	
+    	
+		String query = "DELETE FROM "+TBL_NAME+" where "+FIELD_ID+" = "+Id;
+		
+		System.out.println(query);
+		
+		try {
+			OpenConnessione();
+			if(updateQuery(query))
+				esito = true;
+			
+			CloseConnessione();
+		    st.close();
+    	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    	
+    	return esito;
+    }
     
     public void method(){ 		
     	

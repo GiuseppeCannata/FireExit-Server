@@ -16,25 +16,23 @@ import model.Mappa_DB;
 import model.Nodo_DB;
 
 /**
- * Servlet implementation class ModificaNodo
+ * Servlet implementation class InseriemntoNodo
  */
-@WebServlet("/ModificaNodo")
-public class ModificaNodo extends HttpServlet {
+@WebServlet("/InserimentoNodo")
+public class InserimentoNodo extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private Nodo_DB ndb;
 	private Mappa_DB mdb;
-	private Nodo nodo;
 	private ArrayList<Integer> piani;
+	private Nodo nodo;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModificaNodo() {
+    public InserimentoNodo() {
         super();
         // TODO Auto-generated constructor stub
         
-        ndb = new Nodo_DB();
         mdb = new Mappa_DB();
     }
 
@@ -42,20 +40,17 @@ public class ModificaNodo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		int Id = Integer.parseInt(request.getParameter("id"));
-		
-		nodo = ndb.FindNodoById(Id);
+			
 		piani = mdb.getPiani();
 		
 		piani.add(134);
 		piani.add(150);
 		
-		request.setAttribute("nodo", nodo);
 		request.setAttribute("ListPiani", piani);
 		
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoNodoView.jsp");
         dispatcher.forward(request, response);
+		
 	}
 
 	/**
@@ -63,8 +58,6 @@ public class ModificaNodo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int Id = Integer.parseInt(request.getParameter("Id"));
-		System.out.println(Id);
         String BeaconId = (String) request.getParameter("BeaconId");
         System.out.println("size"+BeaconId.length());
         int mappaId = Integer.parseInt(request.getParameter("mappaId"));
@@ -76,7 +69,7 @@ public class ModificaNodo extends HttpServlet {
         boolean hasError = false;
         String errorString = null;
         
-        nodo = new Nodo(Id,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);;
+        nodo = new Nodo(0,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);
         piani = mdb.getPiani();
 		
 		piani.add(134);
@@ -87,20 +80,14 @@ public class ModificaNodo extends HttpServlet {
             hasError = true;
             errorString = "Alcuni campi sembrano essere vuoti!";
         } else {
-             
-	        try {
-	        	
-				if (ndb.updateNodo(nodo)) 
-					response.sendRedirect(request.getContextPath() + "/ListNodi");
-				else {
-					
-					//errore view
-				}
+           
+	        Nodo_DB ndb = new Nodo_DB();
+	        
+	        if (ndb.inserimentoNodo(nodo)) 
+				response.sendRedirect(request.getContextPath() + "/ListNodi");
+			else {
 				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				hasError = true;
-	            errorString = e.getMessage();
+				//errore view
 			}
         }
         

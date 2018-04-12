@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.Nodo;
 import model.Nodo_DB;
 
 /**
- * Servlet implementation class ListNodi
+ * Servlet implementation class EliminaNodo
  */
-@WebServlet("/ListNodi")
-public class ListNodi extends HttpServlet {
+@WebServlet("/EliminaNodo")
+public class EliminaNodo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListNodi() {
+    public EliminaNodo() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,16 +30,21 @@ public class ListNodi extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Nodo> list = new ArrayList<Nodo>();
-        Nodo_DB ndb = new Nodo_DB();
-      
-        list = ndb.getListNodi();
-       
-        request.setAttribute("NodiList", list);
-         
-        // Forward to NodiListView.jsp
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/NodiListView.jsp");
-        dispatcher.forward(request, response);
+		// TODO Auto-generated method stub
+		int Id = Integer.parseInt(request.getParameter("id"));
+		
+		Nodo_DB ndb = new Nodo_DB();
+		
+		if( ndb.delete(Id) ) {
+			response.sendRedirect(request.getContextPath() + "/ListNodi");
+		}else {
+			
+			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
+		  
+		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
+	 
+		    dispatcher.forward(request, response);
+		}
 	}
 
 	/**

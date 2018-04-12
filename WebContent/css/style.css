@@ -46,6 +46,10 @@ a {
 	 color: red;
 }
 
+.messaggio{
+	 text-align: center; 	
+}
+
 #Pricipale-a li a{
 	 color: #F7F7F7;   /*bianco*/
 }
