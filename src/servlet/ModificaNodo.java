@@ -99,8 +99,10 @@ public class ModificaNodo extends HttpServlet {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-				hasError = true;
-	            errorString = e.getMessage();
+				if(e.getErrorCode() == 30000) {
+					hasError = true;
+		            errorString = "BeaconId già presente nel DB. Il MacAdrs deve essere univoco per ogni beacon.";
+				}
 			}
         }
         
@@ -112,9 +114,7 @@ public class ModificaNodo extends HttpServlet {
 		    
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
 	 
-		    dispatcher.forward(request, response);
-				
+		    dispatcher.forward(request, response);		
 	   }
 	}
-
 }

@@ -1,7 +1,6 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 import entity.Nodo;
@@ -380,26 +379,26 @@ public class Nodo_DB extends Model{
     	
     
         	
-	    	String query ="update "+TBL_NAME+" set "
-	    			      +FIELD_IDBEACON+" = '"+nodo.getBeaconId()+"',"
-	    			      +FIELD_PIANO+" = "+nodo.getmappaId()+","
-	    			      +FIELD_TIPO+" = "+tipo+","
-	    			      +FIELD_X+" = "+nodo.getX()+","
-	    	              +FIELD_Y+" = "+nodo.getY()+""
-	    	              +"where "+FIELD_ID+"= "+nodo.getId()+"";
-	    	System.out.println(query);
-	    	
-	    	OpenConnessione();
-	    	esito = updateQuery(query);
-		    
-		    CloseConnessione();
-		    st.close();
+    	String query ="update "+TBL_NAME+" set "
+    			      +FIELD_IDBEACON+" = '"+nodo.getBeaconId()+"',"
+    			      +FIELD_PIANO+" = "+nodo.getmappaId()+","
+    			      +FIELD_TIPO+" = "+tipo+","
+    			      +FIELD_X+" = "+nodo.getX()+","
+    	              +FIELD_Y+" = "+nodo.getY()+""
+    	              +"where "+FIELD_ID+"= "+nodo.getId()+"";
+    	System.out.println(query);
+    	
+    	OpenConnessione();
+    	esito = updateQueryCostrain(query);
+	    
+	    CloseConnessione();
+	    st.close();
 	    	
     	return esito;	
     
    }  
     
-   public boolean inserimentoNodo(Nodo nodo) {
+   public boolean inserimentoNodo(Nodo nodo) throws SQLException{
     	
     	boolean esito = false;
     	int tipo;
@@ -427,17 +426,12 @@ public class Nodo_DB extends Model{
     			       
     	System.out.println(query);
     	
-    	try {
-			OpenConnessione();
-			esito = updateQuery(query);
-		    
-		    CloseConnessione();
-		    st.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
+		OpenConnessione();
+		esito = updateQueryCostrain(query);
+	    
+	    CloseConnessione();
+	    st.close();
+	
 	    return esito;		
     
     }

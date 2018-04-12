@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
 /*
@@ -92,10 +93,23 @@ public abstract class Model {
             
         } catch (SQLException se) {
             se.printStackTrace();
-        }
+        } 
 
         return result;
     }
+    
+    protected boolean updateQueryCostrain(String sql) throws SQLException{
+
+        boolean result = false;
+        	
+        st = conn.createStatement();
+        st.executeUpdate(sql);
+        result = true;
+
+        return result;
+    }
+    
+    
     
     
     public abstract void method();

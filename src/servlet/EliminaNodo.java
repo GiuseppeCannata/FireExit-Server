@@ -40,9 +40,7 @@ public class EliminaNodo extends HttpServlet {
 		}else {
 			
 			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
-		  
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
-	 
 		    dispatcher.forward(request, response);
 		}
 	}

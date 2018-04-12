@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -83,16 +84,23 @@ public class InserimentoNodo extends HttpServlet {
            
 	        Nodo_DB ndb = new Nodo_DB();
 	        
-	        if (ndb.inserimentoNodo(nodo)) 
-				response.sendRedirect(request.getContextPath() + "/ListNodi");
-			else {
+	        try {
+	        	
+				if(ndb.inserimentoNodo(nodo))
+				   response.sendRedirect(request.getContextPath() + "/ListNodi");
+				else {
+					request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete"); 
+				    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
+				    dispatcher.forward(request, response);
+				}
 				
-				request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
-				  
-			    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
-		 
-			    dispatcher.forward(request, response);
-			}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				if(e.getErrorCode() == 30000) {
+					hasError = true;
+		            errorString = "BeaconId già presente nel DB. Il MacAdrs deve essere univoco per ogni beacon.";
+				}
+			} 
         }
         
         if (hasError) {		
@@ -101,7 +109,7 @@ public class InserimentoNodo extends HttpServlet {
 		    request.setAttribute("nodo", nodo);
 		    request.setAttribute("ListPiani", piani);
 		    
-		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
+		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoNodoView.jsp");
 	 
 		    dispatcher.forward(request, response);
 				

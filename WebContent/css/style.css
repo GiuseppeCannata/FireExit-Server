@@ -29,6 +29,15 @@ ul#Pricipale-a {
     float: left;
 }
 
+#Pricipale-a li a{
+	 color: #F7F7F7;   /*bianco*/
+}
+
+/*====================================================================================
+     Generali
+  ====================================================================================
+*/
+
 a {
     color: #615555;
     text-decoration: none;       
@@ -50,6 +59,3 @@ a {
 	 text-align: center; 	
 }
 
-#Pricipale-a li a{
-	 color: #F7F7F7;   /*bianco*/
-}
