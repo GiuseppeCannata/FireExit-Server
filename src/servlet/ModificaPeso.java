@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,22 +10,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Arco_DB;
-import model.Nodo_DB;
+import model.Peso_DB;
+import entity.Peso;
 
 /**
- * Servlet implementation class EliminaNodo
+ * Servlet implementation class ModificaPeso
  */
-@WebServlet("/EliminaNodo")
-public class EliminaNodo extends HttpServlet {
+@WebServlet("/ModificaPeso")
+public class ModificaPeso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private Peso_DB pdb;
+	private Peso peso;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EliminaNodo() {
+    public ModificaPeso() {
         super();
         // TODO Auto-generated constructor stub
+        pdb = new Peso_DB();
+        
     }
 
 	/**
@@ -32,23 +38,14 @@ public class EliminaNodo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int Id = Integer.parseInt(request.getParameter("id"));
+        int Id = Integer.parseInt(request.getParameter("id"));
 		
-		Nodo_DB ndb = new Nodo_DB();
-		Arco_DB adb = new Arco_DB();
+		peso = pdb.findById(Id);
 		
-		//importante all eliminazione di un nodo vanno eliminati anche tutti gli archi relativi a quel nodo
-		//con archi si intende anche i pesi degli archi
-		adb.deleteArchiByNodoId(Id);
+		request.setAttribute("peso", peso);
 		
-		if( ndb.delete(Id) ) {
-			response.sendRedirect(request.getContextPath() + "/ListNodi");
-		}else {
-			
-			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
-		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
-		    dispatcher.forward(request, response);
-		}
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaPesoView.jsp");
+        dispatcher.forward(request, response);
 	}
 
 	/**
@@ -56,7 +53,17 @@ public class EliminaNodo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		int Id = Integer.parseInt(request.getParameter("Id"));
+        String Descrizione = (String) request.getParameter("Descrizione");
+        int p = Integer.parseInt(request.getParameter("Peso"));
+        
+        peso = new Peso(Id,Descrizione,p);
+        	
+		if (pdb.updatePeso(peso)) 
+			response.sendRedirect(request.getContextPath() + "/ListPesi");
+		else {
+			
+			//errore view
+		}  
 	}
-
 }

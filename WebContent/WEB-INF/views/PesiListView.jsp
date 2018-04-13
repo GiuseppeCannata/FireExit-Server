@@ -22,31 +22,24 @@
 	    
 	    <h4>Lista dei nodi contenuti nel DB: </h4>
 	    
-	    <a href="${pageContext.request.contextPath}/InserimentoNodo"><button type="button">Inserisci nuovo nodo</button></a>
+	    <a href="${pageContext.request.contextPath}/InserimentoPeso"><button type="button">Inserisci nuovo peso</button></a>
 	    <br>
 	    <br>
 	    <table border="1" cellpadding="5" cellspacing="1" >
 	      <tr>
-	          <th>BeaconId</th>
-	          <th>Piano</th>
-	          <th>X</th>
-	          <th>Y</th>
-	          <th>TipoIncendio</th>
-	          <th>TipoUscita</th>
+	          <th>Descrizione</th>
+	          <th>Peso</th>
 	       </tr>
-	       <c:forEach items="${NodiList}" var="nodo" >
+	       <c:forEach items="${PesiList}" var="peso" >
 	          <tr>
-	             <td>${nodo.getBeaconId()}</td>
-	             <td>${nodo.getmappaId()}</td>
-	             <td>${nodo.getX()}</td>
-	             <td>${nodo.getY()}</td>
-	             <td>${nodo.isTipoIncendio()}</td>
-	             <td>${nodo.isTipoUscita()}</td>
+	             <td>${peso.getDescrizione()}</td>
+	             <td>${peso.getPeso()}</td>
+	             
 	             <td>
-	                <a href="${pageContext.request.contextPath}/ModificaNodo?id=${nodo.getId()}">Edit</a>
+	                <a href="${pageContext.request.contextPath}/ModificaPeso?id=${peso.getId()}">Edit</a>
 	             </td>
 	             <td>
-	                <a id="delete${nodo.getBeaconId()}" href="#" onclick="elimina(event,'${pageContext.request.contextPath}/EliminaNodo?id=${nodo.getId()}','${nodo.getBeaconId()}')">Delete</a>
+	                <a id="delete${peso.getDescrizione()}" href="#" onclick="elimina(event,'${pageContext.request.contextPath}/EliminaPeso?id=${peso.getId()}','${peso.getDescrizione()}')">Delete</a>
 	             </td>
 	          </tr>
 	       </c:forEach>   

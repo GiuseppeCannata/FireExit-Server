@@ -65,7 +65,113 @@ public class Arco_DB extends Model{
     	 
     	 return Archi;
     }
+    
+    public ArrayList<Arco> getListArchi(){
     	
+        ArrayList<Arco> Archi = new ArrayList<Arco>();
+        
+        Nodo_DB ndb = new Nodo_DB();
+		PesoArco_DB padb = new PesoArco_DB();
+   	 
+   	 try {
+        	
+	    	String query = "select * from "+TBL_NAME;
+	    	System.out.println(query);
+	    	
+	    	OpenConnessione();
+		    ResultSet rs = selectQuery(query);
+		    
+		    while(rs.next()) {
+		    
+			  Nodo nodoPartenza = ndb.FindNodoById(rs.getInt(FIELD_NODOPARTENZA));
+			  Nodo nodoArrivo = ndb.FindNodoById(rs.getInt(FIELD_NODOARRIVO));
+			  ArrayList<PesoArco> pesi = padb.findPesiById(rs.getInt(FIELD_ID));
+			  
+			  Arco arco = new Arco( rs.getInt(FIELD_ID),
+					                nodoPartenza,
+					                nodoArrivo,
+					                pesi
+					               );
+			  
+			  Archi.add(arco);
+			  
+		    }
+		    
+		    CloseConnessione();
+		    st.close();
+			
+    	} catch (SQLException e) {
+			e.printStackTrace();	
+		}
+   	 
+   	 return Archi;
+   }
+
+   public void deleteArchiByNodoId(int Id){
+    	
+    ArrayList<Arco> Archi = new ArrayList<Arco>();
+    
+    Nodo_DB ndb = new Nodo_DB();
+	PesoArco_DB padb = new PesoArco_DB();
+   	 
+   	 try {
+        	
+	    	String query = "select * from "+TBL_NAME+" where "+this.FIELD_NODOPARTENZA+"="+Id+" or "+this.FIELD_NODOARRIVO+" = "+Id;
+	    	System.out.println(query);
+	    	
+	    	OpenConnessione();
+		    ResultSet rs = selectQuery(query);
+		    
+		    while(rs.next()) {
+		    
+			  Nodo nodoPartenza = ndb.FindNodoById(rs.getInt(FIELD_NODOPARTENZA));
+			  Nodo nodoArrivo = ndb.FindNodoById(rs.getInt(FIELD_NODOARRIVO));
+			  ArrayList<PesoArco> pesi = padb.findPesiById(rs.getInt(FIELD_ID));
+			  
+			  Arco arco = new Arco( rs.getInt(FIELD_ID),
+					                nodoPartenza,
+					                nodoArrivo,
+					                pesi
+					               );
+			  
+			  Archi.add(arco);
+			  
+		    }
+		    
+		    CloseConnessione();
+		    st.close();
+		    
+		    for(Arco arco: Archi) {
+		    	this.deleteArco(arco.getId());
+		    	for(PesoArco pa: arco.getPesi())
+		    	      padb.delete(pa.getId());
+		    }
+
+			
+    	} catch (SQLException e) {
+			e.printStackTrace();	
+		}
+   	 
+   	 
+   }
+   
+   public void deleteArco(int Id){
+   	     	 
+   	 try {
+        	
+	    	String query = "delete from "+TBL_NAME+" where "+this.FIELD_ID+"="+Id;
+	    	
+	    	OpenConnessione();
+		    this.updateQuery(query);
+		    
+		    CloseConnessione();
+		    st.close();
+		  	
+    	} catch (SQLException e) {
+			e.printStackTrace();	
+		}
+   	 
+	}
     
    public void method(){
     	

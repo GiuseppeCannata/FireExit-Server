@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,19 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Arco_DB;
-import model.Nodo_DB;
+import entity.Arco;
 
 /**
- * Servlet implementation class EliminaNodo
+ * Servlet implementation class ListArchi
  */
-@WebServlet("/EliminaNodo")
-public class EliminaNodo extends HttpServlet {
+@WebServlet("/ListArchi")
+public class ListArchi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EliminaNodo() {
+    public ListArchi() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,23 +33,16 @@ public class EliminaNodo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int Id = Integer.parseInt(request.getParameter("id"));
-		
-		Nodo_DB ndb = new Nodo_DB();
-		Arco_DB adb = new Arco_DB();
-		
-		//importante all eliminazione di un nodo vanno eliminati anche tutti gli archi relativi a quel nodo
-		//con archi si intende anche i pesi degli archi
-		adb.deleteArchiByNodoId(Id);
-		
-		if( ndb.delete(Id) ) {
-			response.sendRedirect(request.getContextPath() + "/ListNodi");
-		}else {
-			
-			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
-		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
-		    dispatcher.forward(request, response);
-		}
+		ArrayList<Arco> list = new ArrayList<Arco>();
+        Arco_DB adb = new Arco_DB();
+      
+        list = adb.getListArchi();
+       
+        request.setAttribute("ArchiList", list);
+         
+        // Forward to NodiListView.jsp
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ArchiListView.jsp");
+        dispatcher.forward(request, response);
 	}
 
 	/**

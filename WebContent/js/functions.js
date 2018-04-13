@@ -41,7 +41,7 @@ function back(e,link){
  */
 function elimina(e, link, nome){
 	 
-	 var ButtonDelete = document.getElementById("delete");
+	 var ButtonDelete = document.getElementById("delete"+nome);
 	 var conf = window.confirm("Eliminare "+nome+" ?");
 	 
 	 if(conf)

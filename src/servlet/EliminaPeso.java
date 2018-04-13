@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Arco_DB;
 import model.Nodo_DB;
+import model.Peso_DB;
 
 /**
- * Servlet implementation class EliminaNodo
+ * Servlet implementation class EliminaPeso
  */
-@WebServlet("/EliminaNodo")
-public class EliminaNodo extends HttpServlet {
+@WebServlet("/EliminaPeso")
+public class EliminaPeso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EliminaNodo() {
+    public EliminaPeso() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,17 +32,14 @@ public class EliminaNodo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int Id = Integer.parseInt(request.getParameter("id"));
+        int Id = Integer.parseInt(request.getParameter("id"));
+        
+        System.out.println("cis sono");
 		
-		Nodo_DB ndb = new Nodo_DB();
-		Arco_DB adb = new Arco_DB();
+		Peso_DB pdb = new Peso_DB();
 		
-		//importante all eliminazione di un nodo vanno eliminati anche tutti gli archi relativi a quel nodo
-		//con archi si intende anche i pesi degli archi
-		adb.deleteArchiByNodoId(Id);
-		
-		if( ndb.delete(Id) ) {
-			response.sendRedirect(request.getContextPath() + "/ListNodi");
+		if(pdb.delete(Id)) {
+			response.sendRedirect(request.getContextPath() + "/ListPesi");
 		}else {
 			
 			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");

@@ -35,17 +35,16 @@ public class InserimentoNodo extends HttpServlet {
         // TODO Auto-generated constructor stub
         
         mdb = new Mappa_DB();
+        piani = mdb.getPiani();
+        
+        piani.add(134);
+		piani.add(150);
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-		piani = mdb.getPiani();
-		
-		piani.add(134);
-		piani.add(150);
 		
 		request.setAttribute("ListPiani", piani);
 		
@@ -71,11 +70,6 @@ public class InserimentoNodo extends HttpServlet {
         String errorString = null;
         
         nodo = new Nodo(0,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);
-        piani = mdb.getPiani();
-		
-		piani.add(134);
-		piani.add(150);
-        
 
         if (BeaconId.length() == 0) {
             hasError = true;

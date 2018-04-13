@@ -1,5 +1,8 @@
 package entity;
 
+import java.util.Comparator;
+
+
 public class PesoArco {
 
     private int id;
@@ -44,6 +47,22 @@ public class PesoArco {
     public void setValore(int valore) {
         this.valore = valore;
     }
+    
+    
+    /*Comparator for sorting the list by roll no*/
+    public static Comparator<PesoArco> PAIdArco = new Comparator<PesoArco>() {
+
+	public int compare(PesoArco pa1, PesoArco pa2) {
+
+	   int idA1 = pa1.getIdArco();
+	   int idA2 = pa2.getIdArco();
+
+	   /*For ascending order*/
+	   return idA1-idA2;
+
+	   /*For descending order*/
+	   //rollno2-rollno1;
+   }};
 
     @Override
     public boolean equals(Object o) {

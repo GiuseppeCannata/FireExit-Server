@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import entity.Nodo;
 import entity.PesoArco;
@@ -56,6 +57,25 @@ public class PesoArco_DB extends Model{
 			
 			return pesi;
     }
+    
+    public void delete(int Id){
+	     	 
+      	 try {
+           	
+   	    	String query = "delete from "+TBL_NAME+" where "+this.FIELD_ID+"="+Id;
+   	    	
+   	    	OpenConnessione();
+   		    this.updateQuery(query);
+   		    
+   		    CloseConnessione();
+   		    st.close();
+   		  	
+       	} catch (SQLException e) {
+   			e.printStackTrace();	
+   		}
+      	 
+   	}
+    
    
     
    public void method(){
