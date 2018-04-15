@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,32 +9,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Arco_DB;
-import model.Nodo_DB;
-import model.PesoArco_DB;
 import entity.Arco;
-import entity.PesoArco;
+import entity.Mappa;
+import entity.Nodo;
+import model.Arco_DB;
+import model.Mappa_DB;
+import model.Nodo_DB;
+import model.Peso_DB;
+import services.Mappa_service;
 
 /**
- * Servlet implementation class EliminaNodo
+ * Servlet implementation class EliminaMappa
  */
-@WebServlet("/EliminaNodo")
-public class EliminaNodo extends HttpServlet {
+@WebServlet("/EliminaMappa")
+public class EliminaMappa extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Nodo_DB ndb;
+	private Mappa_DB mdb;
+	private Mappa mappa;
+	private Mappa_service ms;
 	private Arco_DB adb;
-	private ArrayList<Arco> Archi;
+	private Nodo_DB ndb;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EliminaNodo() {
+    public EliminaMappa() {
         super();
         // TODO Auto-generated constructor stub
         
-        ndb = new Nodo_DB();
+        ms = new Mappa_service();
+        mdb = new Mappa_DB();
         adb = new Arco_DB();
-        Archi = new ArrayList<Arco>();
+        ndb = new Nodo_DB();
     }
 
 	/**
@@ -43,17 +48,24 @@ public class EliminaNodo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int Id = Integer.parseInt(request.getParameter("id"));
 		
-		//importante all eliminazione di un nodo vanno eliminati anche tutti gli archi relativi a quel nodo
-		//con archi si intende anche i pesi degli archi
-		//TODO: POSSO FARE DIVERSAMENTE?
-		Archi = adb.getArchiByNodoId(Id);
-		for(Arco arco: Archi) 
-	    	adb.deleteArco(arco);
-	    	
-		if( ndb.delete(Id) ) {
-			response.sendRedirect(request.getContextPath() + "/ListNodi");
+        int piano = Integer.parseInt((String)request.getParameter("piano"));
+        
+        mappa = ms.CostruzioneMappa(piano);
+        
+        //eleminazione archi
+        if(mappa.getArchi() != null)
+	        for(Arco arco: mappa.getArchi()) 
+		    	adb.deleteArco(arco);
+        
+      //eleminazione nodi
+        if(mappa.getNodi() != null)
+        	for(Nodo nodo: mappa.getNodi())
+        		ndb.delete(nodo.getId());
+        
+		//eliminazione info mappa
+		if(mdb.delete(piano) ) {
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
 		}else {
 			
 			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
@@ -69,5 +81,4 @@ public class EliminaNodo extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

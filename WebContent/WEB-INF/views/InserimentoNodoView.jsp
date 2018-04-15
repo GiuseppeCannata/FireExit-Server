@@ -6,6 +6,13 @@
 <%@ page import="entity.Nodo" %>
 <%@ page import="java.lang.*" %>
 
+<% 
+     Nodo nodo = null;
+     
+     if(request.getAttribute("nodo") != null)
+        nodo =(Nodo) request.getAttribute("nodo");
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -31,7 +38,7 @@
 	    
 	    <p class="errore">${errorString}</p>
 	    
-	     <form method="POST" action="${pageContext.request.contextPath}/InserimentoNodo">
+	     <form id="form" method="POST" action="${pageContext.request.contextPath}/InserimentoNodo">
 	        <table border="0">
 	           <tr>
 	              <td>Beacon Id</td>
@@ -40,30 +47,7 @@
 	           <tr>
 	              <td>Piano</td>
 	              <td>
-	                <select name="mappaId"> 
-		                <% 
-			                Nodo nodo = null;
-			                ArrayList<Integer> list = (ArrayList<Integer>) request.getAttribute("ListPiani");
-			                
-			                if(request.getAttribute("nodo") != null)
-			                   nodo =(Nodo) request.getAttribute("nodo");
-			                
-		                    if(nodo != null){   
-		                    	
-			                    for(int i=0; i<list.size(); i++)
-			                    	if(list.get(i) != nodo.getmappaId())
-			                    	   out.print("<option>"+list.get(i)+"</option>");
-			                    	else
-			                    		 out.print("<option selected>"+list.get(i)+"</option>");
-			                   
-			                }else{
-			                	
-		                       for(int i=0; i<list.size(); i++)
-		                        	 out.print("<option>"+list.get(i)+"</option>");	
-		                       
-			                }
-		                %>
-		             </select>           
+	               <input name="mappaId" readonly="readonly" type="text" value="${piano}"  >          
 	               </td>
 	           </tr>
 	           <tr>
@@ -167,16 +151,14 @@
 	           <tr>
 	              <td colspan = "2">
 	                  <button onclick="confirmActionForm(event)">Fatto</button>
-	                  <a id="indietro" href="#" onclick="back(event,'${pageContext.request.contextPath}/ListNodi')">Indietro</a>
+	                  <a id="indietro" href="#" onclick="back(event,'${pageContext.request.contextPath}/CaricaMappa?piano=${piano}')">Indietro</a>
 	              </td>
 	           </tr>
 	        </table>
 	     </form>
 	   
-	   
 	    <div id="footer">
 	       <jsp:include page="../layout/_footer.jsp"></jsp:include>
 	    </div>
-	    
 	</body>
 </html>

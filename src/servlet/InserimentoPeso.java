@@ -21,6 +21,8 @@ import model.Peso_DB;
 @WebServlet("/InserimentoPeso")
 public class InserimentoPeso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private Peso_DB pdb;
+	private Peso peso;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -28,6 +30,8 @@ public class InserimentoPeso extends HttpServlet {
     public InserimentoPeso() {
         super();
         // TODO Auto-generated constructor stub
+        
+        pdb = new Peso_DB();
     }
 
 	/**
@@ -51,9 +55,7 @@ public class InserimentoPeso extends HttpServlet {
         boolean hasError = false;
         String errorString = null;
         
-        Peso peso = new Peso(0,Descrizione,p);
-       
-        Peso_DB pdb = new Peso_DB();
+        peso = new Peso(0,Descrizione,p);
         
         if(Descrizione.length() == 0) {
         	hasError = true;

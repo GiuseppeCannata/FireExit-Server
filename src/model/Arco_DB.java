@@ -107,7 +107,7 @@ public class Arco_DB extends Model{
    	 return Archi;
    }
 
-   public void deleteArchiByNodoId(int Id){
+   public ArrayList<Arco> getArchiByNodoId(int Id){
     	
     ArrayList<Arco> Archi = new ArrayList<Arco>();
     
@@ -140,32 +140,32 @@ public class Arco_DB extends Model{
 		    
 		    CloseConnessione();
 		    st.close();
-		    
-		    for(Arco arco: Archi) {
-		    	this.deleteArco(arco.getId());
-		    	for(PesoArco pa: arco.getPesi())
-		    	      padb.delete(pa.getId());
-		    }
-
 			
     	} catch (SQLException e) {
 			e.printStackTrace();	
 		}
    	 
+   	 return Archi;
    	 
    }
    
-   public void deleteArco(int Id){
-   	     	 
+   public void deleteArco(Arco arco){
+   	    
+	 PesoArco_DB padb = new PesoArco_DB();
+	 
    	 try {
         	
-	    	String query = "delete from "+TBL_NAME+" where "+this.FIELD_ID+"="+Id;
+	    	String query = "delete from "+TBL_NAME+" where "+this.FIELD_ID+"="+arco.getId();
 	    	
 	    	OpenConnessione();
 		    this.updateQuery(query);
 		    
 		    CloseConnessione();
 		    st.close();
+		    
+		    //eliminazione dei pesoArco ASSOCIATI ALL ARCO
+		    for(PesoArco pa: arco.getPesi())
+	    	      padb.delete(pa.getId());
 		  	
     	} catch (SQLException e) {
 			e.printStackTrace();	

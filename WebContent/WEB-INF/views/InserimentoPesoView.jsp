@@ -31,7 +31,7 @@
 	    
 	    <p class="errore">${errorString}</p>
 	    
-	     <form method="POST" action="${pageContext.request.contextPath}/InserimentoPeso">
+	     <form id="form" method="POST" action="${pageContext.request.contextPath}/InserimentoPeso">
 	        <table border="0">
 	           <tr>
 	              <td>Descrizione</td>
@@ -63,8 +63,7 @@
 			                }
 		                %>
 	                </select>
-	              <td>
-		               
+	              <td>      
 	           <tr>
 	              <td colspan = "2">
 	                  <button onclick="confirmActionForm(event)">Fatto</button>
@@ -74,10 +73,8 @@
 	        </table>
 	     </form>
 	   
-	   
 	    <div id="footer">
 	       <jsp:include page="../layout/_footer.jsp"></jsp:include>
 	    </div>
-	    
 	</body>
 </html>

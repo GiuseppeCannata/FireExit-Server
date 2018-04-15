@@ -22,12 +22,6 @@
 	      <h4>Come posso aiutarti:</h4>
 	        <ul>
 	          <li>
-	            <a href="${pageContext.request.contextPath}/ListNodi">Lista Nodi</a>
-	          </li>
-	          <li>
-	            <a href="${pageContext.request.contextPath}/ListArchi">Lista Archi</a>
-	          </li>
-	          <li>
 	            <a href="${pageContext.request.contextPath}/ListPesi">Lista Pesi</a>
 	          </li>
 	          <li>

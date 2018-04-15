@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entity.Mappa;
 import entity.Nodo;
 import model.Mappa_DB;
 import model.Nodo_DB;
+import services.Mappa_service;
 
 /**
  * Servlet implementation class ModificaNodo
@@ -25,7 +27,6 @@ public class ModificaNodo extends HttpServlet {
 	private Nodo_DB ndb;
 	private Mappa_DB mdb;
 	private Nodo nodo;
-	private ArrayList<Integer> piani;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -46,13 +47,8 @@ public class ModificaNodo extends HttpServlet {
 		int Id = Integer.parseInt(request.getParameter("id"));
 		
 		nodo = ndb.FindNodoById(Id);
-		piani = mdb.getPiani();
-		
-		piani.add(134);
-		piani.add(150);
 		
 		request.setAttribute("nodo", nodo);
-		request.setAttribute("ListPiani", piani);
 		
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
         dispatcher.forward(request, response);
@@ -77,22 +73,23 @@ public class ModificaNodo extends HttpServlet {
         String errorString = null;
         
         nodo = new Nodo(Id,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);;
-        piani = mdb.getPiani();
-		
-		piani.add(134);
-		piani.add(150);
-        
-
+      
         if (BeaconId.length() == 0) {
             hasError = true;
             errorString = "Alcuni campi sembrano essere vuoti!";
         } else {
              
 	        try {
-	        	
-				if (ndb.updateNodo(nodo)) 
-					response.sendRedirect(request.getContextPath() + "/ListNodi");
-				else {
+			
+				if (ndb.updateNodo(nodo)) {
+					Mappa_service ms = new Mappa_service();
+				    Mappa mappa;
+				
+				    mappa = ms.CostruzioneMappa(mappaId);
+				    request.getSession().setAttribute("mappa", mappa);
+				    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/MappaView.jsp");
+				    dispatcher.forward(request, response);
+				}else {
 					
 					//errore view
 				}
@@ -110,7 +107,6 @@ public class ModificaNodo extends HttpServlet {
 	       
 		    request.setAttribute("errorString", errorString);
 		    request.setAttribute("nodo", nodo);
-		    request.setAttribute("ListPiani", piani);
 		    
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
 	 

@@ -15,30 +15,27 @@
 	    <div id="header">
 	       <jsp:include page="../layout/_header.jsp"></jsp:include>
 	    </div>
+	    
 	    <div id="topnav">
 	        <jsp:include page="../layout/_topnav.jsp"></jsp:include>
 	    </div>
 	    
-	    <h4>Lista dei pesi contenuti nel DB: </h4>
+	    <h4>Lista dei nodi contenuti nel DB: </h4>
 	    
-	    <a href="${pageContext.request.contextPath}/InserimentoPeso"><button type="button">Inserisci nuovo peso</button></a>
+	    <a href="${pageContext.request.contextPath}/InserimentoInfoMappa"><button type="button">Inserisci nuova mappa</button></a>
 	    <br>
 	    <br>
 	    <table border="1" cellpadding="5" cellspacing="1" >
-	      <tr>
-	          <th>Descrizione</th>
-	          <th>Peso</th>
+	       <tr>
+	          <th>Piano</th>
+	          <th>Nome Piantina</th>
 	       </tr>
-	       <c:forEach items="${PesiList}" var="peso" >
+	       <c:forEach items="${ListMappe}" var="mappa" >
 	          <tr>
-	             <td>${peso.getDescrizione()}</td>
-	             <td>${peso.getPeso()}</td>
-	             <td>
-	                <a href="${pageContext.request.contextPath}/ModificaPeso?id=${peso.getId()}">Edit</a>
-	             </td>
-	             <td>
-	                <a id="delete${peso.getDescrizione()}" href="#" onclick="elimina(event,'${pageContext.request.contextPath}/EliminaPeso?id=${peso.getId()}','${peso.getDescrizione()}')">Delete</a>
-	             </td>
+	             <td>${mappa.getPiano()}</td>
+	             <td>${mappa.getPiantina()}</td>
+	             <td> <a href="${pageContext.request.contextPath}/CaricaMappa?piano=${mappa.getPiano()}">Vai</a></td>
+	              <td> <a id="delete${mappa.getPiano()}" href="#"  onclick="elimina(event,'${pageContext.request.contextPath}/EliminaMappa?piano=${mappa.getPiano()}','${mappa.getPiano()}')">Delete</a></td>
 	          </tr>
 	       </c:forEach>   
 	    </table>

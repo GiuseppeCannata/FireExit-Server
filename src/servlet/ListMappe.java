@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entity.Mappa;
-import model.Nodo_DB;
+import model.Mappa_DB;
 
 /**
  * Servlet implementation class ListMappe
@@ -19,6 +19,8 @@ import model.Nodo_DB;
 @WebServlet("/ListMappe")
 public class ListMappe extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private Mappa_DB mdb;
+	private ArrayList<Mappa> mappe;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,6 +28,8 @@ public class ListMappe extends HttpServlet {
     public ListMappe() {
         super();
         // TODO Auto-generated constructor stub
+       mdb = new Mappa_DB();
+       mappe = new ArrayList<Mappa>();
     }
 
 	/**
@@ -33,13 +37,12 @@ public class ListMappe extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ArrayList<Mappa> list = new ArrayList<Mappa>();
-        Nodo_DB ndb = new Nodo_DB();
-       
-        request.setAttribute("NodiList", list);
+		mappe = mdb.getListInfoMappe();
+		
+		request.setAttribute("ListMappe",mappe);
          
-        // Forward to NodiListView.jsp
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/NodiListView.jsp");
+        // Forward 
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ListMappView.jsp");
         dispatcher.forward(request, response);
 	}
 

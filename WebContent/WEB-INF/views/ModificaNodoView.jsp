@@ -5,6 +5,11 @@
 <%@ page import="entity.Nodo" %>
 <%@ page import="java.lang.*" %>
 
+
+<% 
+  Nodo nodo =(Nodo) request.getAttribute("nodo");    
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -15,11 +20,9 @@
 	</head>
 	
 	<body>
-	
 	    <div id="header">
 	       <jsp:include page="../layout/_header.jsp"></jsp:include>
 	    </div>
-	    
 	    <div id="topnav">
 	        <jsp:include page="../layout/_topnav.jsp"></jsp:include>
 	    </div>
@@ -38,20 +41,7 @@
 	           <tr>
 	              <td>Piano</td>
 	              <td>
-	                <select name="mappaId"> 
-		                <% 
-		                    Nodo nodo =(Nodo) request.getAttribute("nodo");
-		                    ArrayList<Integer> a = (ArrayList<Integer>) request.getAttribute("ListPiani");
-		                    
-		                    for(int i=0; i<a.size(); i++){
-		                    	
-		                    	if(a.get(i) != nodo.getmappaId())
-		                    	   out.print("<option>"+a.get(i)+"</option>");
-		                    	else
-		                    		 out.print("<option selected>"+a.get(i)+"</option>");
-		                    }
-		                %>
-		             </select>           
+		              <input name="mappaId" readonly="readonly" type="text" value="${nodo.getmappaId()}"  >           
 	               </td>
 	           </tr>
 	           <tr>
@@ -125,7 +115,7 @@
 	           <tr>
 	              <td colspan = "2">
 	                  <button  onclick="confirmActionForm(event)">Fatto</button>
-	                  <a id="indietro" href="#" onclick="back(event,'${pageContext.request.contextPath}/ListNodi')">Indietro</a>
+	                  <a id="indietro" href="#" onclick="back(event,'${pageContext.request.contextPath}/CaricaMappa?piano=${nodo.getmappaId()}')">Indietro</a>
 	              </td>
 	           </tr>
 	        </table>

@@ -36,9 +36,6 @@ public class InserimentoNodo extends HttpServlet {
         
         mdb = new Mappa_DB();
         piani = mdb.getPiani();
-        
-        piani.add(134);
-		piani.add(150);
     }
 
 	/**
@@ -46,7 +43,8 @@ public class InserimentoNodo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setAttribute("ListPiani", piani);
+		int piano = Integer.parseInt(request.getParameter("piano"));
+		request.setAttribute("piano", piano);
 		
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoNodoView.jsp");
         dispatcher.forward(request, response);
@@ -59,7 +57,6 @@ public class InserimentoNodo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
         String BeaconId = (String) request.getParameter("BeaconId");
-        System.out.println("size"+BeaconId.length());
         int mappaId = Integer.parseInt(request.getParameter("mappaId"));
         int X = Integer.parseInt(request.getParameter("X"));
         int Y = Integer.parseInt(request.getParameter("Y"));
@@ -81,7 +78,7 @@ public class InserimentoNodo extends HttpServlet {
 	        try {
 	        	
 				if(ndb.inserimentoNodo(nodo))
-				   response.sendRedirect(request.getContextPath() + "/ListNodi");
+				   response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+mappaId);
 				else {
 					request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete"); 
 				    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
@@ -101,7 +98,7 @@ public class InserimentoNodo extends HttpServlet {
 	       
 		    request.setAttribute("errorString", errorString);
 		    request.setAttribute("nodo", nodo);
-		    request.setAttribute("ListPiani", piani);
+		    request.setAttribute("piano", mappaId);
 		    
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoNodoView.jsp");
 	 

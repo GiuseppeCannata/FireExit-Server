@@ -18,6 +18,7 @@ import model.Peso_DB;
 @WebServlet("/EliminaPeso")
 public class EliminaPeso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private Peso_DB pdb;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -25,6 +26,8 @@ public class EliminaPeso extends HttpServlet {
     public EliminaPeso() {
         super();
         // TODO Auto-generated constructor stub
+        
+        pdb = new Peso_DB();
     }
 
 	/**
@@ -33,10 +36,6 @@ public class EliminaPeso extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
         int Id = Integer.parseInt(request.getParameter("id"));
-        
-        System.out.println("cis sono");
-		
-		Peso_DB pdb = new Peso_DB();
 		
 		if(pdb.delete(Id)) {
 			response.sendRedirect(request.getContextPath() + "/ListPesi");

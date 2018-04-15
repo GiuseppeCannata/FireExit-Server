@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,39 +9,42 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Arco_DB;
-import entity.Arco;
+import entity.Mappa;
+import model.Mappa_DB;
+import services.Mappa_service;
 
 /**
- * Servlet implementation class ListArchi
+ * Servlet implementation class CaricaMappa
  */
-@WebServlet("/ListArchi")
-public class ListArchi extends HttpServlet {
+@WebServlet("/CaricaMappa")
+public class CaricaMappa extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private Mappa mappa;
+	private Mappa_service ms;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListArchi() {
+    public CaricaMappa() {
         super();
         // TODO Auto-generated constructor stub
+        
+        ms = new Mappa_service();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		ArrayList<Arco> list = new ArrayList<Arco>();
-        Arco_DB adb = new Arco_DB();
-      
-        list = adb.getListArchi();
-       
-        request.setAttribute("ArchiList", list);
-         
-        // Forward to NodiListView.jsp
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ArchiListView.jsp");
-        dispatcher.forward(request, response);
+		// TODO Auto-generated method stub	
+		int piano = Integer.parseInt(request.getParameter("piano"));
+	 
+		mappa = ms.CostruzioneMappa(piano);
+		
+		request.getSession().setAttribute("mappa", mappa);
+		
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/MappaView.jsp");
+	    dispatcher.forward(request, response);	
 	}
 
 	/**
@@ -52,5 +54,4 @@ public class ListArchi extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
