@@ -49,3 +49,26 @@ function elimina(e, link, nome){
 	 else
 		e.preventDefault();	 
 }
+
+function richiestaNumPesi(e,link){
+	 
+	var ButtonInserisci = document.getElementById("inserisciArco");
+	 
+	var nPesi = prompt ("Prima di inserire i dati relativi all arco la preghiamo di dirci quanti pesi presenta");
+     
+    if(nPesi !=null & nPesi != "")
+    	ButtonInserisci.href = link+"&nPesi="+nPesi; 
+    else
+		if(nPesi == null)
+	        e.preventDefault();
+		else
+			//if (nPesi == "") 
+		        if(window.confirm("Dati errati. Riprovare?"))
+		           richiestaNumPesi(e,link);
+		        else
+		           e.preventDefault();
+		        	
+
+    	
+}
+

@@ -44,7 +44,7 @@ public class Arco_DB extends Model{
  		    
  			  Nodo nodoPartenza = ndb.FindNodoById(rs.getInt(FIELD_NODOPARTENZA));
  			  Nodo nodoArrivo = ndb.FindNodoById(rs.getInt(FIELD_NODOARRIVO));
- 			  ArrayList<PesoArco> pesi = padb.findPesiById(rs.getInt(FIELD_ID));
+ 			  ArrayList<PesoArco> pesi = padb.findPesiByIdArco(rs.getInt(FIELD_ID));
  			  
  			  Arco arco = new Arco( rs.getInt(FIELD_ID),
  					                nodoPartenza,
@@ -85,7 +85,7 @@ public class Arco_DB extends Model{
 		    
 			  Nodo nodoPartenza = ndb.FindNodoById(rs.getInt(FIELD_NODOPARTENZA));
 			  Nodo nodoArrivo = ndb.FindNodoById(rs.getInt(FIELD_NODOARRIVO));
-			  ArrayList<PesoArco> pesi = padb.findPesiById(rs.getInt(FIELD_ID));
+			  ArrayList<PesoArco> pesi = padb.findPesiByIdArco(rs.getInt(FIELD_ID));
 			  
 			  Arco arco = new Arco( rs.getInt(FIELD_ID),
 					                nodoPartenza,
@@ -126,7 +126,7 @@ public class Arco_DB extends Model{
 		    
 			  Nodo nodoPartenza = ndb.FindNodoById(rs.getInt(FIELD_NODOPARTENZA));
 			  Nodo nodoArrivo = ndb.FindNodoById(rs.getInt(FIELD_NODOARRIVO));
-			  ArrayList<PesoArco> pesi = padb.findPesiById(rs.getInt(FIELD_ID));
+			  ArrayList<PesoArco> pesi = padb.findPesiByIdArco(rs.getInt(FIELD_ID));
 			  
 			  Arco arco = new Arco( rs.getInt(FIELD_ID),
 					                nodoPartenza,
@@ -158,7 +158,7 @@ public class Arco_DB extends Model{
 	    	String query = "delete from "+TBL_NAME+" where "+this.FIELD_ID+"="+arco.getId();
 	    	
 	    	OpenConnessione();
-		    this.updateQuery(query);
+		    updateQuery(query);
 		    
 		    CloseConnessione();
 		    st.close();
@@ -172,6 +172,85 @@ public class Arco_DB extends Model{
 		}
    	 
 	}
+   
+   public boolean controlloEsistenzaArco(int IDPartenza, int IDArrivo) {
+	   
+	   boolean esito = false;
+	   	 
+	   	 try {
+	        	
+		    	String query = "select * from "+TBL_NAME+" where "+FIELD_NODOPARTENZA+"="+IDPartenza+" and "+this.FIELD_NODOARRIVO+" = "+IDArrivo;
+		    	System.out.println(query);
+		    	
+		    	OpenConnessione();
+			    ResultSet rs = selectQuery(query);
+			    
+			    if(rs.next()) 
+			    	esito = true;
+			    
+			    CloseConnessione();
+			    st.close();
+				
+	    	} catch (SQLException e) {
+				e.printStackTrace();	
+			}
+	   	 
+	   	 return esito;
+	   
+   }
+   
+   public void insertArco(int IDPartenza, int IDArrivo, int piano) {
+		  
+		 String query ="insert into "+TBL_NAME+" ( "+FIELD_NODOPARTENZA+","
+		               +FIELD_NODOARRIVO+","
+		               +FIELD_MAPPAID+
+		              " )"+
+					 " values( "+IDPartenza+","
+					           +IDArrivo+","
+					           +piano+
+					        " )";
+		System.out.println(query);
+		
+		try {
+			OpenConnessione();
+			
+			updateQuery(query);
+			
+			CloseConnessione();
+			st.close(); 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+   }
+   
+   public int findIDArcoByNodoPIDNodoAID(int IDPartenza, int IDArrivo) {
+		  
+	   int esito = 0;
+	   	 
+	   	 try {
+	        	
+		    	String query = "select * from "+TBL_NAME+" where "+FIELD_NODOPARTENZA+"="+IDPartenza+" and "+FIELD_NODOARRIVO+" = "+IDArrivo;
+		    	System.out.println(query);
+		    	
+		    	OpenConnessione();
+			    ResultSet rs = selectQuery(query);
+			    
+			    if(rs.next()) 
+			    	esito = rs.getInt(FIELD_ID);
+			    
+			    CloseConnessione();
+			    st.close();
+				
+	    	} catch (SQLException e) {
+				e.printStackTrace();	
+			}
+	   	 
+	   	 return esito;
+		
+   }
     
    public void method(){
     	

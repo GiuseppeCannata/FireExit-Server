@@ -18,6 +18,7 @@ import model.Peso_DB;
  */
 @WebServlet("/ListPesi")
 public class ListPesi extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Peso> list;
 	private Peso_DB pdb;
@@ -28,6 +29,7 @@ public class ListPesi extends HttpServlet {
     public ListPesi() {
         super();
         // TODO Auto-generated constructor stub
+        
         list = new ArrayList<Peso>();
         pdb = new Peso_DB();
     }

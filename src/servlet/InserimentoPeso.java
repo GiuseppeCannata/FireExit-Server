@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -10,9 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.Nodo;
 import entity.Peso;
-import model.Nodo_DB;
 import model.Peso_DB;
 
 /**
@@ -20,6 +19,7 @@ import model.Peso_DB;
  */
 @WebServlet("/InserimentoPeso")
 public class InserimentoPeso extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private Peso_DB pdb;
 	private Peso peso;
@@ -57,6 +57,7 @@ public class InserimentoPeso extends HttpServlet {
         
         peso = new Peso(0,Descrizione,p);
         
+        //1^ controllo
         if(Descrizione.length() == 0) {
         	hasError = true;
         	errorString = "Alcuni campi sembrano essere vuoti";
@@ -84,12 +85,10 @@ public class InserimentoPeso extends HttpServlet {
         if (hasError) {		
 	       
 		    request.setAttribute("errorString", errorString);
-		    request.setAttribute("nodo", peso);
+		    request.setAttribute("peso", peso);
 		    
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoPesoView.jsp");
-	 
-		    dispatcher.forward(request, response);
-				
+		    dispatcher.forward(request, response);		
 	   }
 	}
 

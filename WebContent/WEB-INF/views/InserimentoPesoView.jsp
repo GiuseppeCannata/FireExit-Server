@@ -25,8 +25,8 @@
 	        <jsp:include page="../layout/_topnav.jsp"></jsp:include>
 	    </div>
 	                   
-	    <h4>Inserimento nuovo nodo</h4>
-	    <p> Qui puoi inserire un nuovo nodo associando lo stesso ad un determinato piano <p>
+	    <h4>Inserimento nuovo peso</h4>
+	    <p> Qui puoi inserire un nuovo peso<p>
 	    <br>
 	    
 	    <p class="errore">${errorString}</p>

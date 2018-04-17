@@ -1,8 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -74,6 +74,7 @@ public class ModificaNodo extends HttpServlet {
         
         nodo = new Nodo(Id,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);;
       
+        //1^ controllo
         if (BeaconId.length() == 0) {
             hasError = true;
             errorString = "Alcuni campi sembrano essere vuoti!";

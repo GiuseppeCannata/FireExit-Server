@@ -1,9 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@ page import="entity.Mappa" %>
 
-<% Mappa mappa =  (Mappa) request.getSession().getAttribute("mappa");
-  pageContext.setAttribute("NodiList", mappa.getNodi());
-  pageContext.setAttribute("piano", mappa.getPiano());
+<% 
+  Mappa mappa =  (Mappa) request.getSession().getAttribute("mappa");
+  if(mappa != null){
+	  pageContext.setAttribute("NodiList", mappa.getNodi());
+	  pageContext.setAttribute("piano", mappa.getPiano());
+  }
 %>
   
 <div>
@@ -31,13 +34,14 @@
             <td>${nodo.getX()}</td>
             <td>${nodo.getY()}</td>
             <td>${nodo.isTipoIncendio()}</td>
-            <td>${nodo.isTipoUscita()}</td>
-            <td>
-               <a href="${pageContext.request.contextPath}/ModificaNodo?id=${nodo.getId()}">Edit</a>
-            </td>
-            <td>
-               <a id="delete${nodo.getBeaconId()}" href="#" onclick="elimina(event,'${pageContext.request.contextPath}/EliminaNodo?id=${nodo.getId()}','${nodo.getBeaconId()}')">Delete</a>
-            </td>
+            <td>${nodo.isTipoUscita()}</td>  
+		    <td>
+	          <a href="${pageContext.request.contextPath}/ModificaNodo?id=${nodo.getId()}">Edit</a>
+	        </td>
+	        <td>
+	          <a id="delete${nodo.getBeaconId()}" href="#" onclick="elimina(event,'${pageContext.request.contextPath}/EliminaNodo?id=${nodo.getId()}','${nodo.getBeaconId()}')">Delete</a>
+	        </td>
+            
          </tr>
       </c:forEach>   
    </table>

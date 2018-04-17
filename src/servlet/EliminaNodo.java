@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entity.Arco;
 import model.Arco_DB;
 import model.Nodo_DB;
-import model.PesoArco_DB;
-import entity.Arco;
-import entity.PesoArco;
+
 
 /**
  * Servlet implementation class EliminaNodo
  */
 @WebServlet("/EliminaNodo")
 public class EliminaNodo extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	private ArrayList<Arco> Archi;
 	private Nodo_DB ndb;
 	private Arco_DB adb;
-	private ArrayList<Arco> Archi;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -49,16 +49,18 @@ public class EliminaNodo extends HttpServlet {
 		//con archi si intende anche i pesi degli archi
 		//TODO: POSSO FARE DIVERSAMENTE?
 		Archi = adb.getArchiByNodoId(Id);
-		for(Arco arco: Archi) 
-	    	adb.deleteArco(arco);
+		if(Archi != null)
+			for(Arco arco: Archi) 
+		    	adb.deleteArco(arco);
 	    	
-		if( ndb.delete(Id) ) {
+		if( ndb.delete(Id) ) 
 			response.sendRedirect(request.getContextPath() + "/ListNodi");
-		}else {
+		else {
 			
 			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
 		    dispatcher.forward(request, response);
+		    
 		}
 	}
 

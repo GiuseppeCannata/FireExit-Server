@@ -23,10 +23,11 @@ import services.Mappa_service;
  */
 @WebServlet("/EliminaMappa")
 public class EliminaMappa extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-	private Mappa_DB mdb;
-	private Mappa mappa;
 	private Mappa_service ms;
+	private Mappa mappa;
+	private Mappa_DB mdb;
 	private Arco_DB adb;
 	private Nodo_DB ndb;
        
@@ -64,13 +65,14 @@ public class EliminaMappa extends HttpServlet {
         		ndb.delete(nodo.getId());
         
 		//eliminazione info mappa
-		if(mdb.delete(piano) ) {
+		if(mdb.delete(piano)) {
 			response.sendRedirect(request.getContextPath() + "/ListMappe");
 		}else {
 			
 			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
 		    dispatcher.forward(request, response);
+		    
 		}
 	}
 

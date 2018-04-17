@@ -108,10 +108,7 @@ public abstract class Model {
 
         return result;
     }
-    
-    
-    
-    
+       
     public abstract void method();
 
 }

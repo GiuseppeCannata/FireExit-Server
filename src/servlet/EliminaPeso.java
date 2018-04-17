@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Nodo_DB;
 import model.Peso_DB;
 
 /**
@@ -17,6 +16,7 @@ import model.Peso_DB;
  */
 @WebServlet("/EliminaPeso")
 public class EliminaPeso extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private Peso_DB pdb;
        
@@ -37,9 +37,9 @@ public class EliminaPeso extends HttpServlet {
 		// TODO Auto-generated method stub
         int Id = Integer.parseInt(request.getParameter("id"));
 		
-		if(pdb.delete(Id)) {
+		if(pdb.delete(Id))
 			response.sendRedirect(request.getContextPath() + "/ListPesi");
-		}else {
+		else {
 			
 			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");

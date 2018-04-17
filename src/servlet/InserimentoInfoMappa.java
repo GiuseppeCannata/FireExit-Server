@@ -1,12 +1,12 @@
 package servlet;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -26,6 +26,7 @@ import model.Mappa_DB;
 @WebServlet("/InserimentoInfoMappa")
 @MultipartConfig
 public class InserimentoInfoMappa extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -64,6 +65,7 @@ public class InserimentoInfoMappa extends HttpServlet {
 	     String errorString = null;
 	     
 	     try {
+	    	 //pathassoluto per salvataggio file
 	         out = new FileOutputStream(new File("C:\\Users\\User\\Desktop\\glassfish5\\glassfish\\domains\\domain1\\docroot\\src\\images" + File.separator + fileName+".png"));
 	         filecontent = filePart.getInputStream();
 
@@ -73,32 +75,33 @@ public class InserimentoInfoMappa extends HttpServlet {
 	         while ((read = filecontent.read(bytes)) != -1) {
 	             out.write(bytes, 0, read);
 	         }
-	         System.out.print("ok");
+	         //System.out.print("ok");
 	         //LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", 
 	         //        new Object[]{fileName, path});
 	     } catch (FileNotFoundException fne) {
 	    	 fne.printStackTrace();
 	         System.out.print("errore");
 	     } finally {
-	         if (out != null) {
+	    	 
+	         if (out != null) 
 	             out.close();
-	         }
-	         if (filecontent != null) {
-	             filecontent.close();
-	         }
 	         
+	         if (filecontent != null) 
+	             filecontent.close();  
 	     }
 	     
 	     Mappa_DB mdb = new Mappa_DB();
+	     
 	     try {
 	    	 
-			if(mdb.InserimentoInfo(piano,fileName)) {
+			if(mdb.InserimentoInfo(piano,fileName)) 
 				 response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
-			}else {
+			else {
 				request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete"); 
 			    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
 			    dispatcher.forward(request, response);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			if(e.getErrorCode() == 30000) {
@@ -110,15 +113,12 @@ public class InserimentoInfoMappa extends HttpServlet {
 	     
 	     if (hasError) {		
 		       
-			    request.setAttribute("errorString", errorString);
-			    
-			    
-			    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoInfoMappaView.jsp");
-		 
-			    dispatcher.forward(request, response);
+		    request.setAttribute("errorString", errorString);
+		    
+		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoInfoMappaView.jsp");
+		    dispatcher.forward(request, response);
 					
-		   }
-		   
+		 }   
 	 }
 
 

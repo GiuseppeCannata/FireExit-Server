@@ -1,8 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
+
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -68,6 +69,7 @@ public class InserimentoNodo extends HttpServlet {
         
         nodo = new Nodo(0,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);
 
+        //1^ controllo
         if (BeaconId.length() == 0) {
             hasError = true;
             errorString = "Alcuni campi sembrano essere vuoti!";
@@ -87,6 +89,7 @@ public class InserimentoNodo extends HttpServlet {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
+				//3000 code di Sql Exception per campi UNIQUE
 				if(e.getErrorCode() == 30000) {
 					hasError = true;
 		            errorString = "BeaconId già presente nel DB. Il MacAdrs deve essere univoco per ogni beacon.";
@@ -101,9 +104,7 @@ public class InserimentoNodo extends HttpServlet {
 		    request.setAttribute("piano", mappaId);
 		    
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoNodoView.jsp");
-	 
-		    dispatcher.forward(request, response);
-				
+		    dispatcher.forward(request, response);		
 	   }
 	}
 

@@ -55,6 +55,31 @@ public class Peso_DB  extends Model{
     	 return peso;
     }
     
+    public int findByDescrizione(String Descrizione) {
+    	
+    	int row = 0;
+    	
+           try {
+            	
+    	    	String query = "select * from "+TBL_NAME+" where "+FIELD_DESCRIZIONE+" = '"+Descrizione+"'";
+    	    	System.out.println(query);
+    	    	
+    	    	OpenConnessione();
+    		    ResultSet rs = selectQuery(query);
+    		    
+    		    if(rs.next())
+    		       row = rs.getInt(FIELD_ID);
+    		    
+    		    CloseConnessione();
+    		    st.close();
+    			
+        	} catch (SQLException e) {
+    			e.printStackTrace();	
+    		}
+       	 
+       	 return row;
+       }
+    
     public ArrayList<Peso> getListPesi() {
     	
        Peso peso = null;

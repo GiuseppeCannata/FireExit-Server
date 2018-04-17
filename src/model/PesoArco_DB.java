@@ -24,7 +24,7 @@ public class PesoArco_DB extends Model{
     	
     }
     
-    public ArrayList<PesoArco> findPesiById(int Id){
+    public ArrayList<PesoArco> findPesiByIdArco(int Id){
     	
     	ArrayList<PesoArco> pesi = new ArrayList<PesoArco>();
     	Peso_DB pdb = new Peso_DB();
@@ -75,6 +75,34 @@ public class PesoArco_DB extends Model{
    		}
       	 
    	}
+    
+    public void insertPesoArco(int IDArco, int valore, int IDPeso) {
+		 
+ 		 String query ="insert into "+TBL_NAME+" ( "+FIELD_IDARCO+","
+ 		               +FIELD_VALORE+","
+ 		               +FIELD_IDPESO+
+ 		              " )"+
+ 					 " values( "+IDArco+","
+ 					           +valore+","
+ 					           +IDPeso+
+ 					        " )";
+ 		System.out.println(query);
+ 		
+ 		try {
+ 			OpenConnessione();
+ 			
+ 			updateQuery(query);
+ 			
+ 			CloseConnessione();
+ 			st.close(); 
+ 			
+ 		} catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 		
+ 		
+    }
     
    
     

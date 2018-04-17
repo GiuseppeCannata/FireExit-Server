@@ -6,11 +6,13 @@
 <%@ page import="entity.Mappa" %>
 
 <% Mappa mappa =  (Mappa) request.getSession().getAttribute("mappa");
-  pageContext.setAttribute("ArchiList", mappa.getArchi()); %>
+  pageContext.setAttribute("ArchiList", mappa.getArchi());
+  pageContext.setAttribute("piano", mappa.getPiano());
+%>
 	    
 <p class="textRiq">Lista degli archi </p>
 
-<a href="${pageContext.request.contextPath}/InserimentoAro"><button type="button">Inserisci nuovo arco</button></a>
+<a id="inserisciArco" href="#" onclick="richiestaNumPesi(event,'${pageContext.request.contextPath}/InserimentoArco?piano=${piano}')"><button type="button">Inserisci nuovo arco</button></a>
 <br>
 <br>
 <table border="1" cellpadding="5" cellspacing="1" >

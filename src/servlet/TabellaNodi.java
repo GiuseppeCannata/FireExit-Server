@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,28 +11,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Peso_DB;
-import entity.Peso;
+import model.Nodo_DB;
+import entity.Nodo;
 
 /**
- * Servlet implementation class ModificaPeso
+ * Servlet implementation class ListNodi
  */
-@WebServlet("/ModificaPeso")
-public class ModificaPeso extends HttpServlet {
+@WebServlet("/TabellaNodi")
+public class TabellaNodi extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private Peso_DB pdb;
-	private Peso peso;
-	
+	private Nodo_DB ndb;
+	private ArrayList<Nodo> nodi; 
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModificaPeso() {
+    public TabellaNodi() {
         super();
         // TODO Auto-generated constructor stub
-        pdb = new Peso_DB();
         
+        ndb = new Nodo_DB();
+        nodi = new ArrayList<Nodo>();
     }
 
 	/**
@@ -38,13 +40,13 @@ public class ModificaPeso extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        int Id = Integer.parseInt(request.getParameter("id"));
 		
-		peso = pdb.findById(Id);
 		
-		request.setAttribute("peso", peso);
+		nodi = ndb.getListNodi();
 		
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaPesoView.jsp");
+		request.setAttribute("NodiList", nodi);
+		
+		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/TabellaNodiView.jsp");
         dispatcher.forward(request, response);
 	}
 
@@ -53,17 +55,7 @@ public class ModificaPeso extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int Id = Integer.parseInt(request.getParameter("Id"));
-        String Descrizione = (String) request.getParameter("Descrizione");
-        int p = Integer.parseInt(request.getParameter("Peso"));
-        
-        peso = new Peso(Id,Descrizione,p);
-        	
-		if (pdb.updatePeso(peso)) 
-			response.sendRedirect(request.getContextPath() + "/ListPesi");
-		else {
-			
-			//errore view
-		}  
+		doGet(request, response);
 	}
+
 }
