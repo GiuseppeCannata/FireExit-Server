@@ -28,107 +28,107 @@ import services.Mappa_service;
 
 @Path("maps")
 public class Mappa_Resource {
-	
+
 	@POST
-    @Path("getMappa")
+	@Path("getMappa")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String downloadMappa(String macAdrs) {
-		
+
 		System.out.println("mac"+macAdrs);
-		
+
 		// Estrazione dal Json in entrata dell info macAdrs
 		JsonObject jobj = new Gson().fromJson(macAdrs, JsonObject.class);
 		String mac = jobj.get("mac_beacon").getAsString();
-		
+
 		Mappa_service mappaService = new Mappa_service();
 		Nodo_DB ndb = new Nodo_DB();
 		int piano;
 		Mappa mappa;
-		
+
 		piano = ndb.findPianoByMAC(mac);
-		
+
 		mappa = mappaService.CostruzioneMappa(piano);
-		
+
 		// Costruisco il Json da inviare all App
 		Gson gson = new Gson();
 		String esito = gson.toJson(mappa);
-		
-	    return esito;	//essendo un Json il ritorno sarà di tipo String	
+
+		return esito;	//essendo un Json il ritorno sarà di tipo String	
 	}
-	
+
 	@GET
-    @Path("downloadPiantina/{nome}")
+	@Path("downloadPiantina/{nome}")
 	@Produces("image/png")
 	public Response downloadPiantina(@PathParam("nome") String nome) {
-		
+
 		System.out.println("Nome piantina: "+nome);
-		
+
 		// Path all interno della cartella server dove sono contenute le mappe
 		// Path assoluto poichè il relativo non vede la directory
 		File f = new File("C:\\Users\\User\\Desktop\\glassfish5\\glassfish\\domains\\domain1\\docroot\\src\\images\\"+nome+".png");
-	    FileInputStream inStream = null;
-	    
+		FileInputStream inStream = null;
+
 		try {
 			inStream = new FileInputStream(f);
 		} 
-		
+
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-        ResponseBuilder response = Response.ok((Object)inStream);
-        response.header("Content-Length", f.length());
-        return response.build();	
+
+		ResponseBuilder response = Response.ok((Object)inStream);
+		response.header("Content-Length", f.length());
+		return response.build();	
 	}
-	
-	
+
+
 	@POST
-    @Path("segnalazione")
+	@Path("segnalazione")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String segnalazione(String NodiSottoIncendio) {
-		
+
 		System.out.println("mac"+NodiSottoIncendio);
 		boolean esito = false;
-		
+
 		Type type = new TypeToken<ArrayList<Nodo>>() {
-        }.getType();
-        
-        // Estrazione dell ArrayList inviato dall app
-        ArrayList<Nodo> dati_nodi = new Gson().fromJson(NodiSottoIncendio, type);
-        Mappa_service mappaService = new Mappa_service();
-        
-        esito = mappaService.prendiSegnalazione(dati_nodi);
-        System.out.println("esito update nodi: "+esito);
-        
-        JsonObject Data = new JsonObject();
-        Data.addProperty("esito", esito);
-        
-        return Data.toString();		
+		}.getType();
+
+		// Estrazione dell ArrayList inviato dall app
+		ArrayList<Nodo> dati_nodi = new Gson().fromJson(NodiSottoIncendio, type);
+		Mappa_service mappaService = new Mappa_service();
+
+		esito = mappaService.prendiSegnalazione(dati_nodi);
+		System.out.println("esito update nodi: "+esito);
+
+		JsonObject Data = new JsonObject();
+		Data.addProperty("esito", esito);
+
+		return Data.toString();		
 	}
-	
+
 	@POST
-    @Path("downloadAggiornamenti")
+	@Path("downloadAggiornamenti")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String downloadAggiornamenti(String pianoJSON) {
-		
+
 		System.out.println("mac"+pianoJSON);
-		
+
 		// Estrazione dal Json in entrata dell info macAdrs
 		JsonObject jobj = new Gson().fromJson(pianoJSON, JsonObject.class);
 		int pianoUtente = jobj.get("PianoUtente").getAsInt();
-		
+
 		Mappa_service mappaService = new Mappa_service();
 		Mappa mappa;
-		
+
 		mappa = mappaService.CostruzioneMappa(pianoUtente);
-		
+
 		// Costruisco il Json da inviare all App
 		Gson gson = new Gson();
 		String esito = gson.toJson(mappa);
-		
-	    return esito;	//essendo un Json il ritorno sarà di tipo String	
+
+		return esito;	//essendo un Json il ritorno sarà di tipo String	
 	}
 }

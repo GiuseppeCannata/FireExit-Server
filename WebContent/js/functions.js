@@ -8,14 +8,14 @@
  * Al contrario, se l utente clicca "Annulla" si rimmarra sulla pagina corrente
  */
 function confirmActionForm(e){
-	    	 
-   var form = document.getElementById('form');
-   var conf = window.confirm("Si e' sicuri di continuare?");
-   
-   if( conf )
-	  form.submit();
-   else
-	  e.preventDefault() ;  
+
+	var form = document.getElementById('form');
+	var conf = window.confirm("Si e' sicuri di continuare?");
+
+	if( conf )
+		form.submit();
+	else
+		e.preventDefault() ;  
 }
 
 /**
@@ -23,13 +23,13 @@ function confirmActionForm(e){
  * 
  */
 function back(e,link){
-	 
-	 var ButtonIndietro = document.getElementById("indietro");
-	 var conf = window.confirm("Tornando indietro perderai tutti i dati non salvati. Continuare?");
-	 
-	 if(conf)
+
+	var ButtonIndietro = document.getElementById("indietro");
+	var conf = window.confirm("Tornando indietro perderai tutti i dati non salvati. Continuare?");
+
+	if(conf)
 		ButtonIndietro.href = link;
-	 else
+	else
 		e.preventDefault();	 
 }
 
@@ -40,35 +40,33 @@ function back(e,link){
  * 
  */
 function elimina(e, link, nome){
-	 
-	 var ButtonDelete = document.getElementById("delete"+nome);
-	 var conf = window.confirm("Eliminare "+nome+" ?");
-	 
-	 if(conf)
+
+	var ButtonDelete = document.getElementById("delete"+nome);
+	var conf = window.confirm("Eliminare "+nome+" ?");
+
+	if(conf)
 		ButtonDelete.href = link;
-	 else
+	else
 		e.preventDefault();	 
 }
 
 function richiestaNumPesi(e,link){
-	 
+
 	var ButtonInserisci = document.getElementById("inserisciArco");
-	 
+
 	var nPesi = prompt ("Prima di inserire i dati relativi all arco la preghiamo di dirci quanti pesi presenta");
-     
-    if(nPesi !=null & nPesi != "")
-    	ButtonInserisci.href = link+"&nPesi="+nPesi; 
-    else
+
+	if(nPesi !=null & nPesi != "")
+		ButtonInserisci.href = link+"&nPesi="+nPesi; 
+	else
 		if(nPesi == null)
-	        e.preventDefault();
+			e.preventDefault();
 		else
 			//if (nPesi == "") 
-		        if(window.confirm("Dati errati. Riprovare?"))
-		           richiestaNumPesi(e,link);
-		        else
-		           e.preventDefault();
-		        	
+			if(window.confirm("Dati errati. Riprovare?"))
+				richiestaNumPesi(e,link);
+			else
+				e.preventDefault();
 
-    	
 }
 

@@ -1,5 +1,1 @@
-<div>
-  
-  @Copyright of FireExit
-  
-</div>
+<div>@Copyright of FireExit</div>
