@@ -104,6 +104,32 @@ public class PesoArco_DB extends Model{
  		
     }
     
+    public boolean controlloEsistenzaPeso(int idPeso, int Idarco) {
+    	
+    	boolean esito = false;
+    	
+    	try {
+    		 
+	    	String query = "select * from "+TBL_NAME+" where "+FIELD_IDARCO+" = "+Idarco+" and "+FIELD_IDPESO+"="+idPeso;
+	    	System.out.println(query);
+	    	
+	    	OpenConnessione();
+		    ResultSet rs = this.selectQuery(query);
+		    
+		    if(rs.next())
+		    	esito = true;
+		    
+		    CloseConnessione();
+		    st.close();
+		    	
+    	} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+			
+			return esito;
+    	
+    }
+    
    
     
    public void method(){

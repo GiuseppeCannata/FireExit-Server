@@ -41,9 +41,14 @@
 					       <td>${P.getValore()}</td>
 					       <td>${P.getPeso().getDescrizione()}</td> 
 					       <td>${P.getPeso().getPeso()}</td> 
-					       <td><a href="${pageContext.request.contextPath}/">Edit Peso</a></td>
+					       <td><a id="delete${P.getId()}"  href="#"  onclick="elimina(event,'${pageContext.request.contextPath}/EliminaPesoArco?id=${P.getId()}&piano=${piano}',${P.getId()})">Elimina Peso</a></td>
 		             </tr>
 	             </c:forEach>
+	             <tr>
+	               <td>
+	                  <a href="${pageContext.request.contextPath}/AggiungiPesoArco?id=${arco.getId()}&piano=${piano}"><button type="button">Aggiungi</button></a>
+	               </td>
+	             </tr>
              </table> 
          </td>
          <td>
