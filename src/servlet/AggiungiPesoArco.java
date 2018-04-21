@@ -88,7 +88,7 @@ public class AggiungiPesoArco extends HttpServlet {
 			request.setAttribute("PesiList", ListPesi);
 			request.setAttribute("piano", piano);
 			
-			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/AggiungiPesoArcoView.jsp.jsp");
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/AggiungiPesoArcoView.jsp");
 	        dispatcher.forward(request, response);
 		}
 	}

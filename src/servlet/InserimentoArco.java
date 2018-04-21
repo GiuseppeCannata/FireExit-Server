@@ -56,7 +56,9 @@ public class InserimentoArco extends HttpServlet {
 		piano = Integer.parseInt(request.getParameter("piano"));
 		nPesi = Integer.parseInt(request.getParameter("nPesi"));
 		
-		ndb.findNodiByPiano(nodi, piano);
+		if(nodi.isEmpty())
+		   ndb.findNodiByPiano(nodi, piano);
+		
 		pesi = pdb.getListPesi();
 		
 		request.setAttribute("NodiList", nodi);
@@ -111,6 +113,8 @@ public class InserimentoArco extends HttpServlet {
 	        		rowPeso = pdb.findByDescrizione(descrizioni.get(i));
 	        		padb.insertPesoArco(rowArco, valori.get(i), rowPeso); 
 	    		}
+	    		
+	    		response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
 	    		
 	    	}else {
 	    		hasError = true;

@@ -71,10 +71,10 @@ public class EliminaArco extends HttpServlet {
 		
 		for(Arco arco: archi) {
 			
-			if(arco.getNodoPartenza().getId() == NodoPartenzaId)
-				esitoP = true;
+			if(arco.getNodoPartenza().getId() == NodoPartenzaId || arco.getNodoArrivo().getId() == NodoPartenzaId  )
+				esitoP = true;  
 
-			if(arco.getNodoArrivo().getId() == NodoArrivoId)
+			if(arco.getNodoArrivo().getId() == NodoArrivoId || arco.getNodoPartenza().getId() == NodoArrivoId )
 				esitoA = true;
 		}
 		

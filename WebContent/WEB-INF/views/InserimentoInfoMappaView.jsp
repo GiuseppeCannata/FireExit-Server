@@ -54,7 +54,7 @@
 				<td colspan="2">
 					<button onclick="confirmActionForm(event)">Fatto</button> <a
 					id="indietro" href="#"
-					onclick="back(event,'${pageContext.request.contextPath}/ListPesi')">Indietro</a>
+					onclick="back(event,'${pageContext.request.contextPath}/ListMappe')">Indietro</a>
 				</td>
 			</tr>
 		</table>

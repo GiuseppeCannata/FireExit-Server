@@ -52,15 +52,16 @@
 				<td>NodoPartenzaId</td>
 				<td><select name="NodoPartenzaId">
 						<% 
-			                if(arco != null)
+			                if(arco != null){
 			                    for(Nodo nodo: nodi)
 			                    	if(arco.getNodoPartenza().getId() == nodo.getId())
 			                    	   out.print("<option selected>"+nodo.getId()+"</option>");  
 			                    	else
 			                    		out.print("<option>"+nodo.getId()+"</option>");  
-			                else
+			                } else {
 			                	 for(Nodo nodo: nodi)
 			                    	 out.print("<option>"+nodo.getId()+"</option>");  
+			                }
 		                %>
 				</select></td>
 			</tr>
