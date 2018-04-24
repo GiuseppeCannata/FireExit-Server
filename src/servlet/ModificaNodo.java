@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -79,17 +80,30 @@ public class ModificaNodo extends HttpServlet {
             hasError = true;
             errorString = "Alcuni campi sembrano essere vuoti!";
         } else {
-             
+        	
+        
 	        try {
 			
 				if (ndb.updateNodo(nodo)) {
-					Mappa_service ms = new Mappa_service();
+					
+					//controllo sullo stato di emergenza della mappa
+		        	//la mappa è in stato di emergenza se c è almeno un nodo sottoIndìcendio
+		        	if(TipoIncendio)
+		        	    mdb.updateStatoEmergenza(1, mappaId);
+		        	else {
+		        		System.out.println("ciao");
+		        		if(!ndb.FindNodiSottoIncendioByPiano(mappaId));
+		        				mdb.updateStatoEmergenza(0, mappaId);
+		        	}
+		        				
+					/*Mappa_service ms = new Mappa_service();
 				    Mappa mappa;
 				
 				    mappa = ms.CostruzioneMappa(mappaId);
 				    request.getSession().setAttribute("mappa", mappa);
 				    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/MappaView.jsp");
-				    dispatcher.forward(request, response);
+				    dispatcher.forward(request, response);*/
+		        	response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+mappaId);
 				}else {
 					
 					//errore view

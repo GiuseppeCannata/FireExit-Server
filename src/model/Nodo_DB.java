@@ -293,6 +293,32 @@ public class Nodo_DB extends Model{
 		return nodo;
 
 	}
+	
+	public boolean FindNodiSottoIncendioByPiano(int piano) {
+
+		boolean esito = false;
+		
+		try {
+
+			String query = "select * from "+TBL_NAME+" where "+FIELD_TIPO+" = 1 and "+FIELD_PIANO+" = "+piano;
+			System.out.println(query);
+
+			OpenConnessione();
+			ResultSet rs = selectQuery(query);
+
+			if(rs.next()) 
+				esito = true;
+
+			CloseConnessione();
+			st.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();	
+		}
+
+		return esito;
+
+	}
 
 	public ArrayList<Nodo> getListNodi(){
 

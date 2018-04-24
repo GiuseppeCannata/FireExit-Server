@@ -27,10 +27,20 @@
 			<td>
 				<ul id="infoMappa">
 					<li><h4>Quadro generale</h4></li>
-					<li>Piano:</li>
+					<li><b>Piano:</b></li>
 					<li>${mappa.getPiano()}</li>
-					<li>Nome piantina:</li>
+					<li><b>Nome piantina:</b></li>
 					<li>${mappa.getPiantina()}</li>
+					<li><b>Stato Emergenza:</b></li>
+					<c:choose>
+					    <c:when test="${statoEmergenza=='0'}">
+					        <img src="../../src/images/StatiMappa/NOemergenza.png" alt="piantina piano" height="40" width="40"> 
+					    </c:when>    
+					    <c:otherwise>
+					       <img src="../../src/images/StatiMappa/SIemergenza.png" alt="piantina piano" height="40" width="40">
+					    </c:otherwise>
+					</c:choose>
+					
 				</ul>
 			</td>
 			<td>
@@ -40,8 +50,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><img src="../../src\images/${mappa.getPiantina()}.png"
-				alt="piantina piano" height="500" width="400"></td>
+			<td><img src="../../src\images/${mappa.getPiantina()}.png" alt="piantina piano" height="500" width="400"></td>
 			<td>
 				<div id="viewArchi">
 					<jsp:include page="ArchiListView.jsp"></jsp:include>

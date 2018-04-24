@@ -31,8 +31,7 @@
 
 	<p class="errore">${errorString}</p>
 
-	<form id="form" method="POST"
-		action="${pageContext.request.contextPath}/ModificaNodo">
+	<form id="form" method="POST" action="${pageContext.request.contextPath}/ModificaNodo">
 		<input type="hidden" name="Id" value="${nodo.getId()}" />
 		<table border="0">
 			<tr>
@@ -107,9 +106,8 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<button onclick="confirmActionForm(event)">Fatto</button> <a
-					id="indietro" href="#"
-					onclick="back(event,'${pageContext.request.contextPath}/CaricaMappa?piano=${nodo.getmappaId()}')">Indietro</a>
+					<button onclick="confirmActionForm(event)">Fatto</button> 
+					<a id="indietro" href="#" onclick="back(event,'${pageContext.request.contextPath}/CaricaMappa?piano=${nodo.getmappaId()}')">Indietro</a>
 				</td>
 			</tr>
 		</table>

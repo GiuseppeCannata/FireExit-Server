@@ -20,7 +20,8 @@ public class Mappa_DB extends Model{
 
 	public static final String TBL_NAME="MAPPA";
 	public static final String FIELD_PIANO="piano";
-	public static final String FIELD_PIANTINA="piantina";    
+	public static final String FIELD_PIANTINA="piantina";  
+	public static final String FIELD_STATOEMERGENZA="statoemergenza"; 
 
 	public Mappa_DB() {
 
@@ -119,6 +120,31 @@ public class Mappa_DB extends Model{
 
 		return mappe;
 	}
+	
+	public int getStatoEmergenzaByPiano(int piano){
+		
+		int stato = 0;
+
+		try {
+
+			String query = "select * from "+TBL_NAME+" where "+FIELD_PIANO+" = "+piano;
+			System.out.println(query);
+
+			OpenConnessione();
+			ResultSet rs = selectQuery(query);
+
+			if(rs.next())
+				stato = rs.getInt(FIELD_STATOEMERGENZA);
+
+			CloseConnessione();
+			st.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();	
+		}
+
+		return stato;
+	}
 
 	public boolean InserimentoInfo(int piano, String piantina) throws SQLException {
 
@@ -164,6 +190,33 @@ public class Mappa_DB extends Model{
 
 		return esito;
 	}
+	
+	public boolean updateStatoEmergenza(int stato,int piano) {
+
+		boolean esito = false;
+		
+		String query ="update "+TBL_NAME+" set "
+				+FIELD_STATOEMERGENZA+" = "+stato+" "
+				+"where "+FIELD_PIANO+"= "+piano+"";
+		System.out.println(query);
+
+		try {
+			
+			OpenConnessione();
+			esito = updateQuery(query);
+
+			CloseConnessione();
+			st.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		return esito;	
+
+	} 
 
 	public void method(){
 

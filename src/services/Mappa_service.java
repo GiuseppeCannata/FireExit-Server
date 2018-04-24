@@ -6,6 +6,7 @@ import entity.Arco;
 import entity.Mappa;
 import entity.Nodo;
 import model.Arco_DB;
+import model.Mappa_DB;
 import model.Nodo_DB;
 import utils.Parametri;
 
@@ -25,8 +26,10 @@ public class Mappa_service {
 
 		boolean esito = false;
 		int controllo = 0;
-
+        int piano = Nodi.get(0).getmappaId();
+		
 		Nodo_DB ndb = new Nodo_DB();
+		Mappa_DB mdb = new Mappa_DB();
 
 		for(Nodo n: Nodi) {
 
@@ -44,7 +47,7 @@ public class Mappa_service {
 
 		}
 
-		if (controllo == Nodi.size())
+		if (controllo == Nodi.size() && mdb.updateStatoEmergenza(1, piano))
 			esito = true;
 
 		return esito;		
