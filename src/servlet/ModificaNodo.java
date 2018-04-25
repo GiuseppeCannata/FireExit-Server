@@ -81,7 +81,6 @@ public class ModificaNodo extends HttpServlet {
             errorString = "Alcuni campi sembrano essere vuoti!";
         } else {
         	
-        
 	        try {
 			
 				if (ndb.updateNodo(nodo)) {
@@ -90,24 +89,15 @@ public class ModificaNodo extends HttpServlet {
 		        	//la mappa è in stato di emergenza se c è almeno un nodo sottoIndìcendio
 		        	if(TipoIncendio)
 		        	    mdb.updateStatoEmergenza(1, mappaId);
-		        	else {
-		        		System.out.println("ciao");
-		        		if(!ndb.FindNodiSottoIncendioByPiano(mappaId));
-		        				mdb.updateStatoEmergenza(0, mappaId);
-		        	}
+		        	else 
+		        		if(!ndb.FindNodiSottoIncendioByPiano(mappaId))
+		        			mdb.updateStatoEmergenza(0, mappaId);
 		        				
-					/*Mappa_service ms = new Mappa_service();
-				    Mappa mappa;
-				
-				    mappa = ms.CostruzioneMappa(mappaId);
-				    request.getSession().setAttribute("mappa", mappa);
-				    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/MappaView.jsp");
-				    dispatcher.forward(request, response);*/
 		        	response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+mappaId);
-				}else {
-					
-					//errore view
-				}
+		        	
+				}else 
+					System.out.println("Errore");
+				
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -124,7 +114,6 @@ public class ModificaNodo extends HttpServlet {
 		    request.setAttribute("nodo", nodo);
 		    
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
-	 
 		    dispatcher.forward(request, response);		
 	   }
 	}

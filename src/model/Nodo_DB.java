@@ -300,7 +300,7 @@ public class Nodo_DB extends Model{
 		
 		try {
 
-			String query = "select * from "+TBL_NAME+" where "+FIELD_TIPO+" = 1 and "+FIELD_PIANO+" = "+piano;
+			String query = "select * from "+TBL_NAME+" where "+FIELD_TIPO+" = 2 and "+FIELD_PIANO+" = "+piano;
 			System.out.println(query);
 
 			OpenConnessione();
