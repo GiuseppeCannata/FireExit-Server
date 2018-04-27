@@ -10,8 +10,11 @@ import model.Mappa_DB;
 import model.Nodo_DB;
 import utils.Parametri;
 
+/*
+ * Mappa_service viene istanziata da Mappa_resorce.
+ * Offre metodi per generare i dati che poi verranno inviati all utente
+ */
 public class Mappa_service {
-
 
 	public Mappa_service() {
 
@@ -44,7 +47,6 @@ public class Mappa_service {
 				controllo++;
 
 			}
-
 		}
 
 		if (controllo == Nodi.size() && mdb.updateStatoEmergenza(1, piano))
@@ -65,6 +67,5 @@ public class Mappa_service {
 		Archi = adb.findArchiByPiano(piano);
 
 		return new Mappa(piano , "map"+piano , Nodi, Archi);	
-
 	}
 }

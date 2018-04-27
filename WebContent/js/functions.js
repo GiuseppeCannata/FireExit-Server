@@ -50,6 +50,10 @@ function elimina(e, link, nome){
 		e.preventDefault();	 
 }
 
+/**
+ * richiestaNumPesi(e,link) permetti di lanciare un propt con cui l utente può interagire,
+ * in particolare richiede l immissione del numero di pesi prima dell inserimento dell arco
+ */
 function richiestaNumPesi(e,link){
 
 	var ButtonInserisci = document.getElementById("inserisciArco");
@@ -67,6 +71,5 @@ function richiestaNumPesi(e,link){
 				richiestaNumPesi(e,link);
 			else
 				e.preventDefault();
-
 }
 

@@ -21,6 +21,7 @@ import model.Peso_DB;
 public class InserimentoPeso extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
 	private Peso_DB pdb;
 	private Peso peso;
        
@@ -74,13 +75,13 @@ public class InserimentoPeso extends HttpServlet {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
+				
 				if(e.getErrorCode() == 30000) {
 					hasError = true;
 		            errorString = "Peso già presente nel DB";
 				}
 			} 
         }
-        
         
         if (hasError) {		
 	       

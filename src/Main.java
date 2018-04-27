@@ -6,7 +6,6 @@ import java.util.Set;
 @ApplicationPath("services")
 public class Main extends Application {
 	
-	
     @Override
     public Set<Class<?>> getClasses() {
     	
@@ -14,7 +13,6 @@ public class Main extends Application {
         // register dei servizi offerti
         classes.add(Mappa_Resource.class);
         classes.add(Percorso_Resource.class);
-        return classes;
-        
+        return classes;   
     }
 }

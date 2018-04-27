@@ -14,7 +14,10 @@ import model.PesoArco_DB;
  */
 @WebServlet("/EliminaPesoArco")
 public class EliminaPesoArco extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
+	private PesoArco_DB padb;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -22,6 +25,8 @@ public class EliminaPesoArco extends HttpServlet {
     public EliminaPesoArco() {
         super();
         // TODO Auto-generated constructor stub
+        
+        padb = new PesoArco_DB();
     }
 
 	/**
@@ -31,8 +36,6 @@ public class EliminaPesoArco extends HttpServlet {
 		// TODO Auto-generated method stub
 		int Id = Integer.parseInt(request.getParameter("id"));
 		int piano = Integer.parseInt(request.getParameter("piano"));
-		
-		PesoArco_DB padb = new PesoArco_DB();
 		
 		padb.delete(Id);
 		
@@ -46,5 +49,4 @@ public class EliminaPesoArco extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

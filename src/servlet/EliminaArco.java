@@ -23,12 +23,13 @@ import model.PesoArco_DB;
 public class EliminaArco extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
 	private Nodo_DB ndb;
-	private ArrayList<Nodo> nodi;
-	private ArrayList<PesoArco> paList;
-	private ArrayList<Arco> archi;
 	private Arco_DB adb;
 	private PesoArco_DB padb;
+	private ArrayList<PesoArco> paList;
+	private ArrayList<Arco> archiList;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,11 +39,10 @@ public class EliminaArco extends HttpServlet {
         // TODO Auto-generated constructor stub
         
         ndb = new Nodo_DB();
-        nodi = new ArrayList<Nodo>();
-        paList = new ArrayList<PesoArco>();
-        archi = new ArrayList<Arco>();
         adb = new Arco_DB();
         padb = new PesoArco_DB();
+        paList = new ArrayList<PesoArco>();
+        archiList = new ArrayList<Arco>();
     }
 
 	/**
@@ -64,12 +64,13 @@ public class EliminaArco extends HttpServlet {
 		
 		//controllo se è il caso di eliminare nodi
 		// i nodi saranno cancellati solo nel caso in cui non abbiano una stella
-		archi = adb.findArchiByPiano(piano);
+		archiList = adb.findArchiByPiano(piano);
 		
 		boolean esitoA = false;
 		boolean esitoP = false;
 		
-		for(Arco arco: archi) {
+		// eliminazione di eventuali nodi che non possiedono una stella
+		for(Arco arco: archiList) {
 			
 			if(arco.getNodoPartenza().getId() == NodoPartenzaId || arco.getNodoArrivo().getId() == NodoPartenzaId  )
 				esitoP = true;  

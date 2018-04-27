@@ -1,11 +1,9 @@
 package model;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import entity.Nodo;
 import entity.Peso;
 
 public class Peso_DB  extends Model{

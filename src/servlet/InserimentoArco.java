@@ -24,14 +24,17 @@ import model.Peso_DB;
 public class InserimentoArco extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Peso> pesi;
-	private ArrayList<Nodo> nodi;
+	
+	private int piano;
+    private int nPesi;
     private Nodo_DB ndb;
     private Peso_DB pdb;
     private PesoArco_DB padb;
     private Arco_DB adb;
-    private int piano;
-    private int nPesi;
+	private ArrayList<Peso> pesiList;
+	private ArrayList<Nodo> nodiList;
+   
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,12 +42,16 @@ public class InserimentoArco extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
         
-        nodi = new ArrayList<Nodo>();
         ndb = new Nodo_DB();
         pdb = new Peso_DB();
-        pesi = new ArrayList<Peso>();
         adb = new Arco_DB();
         padb = new PesoArco_DB();
+        pesiList = new ArrayList<Peso>();
+        nodiList = new ArrayList<Nodo>();
+        
+        pesiList = pdb.getListPesi();
+        if(nodiList.isEmpty())
+ 		   ndb.findNodiByPiano(nodiList, piano);
     }
 
 	/**
@@ -56,15 +63,10 @@ public class InserimentoArco extends HttpServlet {
 		piano = Integer.parseInt(request.getParameter("piano"));
 		nPesi = Integer.parseInt(request.getParameter("nPesi"));
 		
-		if(nodi.isEmpty())
-		   ndb.findNodiByPiano(nodi, piano);
-		
-		pesi = pdb.getListPesi();
-		
-		request.setAttribute("NodiList", nodi);
+		request.setAttribute("NodiList", nodiList);
 		request.setAttribute("NPesi", nPesi);
 		request.setAttribute("piano", piano);
-		request.setAttribute("PesiList",pesi);
+		request.setAttribute("PesiList",pesiList);
 		
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoArcoView.jsp");
         dispatcher.forward(request, response);
@@ -125,14 +127,13 @@ public class InserimentoArco extends HttpServlet {
         if (hasError) {		
 	       
 		    request.setAttribute("errorString", errorString);
-		    request.setAttribute("NodiList", nodi);
-		    request.setAttribute("PesiList",pesi);
+		    request.setAttribute("NodiList", nodiList);
+		    request.setAttribute("PesiList",pesiList);
 			request.setAttribute("NPesi", NPesi);
 			request.setAttribute("piano", piano);
 		    
 		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoArcoView.jsp");
-		    dispatcher.forward(request, response);
-				
+		    dispatcher.forward(request, response);		
 	   }
 	}
 }

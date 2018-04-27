@@ -21,8 +21,9 @@ import entity.Nodo;
 public class TabellaNodi extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
 	private Nodo_DB ndb;
-	private ArrayList<Nodo> nodi; 
+	private ArrayList<Nodo> nodiList; 
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -32,7 +33,7 @@ public class TabellaNodi extends HttpServlet {
         // TODO Auto-generated constructor stub
         
         ndb = new Nodo_DB();
-        nodi = new ArrayList<Nodo>();
+        nodiList = new ArrayList<Nodo>();
     }
 
 	/**
@@ -41,10 +42,9 @@ public class TabellaNodi extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		nodiList = ndb.getListNodi();
 		
-		nodi = ndb.getListNodi();
-		
-		request.setAttribute("NodiList", nodi);
+		request.setAttribute("NodiList", nodiList);
 		
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/TabellaNodiView.jsp");
         dispatcher.forward(request, response);
@@ -57,5 +57,4 @@ public class TabellaNodi extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

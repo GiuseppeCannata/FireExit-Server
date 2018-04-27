@@ -20,6 +20,7 @@ import services.Mappa_service;
 public class CaricaMappa extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
 	private Mappa_service ms;
 	private Mappa mappa;
 	private Mappa_DB mdb;
@@ -41,6 +42,7 @@ public class CaricaMappa extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
+		
 		int piano = Integer.parseInt(request.getParameter("piano"));
 		int statoEmergenza;
 	 
@@ -58,7 +60,7 @@ public class CaricaMappa extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		//VUOTO
 	}
 }

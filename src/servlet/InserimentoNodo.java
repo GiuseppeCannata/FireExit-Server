@@ -24,9 +24,10 @@ import model.Nodo_DB;
 public class InserimentoNodo extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
 	private Mappa_DB mdb;
-	private ArrayList<Integer> piani;
 	private Nodo nodo;
+	private ArrayList<Integer> pianiList;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,7 +37,7 @@ public class InserimentoNodo extends HttpServlet {
         // TODO Auto-generated constructor stub
         
         mdb = new Mappa_DB();
-        piani = mdb.getPiani();
+        pianiList = mdb.getPiani();
     }
 
 	/**
@@ -48,8 +49,7 @@ public class InserimentoNodo extends HttpServlet {
 		request.setAttribute("piano", piano);
 		
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoNodoView.jsp");
-        dispatcher.forward(request, response);
-		
+        dispatcher.forward(request, response);	
 	}
 
 	/**
@@ -81,11 +81,6 @@ public class InserimentoNodo extends HttpServlet {
 	        	
 				if(ndb.inserimentoNodo(nodo))
 				   response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+mappaId);
-				else {
-					request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete"); 
-				    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
-				    dispatcher.forward(request, response);
-				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -107,5 +102,4 @@ public class InserimentoNodo extends HttpServlet {
 		    dispatcher.forward(request, response);		
 	   }
 	}
-
 }

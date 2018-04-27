@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
@@ -15,6 +14,13 @@ import entity.Mappa;
 import entity.Nodo;
 import services.Mappa_service;
 import services.Percorso_service;
+
+/**
+ * Percorso_Resource offre metodi per il recupero delle informazioni del messaggio Json relative al
+ * percorso
+ * @author 
+ *
+ */
 
 @Path("percorso")
 public class Percorso_Resource {
@@ -37,13 +43,8 @@ public class Percorso_Resource {
 		Mappa_service mappaService = new Mappa_service();
 
 		Mappa mappa = mappaService.CostruzioneMappa(piano);
-
 		Nodo posU = percorsoService.CreaNodoPosUtente(mac);
-
-
 		ArrayList<Arco> percorso = percorsoService.calcolaPercorso(mappa , posU);
-
-
 
 		// Costruisco il Json da inviare all App
 		Gson gson = new Gson();

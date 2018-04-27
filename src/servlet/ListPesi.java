@@ -20,8 +20,9 @@ import model.Peso_DB;
 public class ListPesi extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Peso> list;
+	
 	private Peso_DB pdb;
+	private ArrayList<Peso> pesiList;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,7 +31,7 @@ public class ListPesi extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
         
-        list = new ArrayList<Peso>();
+        pesiList = new ArrayList<Peso>();
         pdb = new Peso_DB();
     }
 
@@ -39,9 +40,9 @@ public class ListPesi extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub  
-        list = pdb.getListPesi();
+        pesiList = pdb.getListPesi();
        
-        request.setAttribute("PesiList", list);
+        request.setAttribute("PesiList", pesiList);
          
         // Forward to NodiListView.jsp
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/PesiListView.jsp");
@@ -55,5 +56,4 @@ public class ListPesi extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

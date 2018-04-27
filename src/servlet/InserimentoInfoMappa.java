@@ -78,9 +78,9 @@ public class InserimentoInfoMappa extends HttpServlet {
 	         //System.out.print("ok");
 	         //LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", 
 	         //        new Object[]{fileName, path});
-	     } catch (FileNotFoundException fne) {
-	    	 fne.printStackTrace();
-	         System.out.print("errore");
+	     } catch (FileNotFoundException e) {
+	    	 e.printStackTrace();
+	         System.out.print("Errore upload piantina");
 	     } finally {
 	    	 
 	         if (out != null) 
@@ -104,6 +104,7 @@ public class InserimentoInfoMappa extends HttpServlet {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			// 3000 è il code sql per mancata row UNIQUE
 			if(e.getErrorCode() == 30000) {
 				hasError = true;
 	            errorString = "Piano già presente nel DB. Il piano deve essere univoco";
@@ -122,9 +123,10 @@ public class InserimentoInfoMappa extends HttpServlet {
 	 }
 
 
-	/*     
+	/*  
+	 Metodo per ottenere il nome del file che l utente vuole upload   
 	 private String getFileName(final Part part) {
-	     final String partHeader = part.getHeader("content-disposition");
+	     final String partHeader = part.getHeader("content-disposition");	
 	     
 	     for (String content : part.getHeader("content-disposition").split(";")) {
 	         if (content.trim().startsWith("filename")) {
@@ -135,5 +137,4 @@ public class InserimentoInfoMappa extends HttpServlet {
 	     return null;
 	 }
 	 */
-
 }

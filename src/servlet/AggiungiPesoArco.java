@@ -19,12 +19,15 @@ import entity.Peso;
  */
 @WebServlet("/AggiungiPesoArco")
 public class AggiungiPesoArco extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private int Idarco;
-	private ArrayList<Peso> ListPesi;
-	private int piano;
 	
-       
+	private static final long serialVersionUID = 1L;
+	
+	private int Idarco;
+	private int piano;
+	private Peso_DB pdb;
+	private PesoArco_DB padb;
+	private ArrayList<Peso> ListPesi;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -33,6 +36,8 @@ public class AggiungiPesoArco extends HttpServlet {
         // TODO Auto-generated constructor stub
         
         ListPesi = new ArrayList<Peso>();
+        pdb = new Peso_DB(); 
+        padb = new PesoArco_DB();
     }
 
 	/**
@@ -43,13 +48,10 @@ public class AggiungiPesoArco extends HttpServlet {
 		Idarco = Integer.parseInt(request.getParameter("id"));
 		piano = Integer.parseInt(request.getParameter("piano"));
 		
-		Peso_DB pdb = new Peso_DB(); 
-		
 		ListPesi = pdb.getListPesi();
 		
 		request.setAttribute("PesiList", ListPesi);
 		request.setAttribute("piano", piano);
-		
 		
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/AggiungiPesoArcoView.jsp");
         dispatcher.forward(request, response);
@@ -64,21 +66,19 @@ public class AggiungiPesoArco extends HttpServlet {
 		int valore = Integer.parseInt(request.getParameter("valore"));
 		String descrizione = request.getParameter("descrizione");
 		
-		Peso_DB pdb = new Peso_DB();
-		PesoArco_DB padb = new PesoArco_DB();
 		boolean hasError = false;
         String errorString = null;
 		
 		int rowpeso = pdb.findByDescrizione(descrizione);
 		
 		if(padb.controlloEsistenzaPeso(rowpeso,Idarco)) {
+			
 			hasError = true;
     		errorString = "Sembra che il peso per il seguente arco sia già esistente";	
     		
 		}else {
 			
 			padb.insertPesoArco(Idarco, valore, rowpeso);
-			
 			response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
 		}
 		
@@ -92,5 +92,4 @@ public class AggiungiPesoArco extends HttpServlet {
 	        dispatcher.forward(request, response);
 		}
 	}
-
 }

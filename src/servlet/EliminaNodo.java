@@ -22,9 +22,10 @@ import model.Nodo_DB;
 public class EliminaNodo extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Arco> Archi;
+	
 	private Nodo_DB ndb;
 	private Arco_DB adb;
+	private ArrayList<Arco> archiList;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,7 +36,7 @@ public class EliminaNodo extends HttpServlet {
         
         ndb = new Nodo_DB();
         adb = new Arco_DB();
-        Archi = new ArrayList<Arco>();
+        archiList = new ArrayList<Arco>();
     }
 
 	/**
@@ -48,20 +49,13 @@ public class EliminaNodo extends HttpServlet {
 		//importante all eliminazione di un nodo vanno eliminati anche tutti gli archi relativi a quel nodo
 		//con archi si intende anche i pesi degli archi
 		//TODO: POSSO FARE DIVERSAMENTE?
-		Archi = adb.getArchiByNodoId(Id);
-		if(Archi != null)
-			for(Arco arco: Archi) 
+		archiList = adb.getArchiByNodoId(Id);
+		if(archiList != null)
+			for(Arco arco: archiList) 
 		    	adb.deleteArco(arco);
 	    	
-		if( ndb.delete(Id) ) 
+		if(ndb.delete(Id)) 
 			response.sendRedirect(request.getContextPath() + "/ListNodi");
-		else {
-			
-			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
-		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
-		    dispatcher.forward(request, response);
-		    
-		}
 	}
 
 	/**
@@ -71,5 +65,4 @@ public class EliminaNodo extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

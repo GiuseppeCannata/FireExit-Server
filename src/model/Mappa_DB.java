@@ -1,14 +1,10 @@
 package model;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import entity.Arco;
 import entity.Mappa;
-import entity.Nodo;
-import entity.PesoArco;
 
 /*
  * Mappa_DB è una specializzazione della classe Model.

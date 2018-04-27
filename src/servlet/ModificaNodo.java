@@ -3,7 +3,6 @@ package servlet;
 import java.io.IOException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,11 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.Mappa;
 import entity.Nodo;
 import model.Mappa_DB;
 import model.Nodo_DB;
-import services.Mappa_service;
 
 /**
  * Servlet implementation class ModificaNodo
@@ -25,6 +22,7 @@ import services.Mappa_service;
 public class ModificaNodo extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
 	private Nodo_DB ndb;
 	private Mappa_DB mdb;
 	private Nodo nodo;
@@ -93,14 +91,12 @@ public class ModificaNodo extends HttpServlet {
 		        		if(!ndb.FindNodiSottoIncendioByPiano(mappaId))
 		        			mdb.updateStatoEmergenza(0, mappaId);
 		        				
-		        	response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+mappaId);
-		        	
-				}else 
-					System.out.println("Errore");
-				
+		        	response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+mappaId);	
+				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
+				//code sql per row UNIQUE
 				if(e.getErrorCode() == 30000) {
 					hasError = true;
 		            errorString = "BeaconId già presente nel DB. Il MacAdrs deve essere univoco per ogni beacon.";

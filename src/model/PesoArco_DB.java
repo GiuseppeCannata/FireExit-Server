@@ -1,12 +1,9 @@
 package model;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 
-import entity.Nodo;
 import entity.PesoArco;
 
 public class PesoArco_DB extends Model{

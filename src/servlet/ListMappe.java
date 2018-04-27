@@ -19,9 +19,11 @@ import model.Mappa_DB;
  */
 @WebServlet("/ListMappe")
 public class ListMappe extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private Mappa_DB mdb;
-	private ArrayList<Mappa> mappe;
+	private ArrayList<Mappa> mappeList;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,7 +32,7 @@ public class ListMappe extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
        mdb = new Mappa_DB();
-       mappe = new ArrayList<Mappa>();
+       mappeList = new ArrayList<Mappa>();
     }
 
 	/**
@@ -38,9 +40,9 @@ public class ListMappe extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		mappe = mdb.getListInfoMappe();
+		mappeList = mdb.getListInfoMappe();
 		
-		request.setAttribute("ListMappe",mappe);
+		request.setAttribute("ListMappe",mappeList);
          
         // Forward 
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ListMappView.jsp");
@@ -54,5 +56,4 @@ public class ListMappe extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

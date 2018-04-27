@@ -25,6 +25,11 @@ import entity.Nodo;
 import model.Nodo_DB;
 import services.Mappa_service;
 
+/**
+ * Mappa_Resource offre metodi per il recupero delle informazioni del messaggio Json relative alla mappa
+ * @author 
+ *
+ */
 
 @Path("maps")
 public class Mappa_Resource {
@@ -34,7 +39,7 @@ public class Mappa_Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String downloadMappa(String macAdrs) {
-
+		
 		System.out.println("mac"+macAdrs);
 
 		// Estrazione dal Json in entrata dell info macAdrs
@@ -47,7 +52,6 @@ public class Mappa_Resource {
 		Mappa mappa;
 
 		piano = ndb.findPianoByMAC(mac);
-
 		mappa = mappaService.CostruzioneMappa(piano);
 
 		// Costruisco il Json da inviare all App
@@ -71,17 +75,15 @@ public class Mappa_Resource {
 
 		try {
 			inStream = new FileInputStream(f);
-		} 
-
-		catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
 		ResponseBuilder response = Response.ok((Object)inStream);
 		response.header("Content-Length", f.length());
+		
 		return response.build();	
 	}
-
 
 	@POST
 	@Path("segnalazione")
@@ -100,7 +102,7 @@ public class Mappa_Resource {
 		Mappa_service mappaService = new Mappa_service();
 
 		esito = mappaService.prendiSegnalazione(dati_nodi);
-		System.out.println("esito update nodi: "+esito);
+		//System.out.println("esito update nodi: "+esito);
 
 		JsonObject Data = new JsonObject();
 		Data.addProperty("esito", esito);

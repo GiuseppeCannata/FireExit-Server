@@ -19,16 +19,17 @@ import entity.Peso;
 public class ModificaPeso extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
 	private Peso_DB pdb;
 	private Peso peso;
-	
-       
+	  
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ModificaPeso() {
         super();
         // TODO Auto-generated constructor stub
+        
         pdb = new Peso_DB();
         
     }
@@ -61,9 +62,5 @@ public class ModificaPeso extends HttpServlet {
         	
 		if (pdb.updatePeso(peso)) 
 			response.sendRedirect(request.getContextPath() + "/ListPesi");
-		else {
-			
-			//errore view
-		}  
 	}
 }

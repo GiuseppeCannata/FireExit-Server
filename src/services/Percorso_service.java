@@ -23,6 +23,7 @@ public class Percorso_service {
 		return ndb.FindNodoByMac(mac);
 	}
 
+	//TODO: mettere l eliminazione dei nodi sottoIncendio
 	public ArrayList<Arco> calcolaPercorso(Mappa mappa, Nodo posUtente) {
 
 		ArrayList<Nodo> uscite = mappa.getNodiUscita();
@@ -89,6 +90,7 @@ public class Percorso_service {
 	}
 
 	private Nodo getMigliorNodo(ArrayList<Nodo> nodiLocali, Map<Nodo, Integer> costi){
+		
 		int costo = -1;
 		Nodo migliorNodo = null;
 
@@ -99,6 +101,7 @@ public class Percorso_service {
 				costo = costoNodo;
 			}
 		}
+		
 		return migliorNodo;
 	}
 }

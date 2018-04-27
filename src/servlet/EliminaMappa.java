@@ -15,7 +15,6 @@ import entity.Nodo;
 import model.Arco_DB;
 import model.Mappa_DB;
 import model.Nodo_DB;
-import model.Peso_DB;
 import services.Mappa_service;
 
 /**
@@ -25,6 +24,7 @@ import services.Mappa_service;
 public class EliminaMappa extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
 	private Mappa_service ms;
 	private Mappa mappa;
 	private Mappa_DB mdb;
@@ -54,7 +54,7 @@ public class EliminaMappa extends HttpServlet {
         
         mappa = ms.CostruzioneMappa(piano);
         
-        //eleminazione archi
+       //eleminazione archi
         if(mappa.getArchi() != null)
 	        for(Arco arco: mappa.getArchi()) 
 		    	adb.deleteArco(arco);
@@ -65,15 +65,8 @@ public class EliminaMappa extends HttpServlet {
         		ndb.delete(nodo.getId());
         
 		//eliminazione info mappa
-		if(mdb.delete(piano)) {
+		if(mdb.delete(piano))
 			response.sendRedirect(request.getContextPath() + "/ListMappe");
-		}else {
-			
-			request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete");
-		    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
-		    dispatcher.forward(request, response);
-		    
-		}
 	}
 
 	/**
