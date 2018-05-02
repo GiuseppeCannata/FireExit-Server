@@ -50,8 +50,7 @@ public class InserimentoArco extends HttpServlet {
         nodiList = new ArrayList<Nodo>();
         
         pesiList = pdb.getListPesi();
-        if(nodiList.isEmpty())
- 		   ndb.findNodiByPiano(nodiList, piano);
+        
     }
 
 	/**
@@ -62,6 +61,9 @@ public class InserimentoArco extends HttpServlet {
 		
 		piano = Integer.parseInt(request.getParameter("piano"));
 		nPesi = Integer.parseInt(request.getParameter("nPesi"));
+		
+		if(nodiList.isEmpty())
+	 		 ndb.findNodiByPiano(nodiList, piano);
 		
 		request.setAttribute("NodiList", nodiList);
 		request.setAttribute("NPesi", nPesi);
