@@ -14,10 +14,10 @@ import entity.Mappa;
 
 public class Mappa_DB extends Model{
 
-	public static final String TBL_NAME="MAPPA";
-	public static final String FIELD_PIANO="piano";
-	public static final String FIELD_PIANTINA="piantina";  
-	public static final String FIELD_STATOEMERGENZA="statoemergenza"; 
+	private static final String TBL_NAME = "MAPPA";
+	private static final String FIELD_PIANO = "PIANO";
+	private static final String FIELD_PIANTINA = "PIANTINA";  
+	private static final String FIELD_STATOEMERGENZA = "STATOEMERGENZA"; 
 
 	public Mappa_DB() {
 
@@ -41,7 +41,7 @@ public class Mappa_DB extends Model{
 			String query = "select * from "+TBL_NAME+" where "+FIELD_PIANO+" = "+piano;
 
 			OpenConnessione();
-			ResultSet rs = this.selectQuery(query);
+			ResultSet rs = selectQuery(query);
 
 			if(rs.next()) {
 				nomePiantina = rs.getString("piantina");
@@ -66,7 +66,7 @@ public class Mappa_DB extends Model{
 			String query = "select * from "+TBL_NAME;
 
 			OpenConnessione();
-			ResultSet rs = this.selectQuery(query);
+			ResultSet rs = selectQuery(query);
 
 			while(rs.next()) {
 				piani.add(rs.getInt("piano"));
@@ -170,10 +170,10 @@ public class Mappa_DB extends Model{
 
 		try {
 
-			String query = "delete from "+TBL_NAME+" where "+this.FIELD_PIANO+"="+piano;
+			String query = "delete from "+TBL_NAME+" where "+FIELD_PIANO+"="+piano;
 
 			OpenConnessione();
-			this.updateQuery(query);
+			updateQuery(query);
 
 			CloseConnessione();
 			st.close();

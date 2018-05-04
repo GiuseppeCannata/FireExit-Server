@@ -22,11 +22,10 @@ import java.sql.Statement;
 public abstract class Model {
 
 	private Connection conn; 
-	private String USER;
-	private String PASS;
 	protected Statement st;
 	private ResultSet rs;
-
+	private String USER;
+	private String PASS;
 
 	public Model() {
 

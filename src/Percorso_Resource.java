@@ -43,8 +43,40 @@ public class Percorso_Resource {
 		Mappa_service mappaService = new Mappa_service();
 
 		Mappa mappa = mappaService.CostruzioneMappa(piano);
-		Nodo posU = percorsoService.CreaNodoPosUtente(mac);
+		Nodo posU = percorsoService.creaNodo(mac);
 		ArrayList<Arco> percorso = percorsoService.calcolaPercorso(mappa , posU);
+
+		// Costruisco il Json da inviare all App
+		Gson gson = new Gson();
+		String esito = gson.toJson(percorso);
+
+		System.out.println(esito);
+
+		return esito;	//essendo un Json il ritorno sarà di tipo String	
+	}
+	
+	@POST
+	@Path("getPercorsoMinimoNormale")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String downloadPercorsoMinimoNormale(String messaggio) {
+
+		System.out.println("Json: "+messaggio);
+
+		// Estrazione dal Json in entrata
+		JsonObject jobj = new Gson().fromJson(messaggio, JsonObject.class);
+		String macPU = jobj.get("posUtente").getAsString();  //relativo al MAC del beacon
+		String macDest = jobj.get("destinazione").getAsString();
+		int piano = jobj.get("piano").getAsInt();
+
+		Percorso_service percorsoService = new Percorso_service();
+		Mappa_service mappaService = new Mappa_service();
+
+		Mappa mappa = mappaService.CostruzioneMappa(piano);
+		Nodo posU = percorsoService.creaNodo(macPU);
+		Nodo destinazione = percorsoService.creaNodo(macDest);
+		
+		ArrayList<Arco> percorso = percorsoService.calcolaPercorsoNormale(mappa , posU, destinazione);
 
 		// Costruisco il Json da inviare all App
 		Gson gson = new Gson();

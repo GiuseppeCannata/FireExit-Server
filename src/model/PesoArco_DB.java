@@ -8,11 +8,11 @@ import entity.PesoArco;
 
 public class PesoArco_DB extends Model{
 
-	public static final String TBL_NAME = "PesoArco";
-	public static final String FIELD_ID = "id";
-	public static final String FIELD_IDARCO = "idArco"; 
-	public static final String FIELD_IDPESO = "idPeso"; 
-	public static final String FIELD_VALORE = "valore"; 
+	private static final String TBL_NAME = "PesoArco";
+	private static final String FIELD_ID = "ID";
+	private static final String FIELD_IDARCO = "IDARCO"; 
+	private static final String FIELD_IDPESO = "IDPESO"; 
+	private static final String FIELD_VALORE = "VALORE"; 
 
 
 	public PesoArco_DB() {
@@ -59,7 +59,7 @@ public class PesoArco_DB extends Model{
 
 		try {
 
-			String query = "delete from "+TBL_NAME+" where "+this.FIELD_ID+"="+Id;
+			String query = "delete from "+TBL_NAME+" where "+FIELD_ID+"="+Id;
 
 			OpenConnessione();
 			this.updateQuery(query);

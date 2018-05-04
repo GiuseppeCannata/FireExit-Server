@@ -12,13 +12,13 @@ import entity.Nodo;
  */
 public class Nodo_DB extends Model{
 
-	public static final String TBL_NAME = "NODO";
-	public static final String FIELD_ID = "ID";
-	public static final String FIELD_IDBEACON = "BEACONID";
-	public static final String FIELD_PIANO = "piano";
-	public static final String FIELD_X = "x";  
-	public static final String FIELD_Y = "y";  
-	public static final String FIELD_TIPO = "tipo"; 
+	private static final String TBL_NAME = "NODO";
+	private static final String FIELD_ID = "ID";
+	private static final String FIELD_IDBEACON = "BEACONID";
+	private static final String FIELD_PIANO = "PIANO";
+	private static final String FIELD_X = "X";  
+	private static final String FIELD_Y = "Y";  
+	private static final String FIELD_TIPO = "TIPO"; 
 
 	public Nodo_DB() {
 
@@ -49,7 +49,7 @@ public class Nodo_DB extends Model{
 
 			CloseConnessione();
 			st.close();
-
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

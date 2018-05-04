@@ -8,10 +8,10 @@ import entity.Peso;
 
 public class Peso_DB  extends Model{
 
-	public static final String TBL_NAME = "PESO";
-	public static final String FIELD_ID = "id";
-	public static final String FIELD_DESCRIZIONE = "descrizione";    
-	public static final String FIELD_PESO = "peso";  
+	private static final String TBL_NAME = "PESO";
+	private static final String FIELD_ID = "ID";
+	private static final String FIELD_DESCRIZIONE = "DESCRIZIONE";    
+	private static final String FIELD_PESO = "PESO";  
 
 	public Peso_DB() {
 

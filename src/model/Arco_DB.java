@@ -10,11 +10,11 @@ import entity.PesoArco;
 
 public class Arco_DB extends Model{
 
-	public static final String TBL_NAME = "ARCO";
-	public static final String FIELD_ID = "id";
-	public static final String FIELD_NODOPARTENZA = "nodoPartenzaId";
-	public static final String FIELD_NODOARRIVO = "nodoArrivoId";   
-	public static final String FIELD_MAPPAID = "mappaId"; 
+	private static final String TBL_NAME = "ARCO";
+	private static final String FIELD_ID = "ID";
+	private static final String FIELD_NODOPARTENZA = "NODOPARTENZAID";
+	private static final String FIELD_NODOARRIVO = "NODOARRIVOID";   
+	private static final String FIELD_MAPPAID = "MAPPAID"; 
 
 	public Arco_DB() {
 
@@ -113,7 +113,7 @@ public class Arco_DB extends Model{
 
 		try {
 
-			String query = "select * from "+TBL_NAME+" where "+this.FIELD_NODOPARTENZA+"="+Id+" or "+this.FIELD_NODOARRIVO+" = "+Id;
+			String query = "select * from "+TBL_NAME+" where "+FIELD_NODOPARTENZA+"="+Id+" or "+FIELD_NODOARRIVO+" = "+Id;
 			System.out.println(query);
 
 			OpenConnessione();
@@ -152,7 +152,7 @@ public class Arco_DB extends Model{
 
 		try {
 
-			String query = "delete from "+TBL_NAME+" where "+this.FIELD_ID+"="+arco.getId();
+			String query = "delete from "+TBL_NAME+" where "+FIELD_ID+"="+arco.getId();
 
 			OpenConnessione();
 			updateQuery(query);
@@ -176,7 +176,7 @@ public class Arco_DB extends Model{
 
 		try {
 
-			String query = "select * from "+TBL_NAME+" where "+FIELD_NODOPARTENZA+"="+IDPartenza+" and "+this.FIELD_NODOARRIVO+" = "+IDArrivo;
+			String query = "select * from "+TBL_NAME+" where "+FIELD_NODOPARTENZA+"="+IDPartenza+" and "+FIELD_NODOARRIVO+" = "+IDArrivo;
 			System.out.println(query);
 
 			OpenConnessione();
