@@ -26,11 +26,9 @@ import model.Nodo_DB;
 import services.Mappa_service;
 
 /**
- * Mappa_Resource offre metodi per il recupero delle informazioni del messaggio Json relative alla mappa
- * @author 
+ * Mappa_Resource offre metodi per il recupero delle informazioni del messaggio Json relative alla mappa 
  *
  */
-
 @Path("maps")
 public class Mappa_Resource {
 
@@ -38,6 +36,12 @@ public class Mappa_Resource {
 	@Path("getMappa")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	/**
+	 * Per il download della mappa da parte dell applicazione
+	 * 
+	 * @param macAdrs JSON contenente l'indirizzo MAC del nodo posizione utente
+	 * @return JSON contente la mappa relativa al piano dell uttente
+	 */
 	public String downloadMappa(String macAdrs) {
 		
 		System.out.println("mac"+macAdrs);
@@ -64,6 +68,12 @@ public class Mappa_Resource {
 	@GET
 	@Path("downloadPiantina/{nome}")
 	@Produces("image/png")
+	/**
+	 * Per il download della piantina relativa alla mappa
+	 * 
+	 * @param nome JSON contenente il nome della risorsa da scaricare
+	 * @return piantina relativa alla mappa
+	 */
 	public Response downloadPiantina(@PathParam("nome") String nome) {
 
 		System.out.println("Nome piantina: "+nome);
@@ -89,6 +99,12 @@ public class Mappa_Resource {
 	@Path("segnalazione")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	/**
+	 * Consente di prendere in consegna la segnalazione fatta da un utente
+	 * 
+	 * @param NodiSottoIncendio JSON contenete i nodi segnalati dall utente
+	 * @return JSON con il risulato della segnalazione (true/false)
+	 */
 	public String segnalazione(String NodiSottoIncendio) {
 
 		System.out.println("mac"+NodiSottoIncendio);
@@ -114,6 +130,12 @@ public class Mappa_Resource {
 	@Path("downloadAggiornamenti")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	/**
+	 * Per il download degli aggiornamenti relativi alla mappa
+	 * 
+	 * @param pianoJSON JSON relativo al piano dell utente
+	 * @return JSON contenente la mappa aggiornata
+	 */
 	public String downloadAggiornamenti(String pianoJSON) {
 
 		System.out.println("mac"+pianoJSON);

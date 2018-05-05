@@ -10,7 +10,7 @@ import model.Mappa_DB;
 import model.Nodo_DB;
 import utils.Parametri;
 
-/*
+/**
  * Mappa_service viene istanziata da Mappa_resorce.
  * Offre metodi per generare i dati che poi verranno inviati all utente
  */
@@ -21,9 +21,11 @@ public class Mappa_service {
 	}
 
 
-	/*
+	/**
 	 * Gestisce le segnalazioni di emergenza
 	 * 
+	 * @param nodi List relativa ai nodi sotto incendio
+	 * @return true/false se la segnalazione è stata o meno effettuata
 	 */
 	public boolean prendiSegnalazione(ArrayList<Nodo> Nodi) {
 
@@ -55,6 +57,12 @@ public class Mappa_service {
 		return esito;		
 	}
 
+	/**
+	 * Pemette di costruire la mappa
+	 * 
+	 * @param piano relativo alla mappa che si desidera ottenre
+	 * @return mappa richiesta
+	 */
 	public Mappa CostruzioneMappa(int piano) {
 
 		Nodo_DB ndb = new Nodo_DB();

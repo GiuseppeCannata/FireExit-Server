@@ -17,11 +17,9 @@ import services.Percorso_service;
 
 /**
  * Percorso_Resource offre metodi per il recupero delle informazioni del messaggio Json relative al
- * percorso
- * @author 
+ * percorso 
  *
  */
-
 @Path("percorso")
 public class Percorso_Resource {
 
@@ -30,6 +28,12 @@ public class Percorso_Resource {
 	@Path("getPercorsoMinimo")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	/**
+	 * Per il download del percorso nello stato di emergenza
+	 * 
+	 * @param messaggio contente la posizione dell utente e il piano del piano in cui si trova
+	 * @return JSON relativo al percorso calcolato
+	 */
 	public String downloadPercorso(String messaggio) {
 
 		System.out.println("mac"+messaggio);
@@ -59,6 +63,12 @@ public class Percorso_Resource {
 	@Path("getPercorsoMinimoNormale")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	/**
+	 * Per il percorso in modalità normale
+	 * 
+	 * @param messaggio conmtente la posizione attuale dell utente, il piano, e il nodo destinazione
+	 * @return JSON relativo al percorso calcolato
+	 */
 	public String downloadPercorsoMinimoNormale(String messaggio) {
 
 		System.out.println("Json: "+messaggio);
@@ -86,5 +96,4 @@ public class Percorso_Resource {
 
 		return esito;	//essendo un Json il ritorno sarà di tipo String	
 	}
-
 }

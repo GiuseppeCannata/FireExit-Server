@@ -9,6 +9,10 @@ import entity.Mappa;
 import entity.Nodo;
 import model.Nodo_DB;
 
+/**
+ * Percorso_service viene istanziata da Mappa_resorce.
+ * Offre metodi per generare i dati che poi verranno inviati all utente
+ */
 public class Percorso_service {
 
 
@@ -16,6 +20,12 @@ public class Percorso_service {
 
 	}
 
+	/**
+	 * Pemette di ricavare il nodo dal suo indirizzo MAC
+	 * 
+	 * @param mac relativo al nodo che si desidera avere
+	 * @return nodo cercato
+	 */
 	public Nodo creaNodo(String mac) {
 
 		Nodo_DB ndb = new Nodo_DB();
@@ -23,6 +33,13 @@ public class Percorso_service {
 		return ndb.FindNodoByMac(mac);
 	}
 
+	/**
+	 * Calcola il percorso minimo in situazione di emergenza
+	 * 
+	 * @param mappa relativa al piano in cui si vuole raggiungere l uscita di emergenza
+	 * @param posUtente relativa alla posizione attuale dell utente
+	 * @return percorso minimo calcolato
+	 */
 	//TODO: mettere l eliminazione dei nodi sottoIncendio
 	public ArrayList<Arco> calcolaPercorso(Mappa mappa, Nodo posUtente) {
 
@@ -89,6 +106,14 @@ public class Percorso_service {
 		return percorso;		
 	}
 	
+	/**
+	 * Calcola il percorso minimo in modalità normale
+	 * 
+	 * @param mappa relativa al piano in cui si è scelta la destinazione
+	 * @param posUtente  relativa al nodo della posizione attuale dell utente
+	 * @param destinazione nodo selezionato dall utente 
+	 * @return
+	 */
 	public ArrayList<Arco> calcolaPercorsoNormale(Mappa mappa, Nodo posUtente, Nodo destinazione) {
 
 		ArrayList<Nodo> nodi = mappa.getNodi();
