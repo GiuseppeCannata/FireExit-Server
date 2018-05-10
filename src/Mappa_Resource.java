@@ -69,7 +69,7 @@ public class Mappa_Resource {
 	        connection.setDoInput(true);
 	        connection.setRequestMethod("POST");
 	        connection.setRequestProperty("Content-Type", "application/json");
-	        connection.setRequestProperty("Authorization", "key=AIzaSyD7a0N56L8RoWSobOSQxvQ6GAnKT5aAkuE" );
+	        connection.setRequestProperty("Authorization", "key=" );
 	        connection.connect();
 	        
 	        JsonObject json = new JsonObject();
