@@ -4,12 +4,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.Produces;
-
 import javax.ws.rs.Consumes;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -18,11 +23,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import entity.Mappa;
 import entity.Nodo;
+import model.Mappa_DB;
 import model.Nodo_DB;
+import model.Utente_DB;
 import services.Mappa_service;
 
 /**
@@ -31,6 +42,72 @@ import services.Mappa_service;
  */
 @Path("maps")
 public class Mappa_Resource {
+	
+	/*
+	@POST
+	@Path("controllaStatoEmergenza")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void controllaStatoEmergenza(String messaggio){
+		
+		HttpURLConnection connection = null;
+		System.out.println("CONTROLLO");
+		ArrayList<String> tokensList = new ArrayList<>();
+		Utente_DB udb = new Utente_DB();
+		tokensList = udb.getListToken();
+		
+		Iterator<String> it = tokensList.iterator();
+		
+		
+		
+	        URL url;
+			try {
+			
+			url = new URL("https://fcm.googleapis.com/fcm/send");
+			
+	        connection = (HttpURLConnection) url.openConnection();
+	        connection.setDoOutput(true);
+	        connection.setDoInput(true);
+	        connection.setRequestMethod("POST");
+	        connection.setRequestProperty("Content-Type", "application/json");
+	        connection.setRequestProperty("Authorization", "key=AIzaSyD7a0N56L8RoWSobOSQxvQ6GAnKT5aAkuE" );
+	        connection.connect();
+	        
+	        JsonObject json = new JsonObject();
+
+            json.addProperty("to", "eqK8YWzqLsI:APA91bF2RPxkM_sgeZQd0eTTEPSZLyYe8FKjq0lxxfhfWErKqkqh6vgYt0fzbaJcFuHHRriyRdQZfr-5zxE5KlwlcNwG-T6LC3ljuzW2gjGROxl_DfHhFntcagnErRaij0xqgt_0mTMA");
+
+
+            JsonObject info = new JsonObject();
+            info.addProperty("title", "TechnoWeb");   // Notification title
+            info.addProperty("body", "Hello Test notification"); // Notification body
+
+            json.add("notification", info);
+            
+            OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+            wr.write(json.toString());
+            wr.flush();
+            connection.getInputStream();
+            
+	        
+	        
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+	            if (connection != null) {
+	                try {
+	                    connection.disconnect();
+	                }
+
+	                catch (Exception e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+		}*/
 
 	@POST
 	@Path("getMappa")
@@ -119,7 +196,7 @@ public class Mappa_Resource {
 
 		esito = mappaService.prendiSegnalazione(dati_nodi);
 		//System.out.println("esito update nodi: "+esito);
-
+		
 		JsonObject Data = new JsonObject();
 		Data.addProperty("esito", esito);
 

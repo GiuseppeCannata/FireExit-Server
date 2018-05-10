@@ -13,6 +13,7 @@ public class Main extends Application {
         // register dei servizi offerti
         classes.add(Mappa_Resource.class);
         classes.add(Percorso_Resource.class);
+        classes.add(Utente_Resource.class);
         return classes;   
     }
 }

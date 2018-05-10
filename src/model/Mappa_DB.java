@@ -24,6 +24,31 @@ public class Mappa_DB extends Model{
 		super();  
 
 	}
+	
+	public boolean controllaStatoEmergenza() {
+
+		boolean esito = false;
+		
+		try {
+
+			String query = "select * from "+TBL_NAME+" where "+FIELD_STATOEMERGENZA+" = 1 " ;
+
+			OpenConnessione();
+			ResultSet rs = selectQuery(query);
+
+			if(rs.next()) 
+				esito = true;
+			
+
+			CloseConnessione();
+			st.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+
+     	return esito;	
+	}
 
 
 	/*
