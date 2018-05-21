@@ -43,17 +43,25 @@ public class CaricaMappa extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
 		
-		int piano = Integer.parseInt(request.getParameter("piano"));
-		int statoEmergenza;
-	 
-		mappa = ms.CostruzioneMappa(piano);
-		statoEmergenza = mdb.getStatoEmergenzaByPiano(piano);
+		 
+		try {
+			
+			int piano = Integer.parseInt(request.getParameter("piano"));
+		    int statoEmergenza;
 		
-		request.getSession().setAttribute("mappa", mappa);
-		request.getSession().setAttribute("statoEmergenza", statoEmergenza);
-		
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/MappaView.jsp");
-	    dispatcher.forward(request, response);	
+			mappa = ms.CostruzioneMappa(piano);
+			statoEmergenza = mdb.getStatoEmergenzaByPiano(piano);
+			
+			request.getSession().setAttribute("mappa", mappa);
+			request.getSession().setAttribute("statoEmergenza", statoEmergenza);
+			
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/MappaView.jsp");
+		    dispatcher.forward(request, response);	
+	    
+		}catch(Exception e) {
+			System.out.println("INPUT ERRATO");
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}
 	}
 
 	/**

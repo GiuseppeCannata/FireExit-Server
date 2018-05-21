@@ -43,19 +43,19 @@ import services.Mappa_service;
 @Path("maps")
 public class Mappa_Resource {
 	
-	/*
+	
 	@POST
-	@Path("controllaStatoEmergenza")
+	@Path("TEST")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void controllaStatoEmergenza(String messaggio){
 		
-		HttpURLConnection connection = null;
 		System.out.println("CONTROLLO");
-		ArrayList<String> tokensList = new ArrayList<>();
+		HttpURLConnection connection = null;
+		/*ArrayList<String> tokensList = new ArrayList<>();
 		Utente_DB udb = new Utente_DB();
 		tokensList = udb.getListToken();
 		
-		Iterator<String> it = tokensList.iterator();
+		Iterator<String> it = tokensList.iterator();*/
 		
 		
 		
@@ -69,12 +69,12 @@ public class Mappa_Resource {
 	        connection.setDoInput(true);
 	        connection.setRequestMethod("POST");
 	        connection.setRequestProperty("Content-Type", "application/json");
-	        connection.setRequestProperty("Authorization", "key=" );
+	        connection.setRequestProperty("Authorization", "key=AIzaSyD7a0N56L8RoWSobOSQxvQ6GAnKT5aAkuE" );
 	        connection.connect();
 	        
 	        JsonObject json = new JsonObject();
 
-            json.addProperty("to", "eqK8YWzqLsI:APA91bF2RPxkM_sgeZQd0eTTEPSZLyYe8FKjq0lxxfhfWErKqkqh6vgYt0fzbaJcFuHHRriyRdQZfr-5zxE5KlwlcNwG-T6LC3ljuzW2gjGROxl_DfHhFntcagnErRaij0xqgt_0mTMA");
+            json.addProperty("to", "dJxY58z_PIU:APA91bGzeUBB1TmgCIoYbMDd6dXmAGEyBstV8x3ua3hYQxtzIlbokm-2G0Z4hO6hQfbp5lQ2sznDEvH-1jbiz9TYNEnYaD1Eq3f4360sQR7yOJnW4tADHY6UIeyeQdmMzUDfLwtLFN8g");
 
 
             JsonObject info = new JsonObject();
@@ -107,7 +107,7 @@ public class Mappa_Resource {
 	                }
 	            }
 	        }
-		}*/
+		}
 
 	@POST
 	@Path("getMappa")

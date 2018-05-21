@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.regex.Pattern;
+
 import entity.Nodo;
 import model.Mappa_DB;
 import model.Nodo_DB;
@@ -45,11 +47,17 @@ public class InserimentoNodo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int piano = Integer.parseInt(request.getParameter("piano"));
-		request.setAttribute("piano", piano);
-		
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoNodoView.jsp");
-        dispatcher.forward(request, response);	
+		try {
+			int piano = Integer.parseInt(request.getParameter("piano"));
+			request.setAttribute("piano", piano);
+			
+	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoNodoView.jsp");
+	        dispatcher.forward(request, response);	
+        
+		} catch(Exception e) {
+			System.out.println("INPUT ERRATO");
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}
 	}
 
 	/**
@@ -70,10 +78,10 @@ public class InserimentoNodo extends HttpServlet {
         nodo = new Nodo(0,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);
 
         //1^ controllo
-        if (BeaconId.length() == 0) {
-            hasError = true;
-            errorString = "Alcuni campi sembrano essere vuoti!";
-        } else {
+        if(!Pattern.matches("^([A-Z0-9]{2}[:]){5}([A-Z0-9]{2})$", BeaconId)) {
+        	hasError = true;
+            errorString = "BeaconId sembra non essere corretto";
+        }else{
            
 	        Nodo_DB ndb = new Nodo_DB();
 	        

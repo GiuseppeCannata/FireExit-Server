@@ -36,10 +36,17 @@ public class EliminaPeso extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        int Id = Integer.parseInt(request.getParameter("id"));
 		
-		if(pdb.delete(Id))
-			response.sendRedirect(request.getContextPath() + "/ListPesi");
+		try {
+	        int Id = Integer.parseInt(request.getParameter("id"));
+			
+			if(pdb.delete(Id))
+				response.sendRedirect(request.getContextPath() + "/ListPesi");
+		
+		} catch(Exception e) {
+			System.out.println("INPUT ERRATO");
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}
 	}
 
 	/**

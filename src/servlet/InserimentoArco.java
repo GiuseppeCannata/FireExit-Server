@@ -59,19 +59,25 @@ public class InserimentoArco extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		piano = Integer.parseInt(request.getParameter("piano"));
-		nPesi = Integer.parseInt(request.getParameter("nPesi"));
-		
-		if(nodiList.isEmpty())
-	 		 ndb.findNodiByPiano(nodiList, piano);
-		
-		request.setAttribute("NodiList", nodiList);
-		request.setAttribute("NPesi", nPesi);
-		request.setAttribute("piano", piano);
-		request.setAttribute("PesiList",pesiList);
-		
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoArcoView.jsp");
-        dispatcher.forward(request, response);
+		try {
+			piano = Integer.parseInt(request.getParameter("piano"));
+			nPesi = Integer.parseInt(request.getParameter("nPesi"));
+			
+			if(nodiList.isEmpty())
+		 		 ndb.findNodiByPiano(nodiList, piano);
+			
+			request.setAttribute("NodiList", nodiList);
+			request.setAttribute("NPesi", nPesi);
+			request.setAttribute("piano", piano);
+			request.setAttribute("PesiList",pesiList);
+			
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/InserimentoArcoView.jsp");
+	        dispatcher.forward(request, response);
+        
+		} catch(Exception e) {
+			System.out.println("INPUT ERRATO");
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}
 	}
 
 	/**

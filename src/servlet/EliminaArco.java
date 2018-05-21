@@ -51,41 +51,47 @@ public class EliminaArco extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int Idarco = Integer.parseInt(request.getParameter("id"));
-		int piano = Integer.parseInt(request.getParameter("piano"));
-		int NodoPartenzaId = Integer.parseInt(request.getParameter("NodoPartenza"));
-		int NodoArrivoId = Integer.parseInt(request.getParameter("NodoArrivo"));
+		try {
+			int Idarco = Integer.parseInt(request.getParameter("id"));
+			int piano = Integer.parseInt(request.getParameter("piano"));
+			int NodoPartenzaId = Integer.parseInt(request.getParameter("NodoPartenza"));
+			int NodoArrivoId = Integer.parseInt(request.getParameter("NodoArrivo"));
+				
+			Nodo NodoPartenza = ndb.FindNodoById(NodoPartenzaId);
+			Nodo NodoArrivo = ndb.FindNodoById(NodoArrivoId);
+			paList = padb.findPesiByIdArco(Idarco);
 			
-		Nodo NodoPartenza = ndb.FindNodoById(NodoPartenzaId);
-		Nodo NodoArrivo = ndb.FindNodoById(NodoArrivoId);
-		paList = padb.findPesiByIdArco(Idarco);
-		
-		adb.deleteArco( new Arco(Idarco,NodoPartenza,NodoArrivo,paList) );
-		
-		//controllo se è il caso di eliminare nodi
-		// i nodi saranno cancellati solo nel caso in cui non abbiano una stella
-		archiList = adb.findArchiByPiano(piano);
-		
-		boolean esitoA = false;
-		boolean esitoP = false;
-		
-		// eliminazione di eventuali nodi che non possiedono una stella
-		for(Arco arco: archiList) {
+			adb.deleteArco( new Arco(Idarco,NodoPartenza,NodoArrivo,paList) );
 			
-			if(arco.getNodoPartenza().getId() == NodoPartenzaId || arco.getNodoArrivo().getId() == NodoPartenzaId  )
-				esitoP = true;  
-
-			if(arco.getNodoArrivo().getId() == NodoArrivoId || arco.getNodoPartenza().getId() == NodoArrivoId )
-				esitoA = true;
-		}
-		
-		if(!esitoA)
-			ndb.delete(NodoArrivoId);
+			//controllo se è il caso di eliminare nodi
+			// i nodi saranno cancellati solo nel caso in cui non abbiano una stella
+			archiList = adb.findArchiByPiano(piano);
 			
-	    if(!esitoP)
-	    	ndb.delete(NodoPartenzaId);
-		
-	    response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
+			boolean esitoA = false;
+			boolean esitoP = false;
+			
+			// eliminazione di eventuali nodi che non possiedono una stella
+			for(Arco arco: archiList) {
+				
+				if(arco.getNodoPartenza().getId() == NodoPartenzaId || arco.getNodoArrivo().getId() == NodoPartenzaId  )
+					esitoP = true;  
+	
+				if(arco.getNodoArrivo().getId() == NodoArrivoId || arco.getNodoPartenza().getId() == NodoArrivoId )
+					esitoA = true;
+			}
+			
+			if(!esitoA)
+				ndb.delete(NodoArrivoId);
+				
+		    if(!esitoP)
+		    	ndb.delete(NodoPartenzaId);
+			
+		    response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
+		    
+		} catch(Exception e) {
+			System.out.println("INPUT ERRATO");
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}	
 	}
 
 	/**

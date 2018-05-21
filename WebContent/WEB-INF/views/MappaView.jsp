@@ -21,6 +21,12 @@
 	</div>
 
 	<h2>Mappa</h2>
+	<p>Ecco la dashboard della mappa da te scelta.
+	   <br>
+       Qui potrai inserire nuovi nodi e modificare quelli già presenti.
+       <br>
+       Inoltre puoi inserire nuovi archi e modificare quelli già esisenti.
+    </p>
 
 	<table>
 		<tr>

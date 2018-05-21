@@ -45,16 +45,24 @@ public class AggiungiPesoArco extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Idarco = Integer.parseInt(request.getParameter("id"));
-		piano = Integer.parseInt(request.getParameter("piano"));
 		
-		ListPesi = pdb.getListPesi();
-		
-		request.setAttribute("PesiList", ListPesi);
-		request.setAttribute("piano", piano);
-		
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/AggiungiPesoArcoView.jsp");
-        dispatcher.forward(request, response);
+		//Controllo input derivante dalla query string
+		try {
+			Idarco = Integer.parseInt(request.getParameter("id"));
+			piano = Integer.parseInt(request.getParameter("piano"));
+			
+			ListPesi = pdb.getListPesi();
+			
+			request.setAttribute("PesiList", ListPesi);
+			request.setAttribute("piano", piano);
+			
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/AggiungiPesoArcoView.jsp");
+	        dispatcher.forward(request, response);
+		} catch(Exception e) {
+			
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+			
+		}
 	}
 
 	/**

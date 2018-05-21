@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,14 +44,20 @@ public class ModificaNodo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int Id = Integer.parseInt(request.getParameter("id"));
-		
-		nodo = ndb.FindNodoById(Id);
-		
-		request.setAttribute("nodo", nodo);
-		
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
-        dispatcher.forward(request, response);
+		try {
+			int Id = Integer.parseInt(request.getParameter("id"));
+			
+			nodo = ndb.FindNodoById(Id);
+			
+			request.setAttribute("nodo", nodo);
+			
+	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
+	        dispatcher.forward(request, response);
+	        
+		} catch (Exception e) {
+			System.out.println("INPUT ERRATO");
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}
 	}
 
 	/**
@@ -74,10 +81,10 @@ public class ModificaNodo extends HttpServlet {
         nodo = new Nodo(Id,BeaconId,X,Y,TipoUscita,TipoIncendio,mappaId);;
       
         //1^ controllo
-        if (BeaconId.length() == 0) {
+        if (!Pattern.matches("^([A-Z0-9]{2}[:]){5}([A-Z0-9]{2})$", BeaconId)) {
             hasError = true;
-            errorString = "Alcuni campi sembrano essere vuoti!";
-        } else {
+            errorString = "BeaconId sembra non essere corretto";
+        }else {
         	
 	        try {
 			

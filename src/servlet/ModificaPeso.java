@@ -39,14 +39,21 @@ public class ModificaPeso extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        int Id = Integer.parseInt(request.getParameter("id"));
 		
-		peso = pdb.findById(Id);
-		
-		request.setAttribute("peso", peso);
-		
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaPesoView.jsp");
-        dispatcher.forward(request, response);
+		try {
+	        int Id = Integer.parseInt(request.getParameter("id"));
+			
+			peso = pdb.findById(Id);
+			
+			request.setAttribute("peso", peso);
+			
+	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaPesoView.jsp");
+	        dispatcher.forward(request, response);
+	        
+		} catch(Exception e) {
+			System.out.println("INPUT ERRATO");
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}
 	}
 
 	/**

@@ -50,23 +50,29 @@ public class EliminaMappa extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-        int piano = Integer.parseInt((String)request.getParameter("piano"));
-        
-        mappa = ms.CostruzioneMappa(piano);
-        
-       //eleminazione archi
-        if(mappa.getArchi() != null)
-	        for(Arco arco: mappa.getArchi()) 
-		    	adb.deleteArco(arco);
-        
-      //eleminazione nodi
-        if(mappa.getNodi() != null)
-        	for(Nodo nodo: mappa.getNodi())
-        		ndb.delete(nodo.getId());
-        
-		//eliminazione info mappa
-		if(mdb.delete(piano))
+		try {
+	        int piano = Integer.parseInt((String)request.getParameter("piano"));
+	        
+	        mappa = ms.CostruzioneMappa(piano);
+	        
+	       //eleminazione archi
+	        if(mappa.getArchi() != null)
+		        for(Arco arco: mappa.getArchi()) 
+			    	adb.deleteArco(arco);
+	        
+	      //eleminazione nodi
+	        if(mappa.getNodi() != null)
+	        	for(Nodo nodo: mappa.getNodi())
+	        		ndb.delete(nodo.getId());
+	        
+			//eliminazione info mappa
+			if(mdb.delete(piano))
+				response.sendRedirect(request.getContextPath() + "/ListMappe");
+			
+		} catch(Exception e) {
+			System.out.println("INPUT ERRATO");
 			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}
 	}
 
 	/**

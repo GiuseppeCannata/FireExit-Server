@@ -37,9 +37,9 @@
 				<td><a
 					href="${pageContext.request.contextPath}/ModificaPeso?id=${peso.getId()}">Edit</a>
 				</td>
-				<td><a id="delete${peso.getDescrizione()}" href="#"
+			<!--  	<td><a id="delete${peso.getDescrizione()}" href="#"
 					onclick="elimina(event,'${pageContext.request.contextPath}/EliminaPeso?id=${peso.getId()}','${peso.getDescrizione()}')">Delete</a>
-				</td>
+				</td>  -->
 			</tr>
 		</c:forEach>
 	</table>

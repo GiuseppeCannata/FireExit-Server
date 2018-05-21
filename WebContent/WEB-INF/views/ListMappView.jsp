@@ -20,7 +20,7 @@
 		<jsp:include page="../layout/_topnav.jsp"></jsp:include>
 	</div>
 
-	<h4>Lista dei nodi contenuti nel DB:</h4>
+	<h4>Lista delle mappe contenute nel DB:</h4>
 
 	<a href="${pageContext.request.contextPath}/InserimentoInfoMappa"><button
 			type="button">Inserisci nuova mappa</button></a>

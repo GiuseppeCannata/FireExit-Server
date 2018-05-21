@@ -44,18 +44,25 @@ public class EliminaNodo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int Id = Integer.parseInt(request.getParameter("id"));
 		
-		//importante all eliminazione di un nodo vanno eliminati anche tutti gli archi relativi a quel nodo
-		//con archi si intende anche i pesi degli archi
-		//TODO: POSSO FARE DIVERSAMENTE?
-		archiList = adb.getArchiByNodoId(Id);
-		if(archiList != null)
-			for(Arco arco: archiList) 
-		    	adb.deleteArco(arco);
-	    	
-		if(ndb.delete(Id)) 
-			response.sendRedirect(request.getContextPath() + "/ListNodi");
+		try {
+			int Id = Integer.parseInt(request.getParameter("id"));
+			
+			//importante all eliminazione di un nodo vanno eliminati anche tutti gli archi relativi a quel nodo
+			//con archi si intende anche i pesi degli archi
+			//TODO: POSSO FARE DIVERSAMENTE?
+			archiList = adb.getArchiByNodoId(Id);
+			if(archiList != null)
+				for(Arco arco: archiList) 
+			    	adb.deleteArco(arco);
+		    	
+			if(ndb.delete(Id)) 
+				response.sendRedirect(request.getContextPath() + "/ListNodi");
+		
+		} catch(Exception e) {
+			System.out.println("INPUT ERRATO");
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}
 	}
 
 	/**

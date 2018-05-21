@@ -25,6 +25,7 @@
 					Pesi</a></li>
 			<li><a href="${pageContext.request.contextPath}/ListMappe">Lista
 					Mappe</a></li>
+			<li><a href="${pageContext.request.contextPath}/ATTIVA">Attiva servizio di broadcast</a></li>
 		</ul>
 	</div>
 
