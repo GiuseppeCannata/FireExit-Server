@@ -7,6 +7,10 @@ import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class Discover implements Runnable {
 
 	DatagramSocket socket;
@@ -17,7 +21,7 @@ public class Discover implements Runnable {
 	  try {
 		  
 	        //Keep a socket open to listen to all the UDP trafic that is destined for this port
-	        socket = new DatagramSocket(8888, InetAddress.getByName("255.255.255.255"));
+	        socket = new DatagramSocket(4849, InetAddress.getByName("0.0.0.0"));
 	        socket.setBroadcast(true);
 	  		  
 	        while (true) {
@@ -51,7 +55,6 @@ public class Discover implements Runnable {
 	      } catch (IOException ex) {
 	  
 	        Logger.getLogger(Discover.class.getName()).log(Level.SEVERE, null, ex);
-	  
 	      }
 
   }

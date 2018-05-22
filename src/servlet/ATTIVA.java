@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +32,9 @@ public class ATTIVA extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Thread discoveryThread = new Thread(Discover.getInstance());
 	    discoveryThread.start();
+	    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
+	    request.setAttribute("Messaggio", "Ora ogni device con istallata FireExit sarà in grado di localizzare il server");
+	    dispatcher.forward(request, response);
 	}
 
 	/**
