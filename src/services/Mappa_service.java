@@ -36,20 +36,20 @@ public class Mappa_service {
 		Nodo_DB ndb = new Nodo_DB();
 		Mappa_DB mdb = new Mappa_DB();
 
-		for(Nodo n: Nodi) {
-
-			if(n.isTipoIncendio()) {
-
-				ndb.setTipo(Parametri.TIPO_INCENDIO, n.getBeaconId());
+		for(Nodo nodo: Nodi) 
+			if(nodo.isTipoIncendio() && nodo.isTipoUscita()) {
+				ndb.setTipo(Parametri.TIPO_USCITA_INCENDIATO, nodo.getBeaconId());
 				controllo++;
-
-			} else if(n.isCambiato()) {
-
-				ndb.setTipo(Parametri.TIPO_BASE, n.getBeaconId());
+			} else if(nodo.isTipoIncendio()) {
+				ndb.setTipo(Parametri.TIPO_BASE_INCENDIATO, nodo.getBeaconId());
 				controllo++;
-
+			} else if(nodo.isCambiato() && nodo.isTipoUscita()) {
+				ndb.setTipo(Parametri.TIPO_USCITA_NO_INCENDIATO, nodo.getBeaconId());
+				controllo++;
+			} else if(nodo.isCambiato()) {
+				ndb.setTipo(Parametri.TIPO_BASE_NO_INCENDIATO, nodo.getBeaconId());
+				controllo++;
 			}
-		}
 
 		if (controllo == Nodi.size() && mdb.updateStatoEmergenza(1, piano))
 			esito = true;

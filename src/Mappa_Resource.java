@@ -51,11 +51,11 @@ public class Mappa_Resource {
 		
 		System.out.println("CONTROLLO");
 		HttpURLConnection connection = null;
-		/*ArrayList<String> tokensList = new ArrayList<>();
+		ArrayList<String> tokensList = new ArrayList<>();
 		Utente_DB udb = new Utente_DB();
 		tokensList = udb.getListToken();
 		
-		Iterator<String> it = tokensList.iterator();*/
+		Iterator<String> it = tokensList.iterator();
 		
 		
 		
@@ -71,17 +71,22 @@ public class Mappa_Resource {
 	        connection.setRequestProperty("Content-Type", "application/json");
 	        connection.setRequestProperty("Authorization", "key=AIzaSyD7a0N56L8RoWSobOSQxvQ6GAnKT5aAkuE" );
 	        connection.connect();
-	        
-	        JsonObject json = new JsonObject();
+	        String json = "";
 
-            json.addProperty("to", "dJxY58z_PIU:APA91bGzeUBB1TmgCIoYbMDd6dXmAGEyBstV8x3ua3hYQxtzIlbokm-2G0Z4hO6hQfbp5lQ2sznDEvH-1jbiz9TYNEnYaD1Eq3f4360sQR7yOJnW4tADHY6UIeyeQdmMzUDfLwtLFN8g");
+            if(it.hasNext())
+                json = "{\"registration_ids\": [\""+it.next()+"\"";
+            while(it.hasNext())
+                json = json+", \"" + it.next() + "\"";
+
+            json = json + "], \"data\": {\"title\": \"FireExit - EMERGENZA INCENDIO\" , " +
+                                         "\"message\": \"Clicca per metterti al sicuro\"}}";
 
 
             JsonObject info = new JsonObject();
             info.addProperty("title", "TechnoWeb");   // Notification title
             info.addProperty("body", "Hello Test notification"); // Notification body
 
-            json.add("notification", info);
+            
             
             OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
             wr.write(json.toString());

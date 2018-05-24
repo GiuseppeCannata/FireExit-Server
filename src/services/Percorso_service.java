@@ -40,71 +40,75 @@ public class Percorso_service {
 	 * @param posUtente relativa alla posizione attuale dell utente
 	 * @return percorso minimo calcolato
 	 */
-	//TODO: mettere l eliminazione dei nodi sottoIncendio
-	public ArrayList<Arco> calcolaPercorso(Mappa mappa, Nodo posUtente) {
+	public ArrayList<Arco> calcolaPercorsoEmergenza(Mappa mappa, Nodo posUtente) {
 
-		ArrayList<Nodo> uscite = mappa.getNodiUscita();
-		ArrayList<Nodo> nodi = mappa.getNodi();
+        ArrayList<Nodo> uscite = mappa.getNodiUscita();
+        ArrayList<Nodo> nodi = mappa.getNodi();
+        ArrayList<Arco> archiGrafo = mappa.getArchi();
+        ArrayList<Arco> archi = new ArrayList<>();
 
-		ArrayList<Arco> archi = mappa.getArchi();
-		Nodo migliorUscita = null;
+        // considera solo gli archi non incidenti a nodi sotto incendio
+        for (Arco arco : archiGrafo)
+            if(!arco.getNodoPartenza().isTipoIncendio() && !arco.getNodoArrivo().isTipoIncendio())
+                archi.add(arco);
+        Nodo migliorUscita = null;
 
-		// algoritmo di Dijkstra: inizializza valori
-		Map<Nodo, Integer> costi = new HashMap<>();
-		Map<Nodo, Nodo> nodoPrev = new HashMap<>();
-		Map<Nodo, Arco> arcoPrev = new HashMap<>();
-		ArrayList<Nodo> nodiLocali = new ArrayList<>();
+        // algoritmo di Dijkstra: inizializza valori
+        Map<Nodo, Integer> costi = new HashMap<>();
+        Map<Nodo, Nodo> nodoPrev = new HashMap<>();
+        Map<Nodo, Arco> arcoPrev = new HashMap<>();
+        ArrayList<Nodo> nodiLocali = new ArrayList<>();
 
-		// copia i nodi della mappa nella lista di nodi locali e setta la distanza a -1 (non ancora calcolata)
-		for (Nodo nodo : nodi) {
-			nodiLocali.add(nodo);
-			costi.put(nodo, -1);
-		}
+        // copia i nodi della mappa nella lista di nodi locali e setta la distanza a -1 (non ancora calcolata)
+        for (Nodo nodo : nodi) {
+            nodiLocali.add(nodo);
+            costi.put(nodo, -1);
+        }
 
-		// il costo per andare dal nodo sorgente (posizione utente) e se stesso è zero per definizione
-		costi.put(posUtente, 0);
+        // il costo per andare dal nodo sorgente (posizione utente) e se stesso è zero per definizione
+        costi.put(posUtente, 0);
 
 
-		while (nodiLocali.size() > 0) {
-			// restituisci e rimuovi il nodo con minor costo
-			Nodo migliorNodo = getMigliorNodo(nodiLocali, costi);
+        while (nodiLocali.size() > 0) {
+            // restituisci e rimuovi il nodo con minor costo
+            Nodo migliorNodo = getMigliorNodo(nodiLocali, costi);
 
-			nodiLocali.remove(migliorNodo);
+            nodiLocali.remove(migliorNodo);
 
-			// calcoliamo il costo per tutti i nodi adiacenti
-			for (Arco arcoVicino : migliorNodo.getStella(archi)) {
-				Nodo nodoVicino = null;
-				if (arcoVicino.getNodoArrivo().equals(migliorNodo))
-					nodoVicino = arcoVicino.getNodoPartenza();
-				else
-					nodoVicino = arcoVicino.getNodoArrivo();
-				if (nodiLocali.contains(nodoVicino)) {
-					int costo = costi.get(migliorNodo) + arcoVicino.getCosto();
-					int costoVicino = costi.get(nodoVicino);
+            // calcoliamo il costo per tutti i nodi adiacenti
+            for (Arco arcoVicino : migliorNodo.getStella(archi)) {
+                Nodo nodoVicino = null;
+                if (arcoVicino.getNodoArrivo().equals(migliorNodo))
+                    nodoVicino = arcoVicino.getNodoPartenza();
+                else
+                    nodoVicino = arcoVicino.getNodoArrivo();
+                if (nodiLocali.contains(nodoVicino)) {
+                    int costo = costi.get(migliorNodo) + arcoVicino.getCosto();
+                    int costoVicino = costi.get(nodoVicino);
 
-					if (costoVicino == -1 || costo < costoVicino) {
-						costi.put(nodoVicino, costo);
-						nodoPrev.put(nodoVicino, migliorNodo);
-						arcoPrev.put(nodoVicino, arcoVicino);
-					}
-				}
-			}
+                    if (costoVicino == -1 || costo < costoVicino) {
+                        costi.put(nodoVicino, costo);
+                        nodoPrev.put(nodoVicino, migliorNodo);
+                        arcoPrev.put(nodoVicino, arcoVicino);
+                    }
+                }
+            }
 
-			if (uscite.contains(migliorNodo) && ((migliorUscita == null || costi.get(migliorNodo) < costi.get(migliorUscita))))
-				migliorUscita = migliorNodo;
-		}
+            if (uscite.contains(migliorNodo) && ((migliorUscita == null || costi.get(migliorNodo) < costi.get(migliorUscita))))
+                migliorUscita = migliorNodo;
+        }
 
-		ArrayList<Arco> percorso = new ArrayList<>();
-		try {
-			Nodo nodoProssimo = migliorUscita;
-			while (nodoPrev.containsKey(nodoProssimo)) {
-				percorso.add(arcoPrev.get(nodoProssimo));
-				nodoProssimo = nodoPrev.get(nodoProssimo);
-			}
-		} catch (Exception e) {}
+        ArrayList<Arco> percorso = new ArrayList<>();
+        try {
+            Nodo nodoProssimo = migliorUscita;
+            while (nodoPrev.containsKey(nodoProssimo)) {
+                percorso.add(arcoPrev.get(nodoProssimo));
+                nodoProssimo = nodoPrev.get(nodoProssimo);
+            }
+        } catch (Exception e) {}
 
-		return percorso;		
-	}
+        return percorso;
+    }
 	
 	/**
 	 * Calcola il percorso minimo in modalità normale

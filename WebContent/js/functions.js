@@ -51,6 +51,21 @@ function elimina(e, link, nome){
 }
 
 /**
+ * terminaEmergenza è utilizzata per il pop-up di conferma se si desidera o meno terminare l emergenza
+ * 
+ */
+function terminaEmergenza(e, link){
+
+	var Button = document.getElementById("terminaEmergenza");
+	var conf = window.confirm("Vuoi terminare l emergenza per questo piano ?");
+
+	if(conf)
+		Button.href = link;
+	else
+		e.preventDefault();	 
+}
+
+/**
  * richiestaNumPesi(e,link) permetti di lanciare un propt con cui l utente può interagire,
  * in particolare richiede l immissione del numero di pesi prima dell inserimento dell arco
  */

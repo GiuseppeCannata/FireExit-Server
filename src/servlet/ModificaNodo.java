@@ -95,7 +95,7 @@ public class ModificaNodo extends HttpServlet {
 		        	if(TipoIncendio)
 		        	    mdb.updateStatoEmergenza(1, mappaId);
 		        	else 
-		        		if(!ndb.FindNodiSottoIncendioByPiano(mappaId))
+		        		if(!ndb.verificaNodiSottoIncendioByPiano(mappaId))
 		        			mdb.updateStatoEmergenza(0, mappaId);
 		        				
 		        	response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+mappaId);	

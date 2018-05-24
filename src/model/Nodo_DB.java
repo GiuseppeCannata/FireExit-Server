@@ -25,6 +25,8 @@ public class Nodo_DB extends Model{
 		super();
 
 	}
+	
+	
 
 	/*
 	 * Ottiene il piano dei vari Beacon in base al loro macAdrs
@@ -117,6 +119,20 @@ public class Nodo_DB extends Model{
 							);
 					nodi.add(nodo);
 					break;
+					
+				case 4:
+					tipoUscita = true;
+					tipoIncendio = true;
+					nodo  = new Nodo(rs.getInt(FIELD_ID),
+							rs.getString(FIELD_IDBEACON), 
+							rs.getInt(FIELD_X),
+							rs.getInt(FIELD_Y), 
+							tipoUscita, 
+							tipoIncendio, 
+							rs.getInt(FIELD_PIANO)
+							);
+					nodi.add(nodo);
+					break;
 				}
 
 			}
@@ -157,9 +173,6 @@ public class Nodo_DB extends Model{
 
 		return esito;	
 	}
-
-
-
 
 	public Nodo FindNodoById(int id) {
 
@@ -204,6 +217,19 @@ public class Nodo_DB extends Model{
 				case 3:
 					tipoUscita = true;
 					tipoIncendio = false;
+					nodo  = new Nodo(rs.getInt(FIELD_ID),
+							rs.getString(FIELD_IDBEACON), 
+							rs.getInt(FIELD_X),
+							rs.getInt(FIELD_Y), 
+							tipoUscita, 
+							tipoIncendio, 
+							rs.getInt(FIELD_PIANO)
+							);
+					break;
+					
+				case 4:
+					tipoUscita = true;
+					tipoIncendio = true;
 					nodo  = new Nodo(rs.getInt(FIELD_ID),
 							rs.getString(FIELD_IDBEACON), 
 							rs.getInt(FIELD_X),
@@ -279,6 +305,19 @@ public class Nodo_DB extends Model{
 							rs.getInt(FIELD_PIANO)
 							);
 					break;
+					
+				case 4:
+					tipoUscita = true;
+					tipoIncendio = true;
+					nodo  = new Nodo(rs.getInt(FIELD_ID),
+							rs.getString(FIELD_IDBEACON), 
+							rs.getInt(FIELD_X),
+							rs.getInt(FIELD_Y), 
+							tipoUscita, 
+							tipoIncendio, 
+							rs.getInt(FIELD_PIANO)
+							);
+					break;
 				}
 
 			}
@@ -294,7 +333,7 @@ public class Nodo_DB extends Model{
 
 	}
 	
-	public boolean FindNodiSottoIncendioByPiano(int piano) {
+	public boolean verificaNodiSottoIncendioByPiano(int piano) {
 
 		boolean esito = false;
 		
@@ -366,6 +405,20 @@ public class Nodo_DB extends Model{
 				case 3:
 					tipoUscita = true;
 					tipoIncendio = false;
+					nodo  = new Nodo(rs.getInt(FIELD_ID),
+							rs.getString(FIELD_IDBEACON), 
+							rs.getInt(FIELD_X),
+							rs.getInt(FIELD_Y), 
+							tipoUscita, 
+							tipoIncendio, 
+							rs.getInt(FIELD_PIANO)
+							);
+					nodi.add(nodo);
+					break;
+					
+				case 4:
+					tipoUscita = true;
+					tipoIncendio = true;
 					nodo  = new Nodo(rs.getInt(FIELD_ID),
 							rs.getString(FIELD_IDBEACON), 
 							rs.getInt(FIELD_X),

@@ -26,18 +26,19 @@ public class Utente_Resource {
 	/**
 	 * Per la registrazione del token (identificativo dell app per ogni utente)
 	 * 
-	 * @param macAdrs JSON contenente il token 
+	 * @param JSONtoken JSON contenente il token 
 	 */
-	public void registrationToken(String JSONtoken) {
+	public String registrationToken(String JSONtoken) {
 		
 		System.out.println("JSONtoken"+JSONtoken);
+		Gson gson = new Gson();
 		
-		JsonObject jobj = new Gson().fromJson(JSONtoken, JsonObject.class);
+		JsonObject jobj = gson.fromJson(JSONtoken, JsonObject.class);
 		String token = jobj.get("token").getAsString();
 		
 		Utente_DB udb = new Utente_DB();
 		
-		udb.insert(token);
+		return gson.toJson(udb.insert(token));	
 		
 	}
 	

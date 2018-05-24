@@ -48,7 +48,7 @@ public class Percorso_Resource {
 
 		Mappa mappa = mappaService.CostruzioneMappa(piano);
 		Nodo posU = percorsoService.creaNodo(mac);
-		ArrayList<Arco> percorso = percorsoService.calcolaPercorso(mappa , posU);
+		ArrayList<Arco> percorso = percorsoService.calcolaPercorsoEmergenza(mappa , posU);
 
 		// Costruisco il Json da inviare all App
 		Gson gson = new Gson();

@@ -17,8 +17,10 @@ public class Utente_DB extends Model {
 		
 	}
 	
-	public void insert(String token){
+	public boolean insert(String token){
 
+		boolean esito = true;
+		
 		String query ="insert into "+TBL_NAME+" ( "+TOKEN+" )"+
 				" values( '"+token+"' )";
 
@@ -30,11 +32,14 @@ public class Utente_DB extends Model {
 			updateQueryCostrain(query);
 			CloseConnessione();
 			st.close();
+			esito = true;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return esito;
 	}
 	
 	public ArrayList<String> getListToken(){

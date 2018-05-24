@@ -21,13 +21,6 @@
 	</div>
 
 	<h2>Mappa</h2>
-	<p>Ecco la dashboard della mappa da te scelta.
-	   <br>
-       Qui potrai inserire nuovi nodi e modificare quelli già presenti.
-       <br>
-       Inoltre puoi inserire nuovi archi e modificare quelli già esisenti.
-    </p>
-
 	<table>
 		<tr>
 			<td>
@@ -40,13 +33,15 @@
 					<li><b>Stato Emergenza:</b></li>
 					<c:choose>
 					    <c:when test="${statoEmergenza=='0'}">
-					        <img src="../../src/images/StatiMappa/NOemergenza.png" alt="piantina piano" height="40" width="40"> 
+					        <img src="../../src/images/StatiMappa/NOemergenza.png" alt="piantina piano" height="40" width="40">
 					    </c:when>    
 					    <c:otherwise>
 					       <img src="../../src/images/StatiMappa/SIemergenza.png" alt="piantina piano" height="40" width="40">
+					       <li><a id="terminaEmergenza"
+					              href="#"
+				                  onclick="terminaEmergenza(event,'${pageContext.request.contextPath}/TerminaEmergenza?piano=${mappa.getPiano()}')"><button>Termina Emergenza</button></a></li>
 					    </c:otherwise>
 					</c:choose>
-					
 				</ul>
 			</td>
 			<td>
