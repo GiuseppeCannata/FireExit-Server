@@ -65,8 +65,9 @@ public class InserimentoInfoMappa extends HttpServlet {
 	     String errorString = null;
 	     
 	     try {
-	    	 //pathassoluto per salvataggio file
-	         out = new FileOutputStream(new File("C:\\Users\\User\\Desktop\\glassfish5\\glassfish\\domains\\domain1\\docroot\\src\\images" + File.separator + fileName+".png"));
+	    	 String curDir = System.getProperty("user.dir");
+	 		 System.out.println(" - " + curDir);
+	         out = new FileOutputStream(new File("../docroot/src/images" + File.separator + fileName+".png"));
 	         filecontent = filePart.getInputStream();
 
 	         int read = 0;

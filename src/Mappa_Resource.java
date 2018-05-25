@@ -160,9 +160,10 @@ public class Mappa_Resource {
 
 		System.out.println("Nome piantina: "+nome);
 
+		String curDir = System.getProperty("user.dir");
+		System.out.println(" - " + curDir);
 		// Path all interno della cartella server dove sono contenute le mappe
-		// Path assoluto poichè il relativo non vede la directory
-		File f = new File("C:\\Users\\User\\Desktop\\glassfish5\\glassfish\\domains\\domain1\\docroot\\src\\images\\"+nome+".png");
+		File f = new File("../docroot/src/images/"+nome+".png");
 		FileInputStream inStream = null;
 
 		try {
