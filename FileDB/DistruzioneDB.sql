@@ -1,0 +1,14 @@
+--<ScriptOptions statementTerminator=";"/>
+
+DROP TABLE ARCO;
+
+DROP TABLE MAPPA;
+
+DROP TABLE NODO;
+
+DROP TABLE PESOARCO;
+
+DROP TABLE PESO;
+
+DROP TABLE UTENTE;
+

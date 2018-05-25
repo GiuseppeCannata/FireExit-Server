@@ -15,6 +15,9 @@ import model.Nodo_DB;
 import model.Utente_DB;
 import services.Mappa_service;
 
+/*
+ * Utente_resource fornisce metodi per il recupero di informazioni del messaggio Json relative all utente
+ */
 
 @Path("user")
 public class Utente_Resource {

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import utils.Parametri;
 
+/*
+ * Una mappa formata da una serie di Nodi e archi, e viene caratterizzata da una piantina e un piano.
+ */
 public class Mappa {
 
 	private int Piano;
@@ -52,6 +55,9 @@ public class Mappa {
 		Nodi = nodi;
 	}
 	
+	/*
+	 * Permette di ottenere i nodi uscita dalla lista dei nodi associata alla mappa
+	 */
 	public ArrayList<Nodo> getNodiUscita() {
 		ArrayList<Nodo> uscite = new ArrayList<>();
 		for(Nodo nodo : this.Nodi)

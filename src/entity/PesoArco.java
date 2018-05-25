@@ -2,7 +2,10 @@ package entity;
 
 import java.util.Comparator;
 
-
+/*
+ * Un pesoArco è caratterizzato dall id dell arco a cui è associato, un peso, e il valore di quanto quest ultimo
+ * incide sull arco
+ */
 public class PesoArco {
 
 	private int id;

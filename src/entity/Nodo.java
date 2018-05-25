@@ -2,6 +2,10 @@ package entity;
 
 import java.util.ArrayList;
 
+/*
+ * Un nodo è formato da un id, dal suo MACAdress, da posizioni x e y sulla piantina.
+ * Inoltre e caratterizzato dal suo tipo: Incendio o Base
+ */
 public class Nodo {
 
 	private int Id;
@@ -94,6 +98,11 @@ public class Nodo {
 		return cambiato;
 	}
 
+	/*
+	 * Pemette di ottenere la stella (archi associati al nodo)
+	 * 
+	 * @param archi lista degli archi in cui bisogna cercare 
+	 */
 	public ArrayList<Arco> getStella(ArrayList<Arco> archi) {
 		ArrayList<Arco> stella = new ArrayList<>();
 		for(Arco arco : archi)

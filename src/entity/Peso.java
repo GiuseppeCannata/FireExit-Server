@@ -1,5 +1,9 @@
 package entity;
 
+/*
+ * 	Un peso è caratterizzato da una descrizione e dal valore di quel peso.
+ *  Il valore è espresso da un nmumro intero
+ */
 public class Peso {
 
 	private int id;
