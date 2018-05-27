@@ -34,6 +34,9 @@
 					<c:choose>
 					    <c:when test="${statoEmergenza=='0'}">
 					        <img src="../../src/images/StatiMappa/NOemergenza.png" alt="piantina piano" height="40" width="40">
+					         <li><a id="terminaEmergenza"
+					              href=" ${pageContext.request.contextPath}/AvviaEmergenza?piano=${mappa.getPiano()}">
+				                 <button>Avvia Emergenza</button></a></li>
 					    </c:when>    
 					    <c:otherwise>
 					       <img src="../../src/images/StatiMappa/SIemergenza.png" alt="piantina piano" height="40" width="40">

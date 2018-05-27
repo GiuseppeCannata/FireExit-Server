@@ -1,6 +1,12 @@
 package services;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import entity.Arco;
 import entity.Mappa;
@@ -8,6 +14,7 @@ import entity.Nodo;
 import model.Arco_DB;
 import model.Mappa_DB;
 import model.Nodo_DB;
+import model.Utente_DB;
 import utils.Parametri;
 
 /**
@@ -20,6 +27,64 @@ public class Mappa_service {
 
 	}
 
+	
+	public void inviaAlert(int piano) {
+		
+		Mappa_DB mdb = new Mappa_DB();
+		HttpURLConnection connection = null;
+		ArrayList<String> tokensList = new ArrayList<>();
+		Utente_DB udb = new Utente_DB();
+		tokensList = udb.getListToken();
+		
+		Iterator<String> it = tokensList.iterator();
+
+	        URL url;
+			try {
+			
+			url = new URL("https://fcm.googleapis.com/fcm/send");
+			
+	        connection = (HttpURLConnection) url.openConnection();
+	        connection.setDoOutput(true);
+	        connection.setDoInput(true);
+	        connection.setRequestMethod("POST");
+	        connection.setRequestProperty("Content-Type", "application/json");
+	        connection.setRequestProperty("Authorization", "key=AIzaSyD7a0N56L8RoWSobOSQxvQ6GAnKT5aAkuE" );
+	        connection.connect();
+	        String json = "";
+
+            if(it.hasNext())
+                json = "{\"registration_ids\": [\""+it.next()+"\"";
+            while(it.hasNext())
+                json = json+", \"" + it.next() + "\"";
+
+            json = json + "], \"data\": {\"title\": \"FireExit - EMERGENZA INCENDIO\" , " +
+                                         "\"message\": \"Clicca per metterti al sicuro\"}}";
+            
+            OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+            wr.write(json.toString());
+            wr.flush();
+            connection.getInputStream();
+            
+            mdb.updateStatoEmergenza(1,piano);
+	        
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+	            if (connection != null) {
+	                try {
+	                    connection.disconnect();
+	                }
+
+	                catch (Exception e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+	}
 
 	/**
 	 * Gestisce le segnalazioni di emergenza
@@ -34,8 +99,7 @@ public class Mappa_service {
         int piano = Nodi.get(0).getmappaId();
 		
 		Nodo_DB ndb = new Nodo_DB();
-		Mappa_DB mdb = new Mappa_DB();
-
+	
 		for(Nodo nodo: Nodi) 
 			if(nodo.isTipoIncendio() && nodo.isTipoUscita()) {
 				ndb.setTipo(Parametri.TIPO_USCITA_INCENDIATO, nodo.getBeaconId());
@@ -51,7 +115,7 @@ public class Mappa_service {
 				controllo++;
 			}
 
-		if (controllo == Nodi.size() && mdb.updateStatoEmergenza(1, piano))
+		if (controllo == Nodi.size())
 			esito = true;
 
 		return esito;		

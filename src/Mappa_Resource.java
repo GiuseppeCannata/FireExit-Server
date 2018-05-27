@@ -43,76 +43,18 @@ import services.Mappa_service;
 @Path("maps")
 public class Mappa_Resource {
 	
-	
 	@POST
-	@Path("TEST")
+	@Path("inviaAlert")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void controllaStatoEmergenza(String messaggio){
 		
 		System.out.println("CONTROLLO");
-		HttpURLConnection connection = null;
-		ArrayList<String> tokensList = new ArrayList<>();
-		Utente_DB udb = new Utente_DB();
-		tokensList = udb.getListToken();
 		
-		Iterator<String> it = tokensList.iterator();
-		
-		
-		
-	        URL url;
-			try {
-			
-			url = new URL("https://fcm.googleapis.com/fcm/send");
-			
-	        connection = (HttpURLConnection) url.openConnection();
-	        connection.setDoOutput(true);
-	        connection.setDoInput(true);
-	        connection.setRequestMethod("POST");
-	        connection.setRequestProperty("Content-Type", "application/json");
-	        connection.setRequestProperty("Authorization", "key=AIzaSyD7a0N56L8RoWSobOSQxvQ6GAnKT5aAkuE" );
-	        connection.connect();
-	        String json = "";
-
-            if(it.hasNext())
-                json = "{\"registration_ids\": [\""+it.next()+"\"";
-            while(it.hasNext())
-                json = json+", \"" + it.next() + "\"";
-
-            json = json + "], \"data\": {\"title\": \"FireExit - EMERGENZA INCENDIO\" , " +
-                                         "\"message\": \"Clicca per metterti al sicuro\"}}";
-
-
-            JsonObject info = new JsonObject();
-            info.addProperty("title", "TechnoWeb");   // Notification title
-            info.addProperty("body", "Hello Test notification"); // Notification body
-
-            
-            
-            OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
-            wr.write(json.toString());
-            wr.flush();
-            connection.getInputStream();
-            
-	        
-	        
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-	            if (connection != null) {
-	                try {
-	                    connection.disconnect();
-	                }
-
-	                catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	        }
-		}
+		JsonObject jobj = new Gson().fromJson(messaggio, JsonObject.class);
+		int piano = jobj.get("piano").getAsInt();
+		Mappa_service ms = new Mappa_service();
+		ms.inviaAlert(piano);
+	}
 
 	@POST
 	@Path("getMappa")

@@ -123,8 +123,8 @@ public class Mappa_DB extends Model{
 			while(rs.next()) {
 
 				mappa = new Mappa(
-						rs.getInt(this.FIELD_PIANO),
-						rs.getString(this.FIELD_PIANTINA),
+						rs.getInt(FIELD_PIANO),
+						rs.getString(FIELD_PIANTINA),
 						null,
 						null
 						); 
@@ -212,13 +212,13 @@ public class Mappa_DB extends Model{
 		return esito;
 	}
 	
-	public boolean updateStatoEmergenza(int stato,int piano) {
+	public boolean updateStatoEmergenza(int stato, int piano) {
 
 		boolean esito = false;
 		
 		String query ="update "+TBL_NAME+" set "
 				+FIELD_STATOEMERGENZA+" = "+stato+" "
-				+"where "+FIELD_PIANO+"= "+piano+"";
+				+"where "+FIELD_PIANO+" = "+piano;
 		System.out.println(query);
 
 		try {
