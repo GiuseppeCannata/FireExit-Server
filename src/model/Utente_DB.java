@@ -19,7 +19,7 @@ public class Utente_DB extends Model {
 	
 	public boolean insert(String token){
 
-		boolean esito = true;
+		boolean esito = false;
 		
 		String query ="insert into "+TBL_NAME+" ( "+TOKEN+" )"+
 				" values( '"+token+"' )";

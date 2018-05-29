@@ -69,7 +69,7 @@ public class InserimentoNodo extends HttpServlet {
         int mappaId = Integer.parseInt(request.getParameter("mappaId"));
         int X = Integer.parseInt(request.getParameter("X"));
         int Y = Integer.parseInt(request.getParameter("Y"));
-        boolean TipoIncendio = Boolean.parseBoolean(request.getParameter("TipoIncendio"));
+        boolean TipoIncendio = false;
         boolean TipoUscita = Boolean.parseBoolean(request.getParameter("TipoUscita"));
         
         boolean hasError = false;

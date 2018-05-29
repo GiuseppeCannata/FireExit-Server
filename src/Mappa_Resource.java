@@ -35,6 +35,7 @@ import model.Mappa_DB;
 import model.Nodo_DB;
 import model.Utente_DB;
 import services.Mappa_service;
+import utils.Parametri;
 
 /**
  * Mappa_Resource offre metodi per il recupero delle informazioni del messaggio Json relative alla mappa 
@@ -46,14 +47,18 @@ public class Mappa_Resource {
 	@POST
 	@Path("inviaAlert")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void controllaStatoEmergenza(String messaggio){
+	public void inviaAlert(String pianoJSON){
 		
-		System.out.println("CONTROLLO");
+		System.out.println("Ricezione di invio Alert");
 		
-		JsonObject jobj = new Gson().fromJson(messaggio, JsonObject.class);
+		JsonObject jobj = new Gson().fromJson(pianoJSON, JsonObject.class);
 		int piano = jobj.get("piano").getAsInt();
+		
 		Mappa_service ms = new Mappa_service();
-		ms.inviaAlert(piano);
+        Mappa_DB mdb = new Mappa_DB();
+        
+		mdb.updateStatoEmergenza(1,piano);
+		ms.inviaAlert(/*piano*/);
 	}
 
 	@POST
@@ -66,12 +71,12 @@ public class Mappa_Resource {
 	 * @param macAdrs JSON contenente l'indirizzo MAC del nodo posizione utente
 	 * @return JSON contente la mappa relativa al piano dell uttente
 	 */
-	public String downloadMappa(String macAdrs) {
+	public String downloadMappa(String macJSON) {
 		
-		System.out.println("mac"+macAdrs);
+		System.out.println("MAC: "+macJSON);
 
 		// Estrazione dal Json in entrata dell info macAdrs
-		JsonObject jobj = new Gson().fromJson(macAdrs, JsonObject.class);
+		JsonObject jobj = new Gson().fromJson(macJSON, JsonObject.class);
 		String mac = jobj.get("mac_beacon").getAsString();
 
 		Mappa_service mappaService = new Mappa_service();
@@ -100,10 +105,10 @@ public class Mappa_Resource {
 	 */
 	public Response downloadPiantina(@PathParam("nome") String nome) {
 
-		System.out.println("Nome piantina: "+nome);
+		System.out.println("Nome piantina cercata: "+nome);
 
-		String curDir = System.getProperty("user.dir");
-		System.out.println(" - " + curDir);
+		//String curDir = System.getProperty("user.dir");
+		//System.out.println(" - " + curDir);
 		// Path all interno della cartella server dove sono contenute le mappe
 		File f = new File("../docroot/src/images/"+nome+".png");
 		FileInputStream inStream = null;
@@ -130,20 +135,45 @@ public class Mappa_Resource {
 	 * @param NodiSottoIncendio JSON contenete i nodi segnalati dall utente
 	 * @return JSON con il risulato della segnalazione (true/false)
 	 */
-	public String segnalazione(String NodiSottoIncendio) {
+	public String segnalazione(String NodiSottoIncendioJSON) {
 
-		System.out.println("mac"+NodiSottoIncendio);
+		System.out.println("NodiSottoIncendio: "+NodiSottoIncendioJSON);
 		boolean esito = false;
 
 		Type type = new TypeToken<ArrayList<Nodo>>() {
 		}.getType();
 
 		// Estrazione dell ArrayList inviato dall app
-		ArrayList<Nodo> dati_nodi = new Gson().fromJson(NodiSottoIncendio, type);
-		Mappa_service mappaService = new Mappa_service();
+		ArrayList<Nodo> dati_nodi = new Gson().fromJson(NodiSottoIncendioJSON, type);
+		//Mappa_service mappaService = new Mappa_service();
 
-		esito = mappaService.prendiSegnalazione(dati_nodi);
-		//System.out.println("esito update nodi: "+esito);
+	//	esito = mappaService.prendiSegnalazione(dati_nodi);
+	
+		int controllo = 0;
+        int piano = dati_nodi.get(0).getmappaId();
+		
+		Nodo_DB ndb = new Nodo_DB();
+		Mappa_DB mdb = new Mappa_DB();
+		
+		mdb.updateStatoEmergenza(1,piano);
+	
+		for(Nodo nodo: dati_nodi) 
+			if(nodo.isTipoIncendio() && nodo.isTipoUscita()) {
+				ndb.setTipo(Parametri.TIPO_USCITA_INCENDIATO, nodo.getBeaconId());
+				controllo++;
+			} else if(nodo.isTipoIncendio()) {
+				ndb.setTipo(Parametri.TIPO_BASE_INCENDIATO, nodo.getBeaconId());
+				controllo++;
+			} else if(nodo.isCambiato() && nodo.isTipoUscita()) {
+				ndb.setTipo(Parametri.TIPO_USCITA_NO_INCENDIATO, nodo.getBeaconId());
+				controllo++;
+			} else if(nodo.isCambiato()) {
+				ndb.setTipo(Parametri.TIPO_BASE_NO_INCENDIATO, nodo.getBeaconId());
+				controllo++;
+			}
+
+		if (controllo == dati_nodi.size())
+			esito = true;
 		
 		JsonObject Data = new JsonObject();
 		Data.addProperty("esito", esito);
@@ -163,7 +193,7 @@ public class Mappa_Resource {
 	 */
 	public String downloadAggiornamenti(String pianoJSON) {
 
-		System.out.println("mac"+pianoJSON);
+		System.out.println("Piano: "+pianoJSON);
 
 		// Estrazione dal Json in entrata dell info macAdrs
 		JsonObject jobj = new Gson().fromJson(pianoJSON, JsonObject.class);

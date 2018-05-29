@@ -28,9 +28,9 @@ public class Mappa_service {
 	}
 
 	
-	public void inviaAlert(int piano) {
+	public void inviaAlert(/*int piano*/) {
 		
-		Mappa_DB mdb = new Mappa_DB();
+		//Mappa_DB mdb = new Mappa_DB();
 		HttpURLConnection connection = null;
 		ArrayList<String> tokensList = new ArrayList<>();
 		Utente_DB udb = new Utente_DB();
@@ -65,7 +65,7 @@ public class Mappa_service {
             wr.flush();
             connection.getInputStream();
             
-            mdb.updateStatoEmergenza(1,piano);
+           // mdb.updateStatoEmergenza(1,piano);
 	        
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -92,13 +92,16 @@ public class Mappa_service {
 	 * @param nodi List relativa ai nodi sotto incendio
 	 * @return true/false se la segnalazione è stata o meno effettuata
 	 */
-	public boolean prendiSegnalazione(ArrayList<Nodo> Nodi) {
+	/*public boolean prendiSegnalazione(ArrayList<Nodo> Nodi) {
 
 		boolean esito = false;
 		int controllo = 0;
         int piano = Nodi.get(0).getmappaId();
 		
 		Nodo_DB ndb = new Nodo_DB();
+		Mappa_DB mdb = new Mappa_DB();
+		
+		mdb.updateStatoEmergenza(1,piano);
 	
 		for(Nodo nodo: Nodi) 
 			if(nodo.isTipoIncendio() && nodo.isTipoUscita()) {
@@ -119,7 +122,7 @@ public class Mappa_service {
 			esito = true;
 
 		return esito;		
-	}
+	}*/
 
 	/**
 	 * Pemette di costruire la mappa

@@ -34,12 +34,12 @@ public class Percorso_Resource {
 	 * @param messaggio contente la posizione dell utente e il piano del piano in cui si trova
 	 * @return JSON relativo al percorso calcolato
 	 */
-	public String downloadPercorso(String messaggio) {
+	public String downloadPercorso(String messaggioJSON) {
 
-		System.out.println("mac"+messaggio);
+		System.out.println("JSON p. emergenza: "+messaggioJSON);
 
 		// Estrazione dal Json in entrata
-		JsonObject jobj = new Gson().fromJson(messaggio, JsonObject.class);
+		JsonObject jobj = new Gson().fromJson(messaggioJSON, JsonObject.class);
 		String mac = jobj.get("posUtente").getAsString();  //relativo al MAC del beacon
 		int piano = jobj.get("piano").getAsInt();
 
@@ -69,12 +69,12 @@ public class Percorso_Resource {
 	 * @param messaggio conmtente la posizione attuale dell utente, il piano, e il nodo destinazione
 	 * @return JSON relativo al percorso calcolato
 	 */
-	public String downloadPercorsoMinimoNormale(String messaggio) {
+	public String downloadPercorsoMinimoNormale(String messaggioJSON) {
 
-		System.out.println("Json: "+messaggio);
+		System.out.println("JSON p. Normale: "+messaggioJSON);
 
 		// Estrazione dal Json in entrata
-		JsonObject jobj = new Gson().fromJson(messaggio, JsonObject.class);
+		JsonObject jobj = new Gson().fromJson(messaggioJSON, JsonObject.class);
 		String macPU = jobj.get("posUtente").getAsString();  //relativo al MAC del beacon
 		String macDest = jobj.get("destinazione").getAsString();
 		int piano = jobj.get("piano").getAsInt();

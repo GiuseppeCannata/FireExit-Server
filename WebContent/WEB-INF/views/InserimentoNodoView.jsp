@@ -97,7 +97,7 @@
 				</select></td>
 			</tr>
 			<tr>
-				<td>Tipo Incendio</td>
+			<!--  	<td>Tipo Incendio</td>
 				<td><select name="TipoIncendio">
 						<% 
 			                if(nodo != null){
@@ -120,7 +120,7 @@
 		                %>
 				</select></td>
 			</tr>
-			<tr>
+			<tr> -->
 				<td>Tipo Uscita</td>
 				<td><select name="TipoUscita">
 						<% 

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Mappa_DB;
 import services.Mappa_service;
 
 /**
@@ -32,7 +33,9 @@ public class AvviaEmergenza extends HttpServlet {
 		
 		int piano = Integer.parseInt((String)request.getParameter("piano"));
 		Mappa_service ms = new Mappa_service();
-		ms.inviaAlert(piano);
+        Mappa_DB mdb = new Mappa_DB();
+		mdb.updateStatoEmergenza(1,piano);
+		ms.inviaAlert(/*piano*/);
 		
 		response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
 	}
