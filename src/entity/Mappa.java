@@ -2,7 +2,6 @@ package entity;
 
 import java.util.ArrayList;
 
-import utils.Parametri;
 
 /*
  * Una mappa formata da una serie di Nodi e archi, e viene caratterizzata da una piantina e un piano.

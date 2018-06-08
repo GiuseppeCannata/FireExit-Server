@@ -7,10 +7,6 @@ import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /*
  * La classe discover implementa un Runnable.
  * E' un Thread che se attivato dall utente permette di ricevere messaggi di broadcast, inviati dalle App

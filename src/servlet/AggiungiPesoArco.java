@@ -44,10 +44,10 @@ public class AggiungiPesoArco extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		//Controllo input derivante dalla query string
 		try {
+			
 			Idarco = Integer.parseInt(request.getParameter("id"));
 			piano = Integer.parseInt(request.getParameter("piano"));
 			
@@ -58,10 +58,10 @@ public class AggiungiPesoArco extends HttpServlet {
 			
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/AggiungiPesoArcoView.jsp");
 	        dispatcher.forward(request, response);
+	        
 		} catch(Exception e) {
 			
 			response.sendRedirect(request.getContextPath() + "/ListMappe");
-			
 		}
 	}
 
@@ -69,7 +69,6 @@ public class AggiungiPesoArco extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		int valore = Integer.parseInt(request.getParameter("valore"));
 		String descrizione = request.getParameter("descrizione");

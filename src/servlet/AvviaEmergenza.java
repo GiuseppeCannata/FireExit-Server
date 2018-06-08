@@ -29,15 +29,21 @@ public class AvviaEmergenza extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
-		int piano = Integer.parseInt((String)request.getParameter("piano"));
-		Mappa_service ms = new Mappa_service();
-        Mappa_DB mdb = new Mappa_DB();
-		mdb.updateStatoEmergenza(1,piano);
-		ms.inviaAlert(/*piano*/);
-		
-		response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
+		try {
+			int piano = Integer.parseInt((String)request.getParameter("piano"));
+			Mappa_service ms = new Mappa_service();
+	        Mappa_DB mdb = new Mappa_DB();
+			mdb.updateStatoEmergenza(1,piano);
+			ms.inviaAlert(/*piano*/);
+			
+			response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
+			
+		} catch(Exception e) {
+			
+			System.out.println("INPUT ERRATO");
+			response.sendRedirect(request.getContextPath() + "/ListMappe");
+		}
 	}
 
 	/**

@@ -49,9 +49,9 @@ public class EliminaArco extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		try {
+			
 			int Idarco = Integer.parseInt(request.getParameter("id"));
 			int piano = Integer.parseInt(request.getParameter("piano"));
 			int NodoPartenzaId = Integer.parseInt(request.getParameter("NodoPartenza"));

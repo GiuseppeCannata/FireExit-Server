@@ -6,15 +6,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -23,17 +17,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import entity.Mappa;
 import entity.Nodo;
 import model.Mappa_DB;
 import model.Nodo_DB;
-import model.Utente_DB;
 import services.Mappa_service;
 import utils.Parametri;
 
@@ -145,9 +134,6 @@ public class Mappa_Resource {
 
 		// Estrazione dell ArrayList inviato dall app
 		ArrayList<Nodo> dati_nodi = new Gson().fromJson(NodiSottoIncendioJSON, type);
-		//Mappa_service mappaService = new Mappa_service();
-
-	//	esito = mappaService.prendiSegnalazione(dati_nodi);
 	
 		int controllo = 0;
         int piano = dati_nodi.get(0).getmappaId();

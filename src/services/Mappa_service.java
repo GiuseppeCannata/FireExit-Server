@@ -12,10 +12,8 @@ import entity.Arco;
 import entity.Mappa;
 import entity.Nodo;
 import model.Arco_DB;
-import model.Mappa_DB;
 import model.Nodo_DB;
 import model.Utente_DB;
-import utils.Parametri;
 
 /**
  * Mappa_service viene istanziata da Mappa_resorce.

@@ -4,10 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import entity.Arco;
-import entity.Nodo;
-import entity.PesoArco;
-
 public class Utente_DB extends Model {
 	
 	private static final String TBL_NAME = "Utente";

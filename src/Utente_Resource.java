@@ -24,12 +24,12 @@ public class Utente_Resource {
 	 * 
 	 * @param JSONtoken JSON contenente il token 
 	 */
-	public String registrationToken(String JSONtoken) {
+	public String registrationToken(String tokenJSON) {
 		
-		System.out.println("JSONtoken: "+JSONtoken);
+		System.out.println("JSONtoken: "+tokenJSON);
 		Gson gson = new Gson();
 		
-		JsonObject jobj = gson.fromJson(JSONtoken, JsonObject.class);
+		JsonObject jobj = gson.fromJson(tokenJSON, JsonObject.class);
 		String token = jobj.get("token").getAsString();
 		
 		Utente_DB udb = new Utente_DB();

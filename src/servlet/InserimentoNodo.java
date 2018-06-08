@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import java.sql.SQLException;
 
-import java.util.ArrayList;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.regex.Pattern;
 
 import entity.Nodo;
-import model.Mappa_DB;
 import model.Nodo_DB;
 
 /**
@@ -27,9 +24,7 @@ public class InserimentoNodo extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Mappa_DB mdb;
 	private Nodo nodo;
-	private ArrayList<Integer> pianiList;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,8 +33,6 @@ public class InserimentoNodo extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
         
-        mdb = new Mappa_DB();
-        pianiList = mdb.getPiani();
     }
 
 	/**
