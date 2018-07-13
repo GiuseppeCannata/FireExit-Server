@@ -4,10 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import entity.Arco;
-import entity.Nodo;
-import entity.PesoArco;
-
 public class Utente_DB extends Model {
 	
 	private static final String TBL_NAME = "Utente";
@@ -19,7 +15,7 @@ public class Utente_DB extends Model {
 	
 	public boolean insert(String token){
 
-		boolean esito = true;
+		boolean esito = false;
 		
 		String query ="insert into "+TBL_NAME+" ( "+TOKEN+" )"+
 				" values( '"+token+"' )";

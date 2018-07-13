@@ -41,7 +41,7 @@
 						<%
 			                Peso peso = (Peso) request.getAttribute("peso");
 		                    
-		                    for(int i=0; i< 10 ; i++){
+		                    for(int i=1; i< 100 ; i++){
 		                    	if(peso.getPeso() == i)
 		                    	  out.print("<option selected>"+i+"</option>");	
 		                    	else

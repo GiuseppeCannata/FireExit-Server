@@ -67,11 +67,6 @@ public class InserimentoPeso extends HttpServlet {
 	        	
 				if(pdb.inserimentoPeso(peso))
 				   response.sendRedirect(request.getContextPath() + "/ListPesi");
-				else {
-					request.setAttribute("messaggio", "Sembra esserci stato un errore. La invitiamo a riprovare scusandoci per l incoveniete"); 
-				    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
-				    dispatcher.forward(request, response);
-				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();

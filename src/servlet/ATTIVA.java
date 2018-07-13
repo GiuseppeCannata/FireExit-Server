@@ -16,6 +16,7 @@ import services.Discover;
  */
 @WebServlet("/ATTIVA")
 public class ATTIVA extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -30,11 +31,14 @@ public class ATTIVA extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		Thread discoveryThread = new Thread(Discover.getInstance());
 	    discoveryThread.start();
+	    
 	    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/Messaggio.jsp");
 	    request.setAttribute("Messaggio", "Ora ogni device con istallata FireExit sarà in grado di localizzare il server");
 	    dispatcher.forward(request, response);
+	    
 	}
 
 	/**

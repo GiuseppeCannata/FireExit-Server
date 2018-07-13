@@ -7,10 +7,6 @@ import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /*
  * La classe discover implementa un Runnable.
  * E' un Thread che se attivato dall utente permette di ricevere messaggi di broadcast, inviati dalle App
@@ -23,6 +19,7 @@ public class Discover implements Runnable {
 
   @Override
   public void run() {
+	  
 	  try {
 		  
 	        //Keep a socket open to listen to all the UDP trafic that is destined for this port
@@ -64,8 +61,6 @@ public class Discover implements Runnable {
 
   }
 
- 
-
   public static Discover getInstance() {
 
     return DiscoveryHolder.INSTANCE;
@@ -77,6 +72,5 @@ public class Discover implements Runnable {
     private static final Discover INSTANCE = new Discover();
 
   }
-
 }
 

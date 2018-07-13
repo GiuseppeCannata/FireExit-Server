@@ -1,19 +1,12 @@
-import java.util.ArrayList;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import entity.Mappa;
-import model.Mappa_DB;
-import model.Nodo_DB;
 import model.Utente_DB;
-import services.Mappa_service;
 
 /*
  * Utente_resource fornisce metodi per il recupero di informazioni del messaggio Json relative all utente
@@ -31,47 +24,16 @@ public class Utente_Resource {
 	 * 
 	 * @param JSONtoken JSON contenente il token 
 	 */
-	public String registrationToken(String JSONtoken) {
+	public String registrationToken(String tokenJSON) {
 		
-		System.out.println("JSONtoken"+JSONtoken);
+		System.out.println("JSONtoken: "+tokenJSON);
 		Gson gson = new Gson();
 		
-		JsonObject jobj = gson.fromJson(JSONtoken, JsonObject.class);
+		JsonObject jobj = gson.fromJson(tokenJSON, JsonObject.class);
 		String token = jobj.get("token").getAsString();
 		
 		Utente_DB udb = new Utente_DB();
 		
-		return gson.toJson(udb.insert(token));	
-		
-	}
-	
-	@POST
-	@Path("getTokens")
-	//@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	/**
-	 * Per ottenre la lista dei token
-	 * 
-	 * @return JSON relativo alla lista dei token
-	 */
-	public String getTokens() {
-		
-		Mappa_DB mdb = new Mappa_DB();
-		String esito = null;
-		
-		if(!mdb.controllaStatoEmergenza()) {
-			Utente_DB udb = new Utente_DB();
-			ArrayList<String> ListToken;
-			ListToken = udb.getListToken();
-			Gson gson = new Gson();
-			esito = gson.toJson(ListToken);	
-		} else {
-			ArrayList<String> ListToken = new ArrayList<String>();
-			Gson gson = new Gson();
-			esito = gson.toJson(ListToken);	
-		}
-		
-		return esito;
-		
+		return gson.toJson(udb.insert(token));		
 	}
 }

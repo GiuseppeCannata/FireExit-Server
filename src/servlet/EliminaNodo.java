@@ -3,7 +3,6 @@ package servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,6 +46,7 @@ public class EliminaNodo extends HttpServlet {
 		
 		try {
 			int Id = Integer.parseInt(request.getParameter("id"));
+			int piano = Integer.parseInt(request.getParameter("piano"));
 			
 			//importante all eliminazione di un nodo vanno eliminati anche tutti gli archi relativi a quel nodo
 			//con archi si intende anche i pesi degli archi
@@ -57,7 +57,7 @@ public class EliminaNodo extends HttpServlet {
 			    	adb.deleteArco(arco);
 		    	
 			if(ndb.delete(Id)) 
-				response.sendRedirect(request.getContextPath() + "/ListNodi");
+				response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
 		
 		} catch(Exception e) {
 			System.out.println("INPUT ERRATO");

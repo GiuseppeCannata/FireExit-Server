@@ -37,7 +37,7 @@
 			<tr>
 				<td>Descrizione</td>
 				<td><input type="text" name="Descrizione"
-					value="${peso.Descrizione()}" /></td>
+					value="${peso.getDescrizione()}" /></td>
 			</tr>
 			<tr>
 				<td>Peso</td>
@@ -50,7 +50,7 @@
 			                
 		                    if(peso != null){   
 		                    	
-			                    for(int i=0; i<10; i++)
+			                    for(int i=1 ; i<100; i++)
 			                    	if(i == peso.getPeso())
 			                    	   out.print("<option selected>"+i+"</option>");
 			                    	else
@@ -58,7 +58,7 @@
 			                   
 			                }else{
 			                	
-		                       for(int i=0; i<10; i++)
+		                       for(int i=1 ; i<100; i++)
 		                        	 out.print("<option>"+i+"</option>");	
 		                       
 			                }

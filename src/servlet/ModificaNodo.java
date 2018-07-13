@@ -45,11 +45,15 @@ public class ModificaNodo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
+			int statoEmergenza;
 			int Id = Integer.parseInt(request.getParameter("id"));
 			
 			nodo = ndb.FindNodoById(Id);
 			
+			statoEmergenza = mdb.getStatoEmergenzaByPiano(nodo.getmappaId());
+			
 			request.setAttribute("nodo", nodo);
+			request.setAttribute("statoEmergenza", statoEmergenza);
 			
 	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/views/ModificaNodoView.jsp");
 	        dispatcher.forward(request, response);
@@ -92,11 +96,11 @@ public class ModificaNodo extends HttpServlet {
 					
 					//controllo sullo stato di emergenza della mappa
 		        	//la mappa è in stato di emergenza se c è almeno un nodo sottoIndìcendio
-		        	if(TipoIncendio)
+		        /*	if(TipoIncendio)
 		        	    mdb.updateStatoEmergenza(1, mappaId);
 		        	else 
 		        		if(!ndb.verificaNodiSottoIncendioByPiano(mappaId))
-		        			mdb.updateStatoEmergenza(0, mappaId);
+		        			mdb.updateStatoEmergenza(0, mappaId);*/
 		        				
 		        	response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+mappaId);	
 				}

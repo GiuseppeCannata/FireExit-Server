@@ -49,9 +49,9 @@ public class EliminaArco extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		try {
+			
 			int Idarco = Integer.parseInt(request.getParameter("id"));
 			int piano = Integer.parseInt(request.getParameter("piano"));
 			int NodoPartenzaId = Integer.parseInt(request.getParameter("NodoPartenza"));
@@ -67,7 +67,7 @@ public class EliminaArco extends HttpServlet {
 			// i nodi saranno cancellati solo nel caso in cui non abbiano una stella
 			archiList = adb.findArchiByPiano(piano);
 			
-			boolean esitoA = false;
+		  /*boolean esitoA = false;
 			boolean esitoP = false;
 			
 			// eliminazione di eventuali nodi che non possiedono una stella
@@ -84,7 +84,7 @@ public class EliminaArco extends HttpServlet {
 				ndb.delete(NodoArrivoId);
 				
 		    if(!esitoP)
-		    	ndb.delete(NodoPartenzaId);
+		    	ndb.delete(NodoPartenzaId);*/
 			
 		    response.sendRedirect(request.getContextPath() + "/CaricaMappa?piano="+piano);
 		    

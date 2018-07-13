@@ -38,10 +38,9 @@
 				<td><a
 					href="${pageContext.request.contextPath}/ModificaNodo?id=${nodo.getId()}">Edit</a>
 				</td>
-			<!--  	<td><a id="delete${nodo.getBeaconId()}" href="#"
-					onclick="elimina(event,'${pageContext.request.contextPath}/EliminaNodo?id=${nodo.getId()}','${nodo.getBeaconId()}')">Delete</a>
-				</td>  -->
-
+			    <td>
+			      <a id="delete${nodo.getBeaconId()}" href="#" onclick="elimina(event,'${pageContext.request.contextPath}/EliminaNodo?id=${nodo.getId()}&piano=${nodo.getmappaId()}','${nodo.getBeaconId()}')">Delete</a>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

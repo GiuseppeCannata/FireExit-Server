@@ -28,7 +28,9 @@
 	</div>
 
 	<h4>Modifica del nodo</h4>
-
+	
+	
+    <p> <b>Attenzione! </b> Il tipo Incendio può essere modificato solo in caso di emergenza </p>
 	<p class="errore">${errorString}</p>
 
 	<form id="form" method="POST" action="${pageContext.request.contextPath}/ModificaNodo">
@@ -74,19 +76,34 @@
 			</tr>
 			<tr>
 				<td>Tipo Incendio</td>
-				<td><select name="TipoIncendio">
-						<% 
-	                    	if(nodo.isTipoIncendio()){
-	                    	   out.print("<option selected>True</option>");
-	                    	   out.print("<option>False</option>");
-	                    	}
-	                    	else{
-	                    	   out.print("<option selected>False</option>");
-	                     	   out.print("<option>True</option>");
-	                    	}
-		                    
-		                %>
-				</select></td>
+				<c:choose>
+					    <c:when test="${statoEmergenza=='0'}">
+					    <td><select name="TipoIncendio">
+									<% 
+				                    	if(nodo.isTipoIncendio())
+				                    	   out.print("<option selected>True</option>");
+				                    	else
+				                    	   out.print("<option selected>False</option>");
+					                %>
+				            </select></td>
+					        
+					    </c:when>    
+					    <c:otherwise>
+					       <td><select name="TipoIncendio">
+									<% 
+				                    	if(nodo.isTipoIncendio()){
+				                    	   out.print("<option selected>True</option>");
+				                    	   out.print("<option>False</option>");
+				                    	}
+				                    	else{
+				                    	   out.print("<option selected>False</option>");
+				                     	   out.print("<option>True</option>");
+				                    	}
+					                    
+					                %>
+				            </select></td>
+					    </c:otherwise>
+					</c:choose>
 			</tr>
 			<tr>
 				<td>Tipo Uscita</td>
